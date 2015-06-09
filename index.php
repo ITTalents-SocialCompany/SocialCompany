@@ -1,13 +1,13 @@
 <?php
 require_once 'config/config.php';
-require_once 'vendor/database/DBConnect.php';
-require_once 'controllers/MasterController.php';
-require_once 'models/Master.php';
-
+require_once 'vendor/db/DBConnect.php';
+require_once 'vendor/controller/MasterController.php';
+require_once 'vendor/model/MasterModel.php';
+require_once 'models/User.php';
 $request = $_SERVER["REQUEST_URI"];
 $method = $_SERVER["REQUEST_METHOD"];
 $args = array();
-define("FOLDER_PATH", "/SocialNetwork/");
+define("FOLDER_PATH", "/SocialCompany/");
 
 if(isset($request)){
 
@@ -39,7 +39,7 @@ if(file_exists("controllers/$controller.php")){
 
         if(method_exists($controller, $action)){
             if($method === "POST"){
-                call_user_func_array(array($controller, $action), $_POST);
+                call_user_func_array(array($controller, $action), array($_POST));
             }else{
                 call_user_func_array(array($controller, $action), $args);
             }
