@@ -5,7 +5,6 @@ class User extends MasterModel{
     private $password;
     private $firstName;
     private $lastName;
-    private $table = "users";
 
     public function __get($name) {
         return $this->$name;
