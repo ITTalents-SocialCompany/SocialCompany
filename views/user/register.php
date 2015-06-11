@@ -1,12 +1,13 @@
 <h1 class="text-center">Register</h1>
-<form action="/SocialCompany/user/registerPost" method="post" class="col-md-offset-4 col-md-4">
+<form action="/user/registerPost" method="post" class="col-md-offset-4 col-md-4">
 
     <div class="form-group">
         <div class="input-group">
 				<span class="input-group-addon">
 					<i class="glyphicon glyphicon-user text-muted"></i>
 				</span>
-            <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
+            <input type="text" class="form-control" id="username" name="username" placeholder="Username"
+                   value="<?= isset($post['username']) ? $post['username'] : ''?>" required>
         </div>
     </div>
 
@@ -22,9 +23,10 @@
     <div class="form-group">
         <div class="input-group">
 				<span class="input-group-addon">
-					<i class="glyphicon glyphicon-asterisk text-muted"></i>
+					<i class="glyphicon glyphicon-font text-muted"></i>
 				</span>
-            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required>
+            <input type="text" class="form-control" id="name" name="first_name" placeholder="First Name"
+                   value="<?= isset($post['first_name']) ? $post['first_name'] : ''?>" required>
         </div>
     </div>
 
@@ -33,16 +35,8 @@
 				<span class="input-group-addon">
 					<i class="glyphicon glyphicon-font text-muted"></i>
 				</span>
-            <input type="text" class="form-control" id="name" name="name" placeholder="Name" required>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="input-group">
-				<span class="input-group-addon">
-					<i class="glyphicon glyphicon-envelope text-muted"></i>
-				</span>
-            <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+            <input type="text" class="form-control" id="name" name="last_name" placeholder="Last Name"
+                   value="<?= isset($post['last_name']) ? $post['last_name'] : ''?>" required>
         </div>
     </div>
 

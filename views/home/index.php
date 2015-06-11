@@ -1,0 +1,1 @@
+<h1>Home <?= isset($_SESSION["username"]) ? $_SESSION['username']: ""?></h1>

@@ -1,16 +1,33 @@
 <?php
 
-class User {
-    public $username;
+class User extends MasterModel{
+    private $username;
     private $password;
+    private $firstName;
+    private $lastName;
     private $table = "users";
 
-    public function register(User $user){
-        $fields = "username, password, first_name, last_name";
-        $this->insert($this->table, $fields, $user);
+    public function __get($name) {
+        return $this->$name;
     }
 
-    public function login(User $user){
+    public function setUsername($username){
+        $this->username = $username;
+    }
 
+    public function setPassword($password){
+        $this->password = $password;
+    }
+
+    public function setFirstName($firstName){
+        $this->firstName = $firstName;
+    }
+
+    public function setLastName($lastName){
+        $this->lastName = $lastName;
+    }
+
+    public function objectToArray(){
+        return get_object_vars($this);
     }
 } 

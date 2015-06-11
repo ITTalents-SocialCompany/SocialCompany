@@ -1,7 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Social Company</title>
+    <meta charset="UTF-8">
+
+    <title>Social Company <?=$title?></title>
+
+    <link rel="stylesheet" href="/libs/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/libs/bootstrap/css/bootstrap-theme.min.css">
 </head>
 <body>
-<h1>Header</h1>
+<?php require_once "views/layouts/navbar.php";?>
+<div class="container">
