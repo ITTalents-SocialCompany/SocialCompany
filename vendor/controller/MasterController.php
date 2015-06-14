@@ -55,6 +55,10 @@ class MasterController {
     public function saveImg($filename, $filePath, $folder){
         $folder = ltrim ($folder, '/');
         $filePath = ltrim($filePath, '/');
+        if(!file_exists("storage/imgs")){
+            mkdir("storage/imgs");
+        }
+
         if(!file_exists("$folder")){
             mkdir("$folder");
         }
