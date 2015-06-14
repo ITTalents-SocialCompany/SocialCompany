@@ -4,7 +4,7 @@ class Auth extends MasterModel{
 
     public function register(User $user, $fields){
         $user->setPassword($this->hashPassword($user->password));
-        return $this->insert($this->table, $fields, $user->objectToArray());
+        return $this->insert($this->table, $fields, $user->objectToArray()) ? true : false;
     }
 
     public function login(User $user){

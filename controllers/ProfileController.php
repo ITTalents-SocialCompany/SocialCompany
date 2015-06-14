@@ -13,10 +13,18 @@ class ProfileController extends MasterController {
             $this->redirect("/profile/edit");
         }else{
             $id = $this->auth->getUserId();
-            $user = $this->userInfo->getLoggedUser($id);
+            $user = $this->userInfo->getUser($id);
             $profile_detail = $this->userInfo->getProfile($id);
             $this->renderViewWithParams("profile/index", array("profile_detail", "user"), array($profile_detail, $user));
         }
+    }
+
+    public function user($args){
+        $username = $args[0];
+        $user = new User();
+        $user = $user->findByUsername($username);
+        $profile_detail = $this->userInfo->getProfile($user->user_id);
+        $this->renderViewWithParams("profile/index", array("profile_detail", "user"), array($profile_detail, $user));
     }
 
     public function edit(){
@@ -35,7 +43,7 @@ class ProfileController extends MasterController {
         if(!$profile_detail_id = $this->userInfo->hasProfile()){
             $fields = $this->takeFields($post);
             if($profile_detail->save($profile_detail, $fields)){
-                $this->redirect("/");
+                $this->redirect("/profile/index");
             }else{
                 $this->renderViewWithError("profile/edit", "profile_detail",$profile_detail, "Error!");
             }
@@ -61,7 +69,7 @@ class ProfileController extends MasterController {
 
     public function changeImgs(){
         $id = $this->auth->getUserId();
-        $user = $this->userInfo->getLoggedUser($id);
+        $user = $this->userInfo->getUser($id);
         $folder = "/storage/imgs/$user->username";
         $profile_detail = $this->userInfo->getProfile($id);
         $fields = array();

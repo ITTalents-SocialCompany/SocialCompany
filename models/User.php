@@ -5,6 +5,7 @@ class User extends MasterModel{
     private $password;
     private $first_name;
     private $last_name;
+    private $user_id;
 
     public function __get($name) {
         return $this->$name;
@@ -38,5 +39,10 @@ class User extends MasterModel{
             }
         }
         return $user;
+    }
+
+    public function findByUsername($username){
+        $arr = $this->selectOne("users", "username = '$username'");
+        return $this->arrayToObject(new User(), $arr);
     }
 } 

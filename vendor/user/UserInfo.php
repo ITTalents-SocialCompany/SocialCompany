@@ -1,7 +1,7 @@
 <?php
 class UserInfo extends MasterModel{
 
-    public function getLoggedUser($id){
+    public function getUser($id){
         $user = new User();
 
         $userInfo = $this->getUserInfo($id);

@@ -23,7 +23,10 @@ class UserController extends MasterController{
         $user->setLastName($post['last_name']);
 
         if($this->auth->register($user, $fields)){
-            $this->redirect("/user/login");
+            $user->setPassword($post['password']);
+            if($this->auth->login($user)){
+                $this->redirect("/profile/index");
+            }
         }
         else{
             $this->renderViewWithError("user/register", "user", $user, "Username is occupied!");

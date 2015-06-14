@@ -56,6 +56,7 @@ class MasterModel {
                . (($limit) ? " LIMIT " . $limit : "")
                . (($offset && $limit) ? " OFFSET " . $offset : "")
                . (($order) ? " ORDER BY " . $order : "");
+//        var_dump($query);
         return $this->dbConn->query($query)->fetch(PDO::FETCH_ASSOC);
     }
 
