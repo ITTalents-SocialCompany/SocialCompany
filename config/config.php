@@ -10,4 +10,4 @@ define("DB_PASS", "");
 define("DEFAULT_CONTROLLER", "HomeController");
 define("DEFAULT_ACTION", "index");
 
-define("DEFAULT_PROFILE_IMG", "/storage/imgs/defaultProfileImg.jpg");
+define("DEFAULT_PROFILE_IMG", "/storage/defaultProfileImg.jpg");
