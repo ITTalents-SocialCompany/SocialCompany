@@ -17,7 +17,7 @@
             </div>
         </div>
 
-        <input type="hidden" name="user_id" value="<?= $auth->getUserId()?>">
+        <input type="hidden" name="user_id" value="<?= getId()?>">
 
         <div class="form-group">
             <div class="col-lg-10 col-lg-offset-2">

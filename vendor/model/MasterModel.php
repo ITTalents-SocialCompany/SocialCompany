@@ -8,12 +8,16 @@ class MasterModel {
         $this->dbConn = $db->getInstance();
     }
 
-    public function insert($table, $fields,array $data)
+    public function insert($table, $fields, array $data)
     {
         if(isset($data['table'])){
             unset($data['table']);
         }
-        $values = array_values($data);
+        foreach($data as $value){
+            if(!is_null($value)){
+                $values[] = $value;
+            }
+        }
 
         $query = "INSERT INTO " . $table . " (" . $fields . ") " . " VALUES (" .
             rtrim(str_repeat("?,", count($values)), ",") . ")";

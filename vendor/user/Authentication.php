@@ -10,6 +10,7 @@ class Auth extends MasterModel{
     public function login(User $user){
         if($res = $this->findByUsername($this->table, "$user->username")){
             if (password_verify($user->password, $res['password'])) {
+                $_SESSION['first_name'] = $res['first_name'];
                 $_SESSION['id'] = $res['user_id'];
                 return true;
             }else{

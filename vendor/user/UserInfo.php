@@ -1,11 +1,5 @@
 <?php
 class UserInfo extends MasterModel{
-    private $auth;
-
-    public function __construct(){
-        parent::__construct();
-        $this->auth = new Auth();
-    }
 
     public function getLoggedUser($id){
         $user = new User();
@@ -30,7 +24,7 @@ class UserInfo extends MasterModel{
     }
 
     public function hasProfile(){
-        $id = $this->auth->getUserId();
+        $id = getId();
         return $this->selectOne("profile_details", "user_id = '$id'") ?
             $this->selectOne("profile_details", "user_id = '$id'")['profile_detail_id'] : false;
     }
