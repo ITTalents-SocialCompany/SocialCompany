@@ -1,6 +1,6 @@
 <form action="/profile/editPost" method="post" class="form-horizontal">
     <fieldset>
-        <legend>Edit Profile</legend>
+        <legend>Edit Profile Information</legend>
         <div class="form-group">
             <label for="age" class="col-lg-2 control-label">Age</label>
             <div class="col-lg-10">

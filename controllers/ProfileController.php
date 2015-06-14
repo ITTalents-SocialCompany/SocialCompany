@@ -50,32 +50,49 @@ class ProfileController extends MasterController {
     }
 
     public function imgs(){
-        $this->renderView("profile/changeImgs");
+        if(!$this->userInfo->hasProfile()){
+            $this->redirect("/profile/edit");
+        }else{
+            $id = $this->auth->getUserId();
+            $profile_detail = $this->userInfo->getProfile($id);
+            $this->renderViewWithParams("profile/changeImgs", array("profile_detail"), array($profile_detail));
+        }
     }
 
-    public function changeImgs($post){
+    public function changeImgs(){
         $id = $this->auth->getUserId();
         $user = $this->userInfo->getLoggedUser($id);
         $folder = "/storage/imgs/$user->username";
+        $profile_detail = $this->userInfo->getProfile($id);
+        $fields = array();
 
-        $filenameProfile = $_FILES['profile_img_url']['tmp_name'];
-        $realFilenameProfile = $_FILES['profile_img_url']['name'];
-        $profileFilePath = "/storage/imgs/$user->username/$realFilenameProfile";
+        if(strcmp($_FILES['profile_img_url']['name'], "") !== 0){
+            $fields[] = "profile_img_url";
+            $filenameProfile = $_FILES['profile_img_url']['tmp_name'];
+            $realFilenameProfile = $_FILES['profile_img_url']['name'];
+            $profileFilePath = "/storage/imgs/$user->username/$realFilenameProfile";
+            $profile_detail->setProfileImg($profileFilePath);
+        }
 
-        $filenameCover = $_FILES['cover_img_url']['tmp_name'];
-        $realFilenameCover = $_FILES['cover_img_url']['name'];
-        $coverFilePath = "/storage/imgs/$user->username/$realFilenameCover";
-
-        $profile_detail = new ProfileDetail();
-        $profile_detail->setProfileImg($profileFilePath);
-        $profile_detail->setCoverImg($coverFilePath);
+        if(strcmp($_FILES['cover_img_url']['name'], "") !== 0){
+            $fields[] = "cover_img_url";
+            $filenameCover = $_FILES['cover_img_url']['tmp_name'];
+            $realFilenameCover = $_FILES['cover_img_url']['name'];
+            $coverFilePath = "/storage/imgs/$user->username/$realFilenameCover";
+            $profile_detail->setCoverImg($coverFilePath);
+        }
 
         $profile_detail_id = $this->userInfo->hasProfile();
-        if($profile_detail->changeImgs($profile_detail, array("profile_img_url", "cover_img_url"), $profile_detail_id)){
-            if($this->saveImg($filenameProfile, $profileFilePath, $folder) &&
-            $this->saveImg($filenameCover, $coverFilePath, $folder)){
-                $this->redirect("/profile/index");
+        if($profile_detail->changeImgs($profile_detail, $fields, $profile_detail_id)){
+            if(isset($filenameProfile)) {
+                $this->saveImg($filenameProfile, $profileFilePath, $folder);
             }
+            if(isset($filenameCover)){
+                $this->saveImg($filenameCover, $coverFilePath, $folder);
+            }
+            $this->redirect("/profile/index");
+        }else{
+            $this->redirect("/profile/imgs");
         }
     }
 

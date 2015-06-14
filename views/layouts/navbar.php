@@ -28,7 +28,7 @@
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="/profile/index">Profile</a></li>
                             <li class="divider"></li>
-                            <li><a href="/profile/edit">Profile Edit</a></li>
+                            <li><a href="/profile/edit">Profile Info Edit</a></li>
                             <li><a href="/profile/imgs">Profile Imgs</a></li>
                             <li class="divider"></li>
                             <li><a href="/user/logout">Logout</a></li>

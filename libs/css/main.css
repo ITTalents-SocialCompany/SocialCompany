@@ -2,3 +2,7 @@
     padding-top: 20%;
     padding-bottom: 0;
 }
+
+#profile_img_url, #cover_img_url{
+    margin-top: 3%;
+}
