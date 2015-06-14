@@ -7,7 +7,7 @@
 					<i class="glyphicon glyphicon-user text-muted"></i>
 				</span>
             <input type="text" class="form-control" id="username" name="username" placeholder="Username"
-                   value="<?= isset($post['username']) ? $post['username'] : ''?>" required>
+                   value="<?= isset($error) ? $user->username : ''?>" required>
         </div>
     </div>
 
@@ -26,7 +26,7 @@
 					<i class="glyphicon glyphicon-font text-muted"></i>
 				</span>
             <input type="text" class="form-control" id="name" name="first_name" placeholder="First Name"
-                   value="<?= isset($post['first_name']) ? $post['first_name'] : ''?>" required>
+                   value="<?= isset($error) ? $user->first_name : ''?>" required>
         </div>
     </div>
 
@@ -36,7 +36,7 @@
 					<i class="glyphicon glyphicon-font text-muted"></i>
 				</span>
             <input type="text" class="form-control" id="name" name="last_name" placeholder="Last Name"
-                   value="<?= isset($post['last_name']) ? $post['last_name'] : ''?>" required>
+                   value="<?= isset($error) ? $user->last_name : ''?>" required>
         </div>
     </div>
 

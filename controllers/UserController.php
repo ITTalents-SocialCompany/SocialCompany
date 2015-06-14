@@ -2,9 +2,11 @@
 
 class UserController extends MasterController{
     private $auth;
+    private $userInfo;
 
     public function __construct(){
         $this->auth = new Auth();
+        $this->userInfo = new UserInfo();
     }
 
     public function register(){
@@ -24,7 +26,7 @@ class UserController extends MasterController{
             $this->redirect("/user/login");
         }
         else{
-            $this->renderViewWithError("user/register", $post, "Username is occupied!");
+            $this->renderViewWithError("user/register", "user", $user, "Username is occupied!");
         }
     }
 
@@ -38,9 +40,13 @@ class UserController extends MasterController{
         $user->setPassword($post['password']);
 
         if($this->auth->login($user)){
-            $this->redirect("/");
+            if($this->userInfo->hasProfile()){
+                $this->redirect("/profile/index");
+            }else{
+                $this->redirect("/profile/edit");
+            }
         }else{
-            $this->renderViewWithError("user/login", $post, "Username or password is wrong!");
+            $this->renderViewWithError("user/login", "user", $user, "Username or password is wrong!");
         }
     }
 

@@ -3,8 +3,8 @@
 class User extends MasterModel{
     private $username;
     private $password;
-    private $firstName;
-    private $lastName;
+    private $first_name;
+    private $last_name;
 
     public function __get($name) {
         return $this->$name;
@@ -18,15 +18,25 @@ class User extends MasterModel{
         $this->password = $password;
     }
 
-    public function setFirstName($firstName){
-        $this->firstName = $firstName;
+    public function setFirstName($first_name){
+        $this->first_name = $first_name;
     }
 
-    public function setLastName($lastName){
-        $this->lastName = $lastName;
+    public function setLastName($last_name){
+        $this->last_name = $last_name;
     }
 
     public function objectToArray(){
         return get_object_vars($this);
+    }
+
+    public function arrayToObject(User $user, $arr){
+        foreach ($arr as $key => $value)
+        {
+            if(property_exists('User', $key) && strcmp($key, "password") !== 0){
+                $user->$key = $value;
+            }
+        }
+        return $user;
     }
 } 

@@ -10,7 +10,7 @@ class Auth extends MasterModel{
     public function login(User $user){
         if($res = $this->findByUsername($this->table, "$user->username")){
             if (password_verify($user->password, $res['password'])) {
-                $_SESSION['username'] = $user->username;
+                $_SESSION['id'] = $res['user_id'];
                 return true;
             }else{
                 return false;
@@ -25,8 +25,12 @@ class Auth extends MasterModel{
         return password_hash($password, PASSWORD_BCRYPT, $options);
     }
 
+    public function getUserId(){
+        return isset($_SESSION['id']) ? $_SESSION['id'] : false;
+    }
+
     public static function isLoggedIn(){
-        return isset($_SESSION['username']) ? true : false;
+        return isset($_SESSION['id']) ? true : false;
     }
 
     public static function isAuthorized(){
