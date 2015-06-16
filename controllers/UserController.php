@@ -1,6 +1,7 @@
 <?php
 
 class UserController extends MasterController{
+    public function __construct(){}
 
     public function register(){
         $this->renderView("user/register");

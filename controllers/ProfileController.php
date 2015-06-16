@@ -1,6 +1,7 @@
 <?php
 class ProfileController extends MasterController {
 
+    public function __construct(){}
 
     public function index(){
         $user_detail = new UserDetail();
