@@ -22,7 +22,7 @@ abstract class MasterModel {
         $query = "INSERT INTO " . $table . " (" . $fields . ") " . " VALUES (" .
             rtrim(str_repeat("?,", count($values)), ",") . ")";
 
-       var_dump($query, $values);
+        // var_dump($query, $values);
 
         $prep = $this->dbConn->prepare($query);
         return $prep->execute($values);
