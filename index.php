@@ -5,10 +5,6 @@ function __autoload($classname) {
     include_once("models/$classname.php");
 }
 
-function getId(){
-    return $_SESSION['id'];
-}
-
 require_once 'config/config.php';
 require_once 'vendor/db/DBConnect.php';
 require_once 'vendor/controller/MasterController.php';

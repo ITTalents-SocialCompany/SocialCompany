@@ -1,7 +1,7 @@
 <?php
 class Auth{
 
-    public static function getUserId(){
+    public static function getId(){
         return isset($_SESSION['id']) ? $_SESSION['id'] : false;
     }
 

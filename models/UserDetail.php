@@ -66,7 +66,7 @@ class UserDetail extends MasterModel{
     }
 
     public function hasUserDetail(){
-        $id = getId();
+        $id = Auth::getId();
         return $this->selectOne($this->table, "user_id = '$id'") ?
             $this->selectOne($this->table, "user_id = '$id'")['user_detail_id'] : false;
     }

@@ -8,7 +8,7 @@ class ProfileController extends MasterController {
         if(!$user_detail->hasUserDetail()){
             $this->redirect("/profile/edit");
         }else{
-            $id = getId();
+            $id = Auth::getId();
             $user = new User();
             $user = $user->getUser($id);
             $user_detail = $user_detail->getUserDetail($id);
@@ -26,7 +26,7 @@ class ProfileController extends MasterController {
     }
 
     public function edit(){
-        $id = getId();
+        $id = Auth::getId();
         $user_detail = new UserDetail();
         $user_detail = $user_detail->getUserDetail($id);
         $this->renderViewWithParams("profile/edit", array("user_detail"), array($user_detail));
@@ -61,14 +61,14 @@ class ProfileController extends MasterController {
         if(!$user_detail->hasUserDetail()){
             $this->redirect("/profile/edit");
         }else{
-            $id = getId();
+            $id = Auth::getId();
             $user_detail = $user_detail->getUserDetail($id);
             $this->renderViewWithParams("profile/changeImgs", array("user_detail"), array($user_detail));
         }
     }
 
     public function changeImgs(){
-        $id = getId();
+        $id = Auth::getId();
         $user_detail = new UserDetail();
         $user = new User();
         $user = $user->getUser($id);
