@@ -8,7 +8,5 @@ class HomeController extends MasterController{
         $this->renderView("home/index");
     }
 
-    public function ajaxRequestNewsFeed(){
 
-    }
 } 
