@@ -1,13 +1,6 @@
 <?php
 
 class UserController extends MasterController{
-    private $auth;
-    private $userInfo;
-
-    public function __construct(){
-        $this->auth = new Auth();
-        $this->userInfo = new UserInfo();
-    }
 
     public function register(){
         $this->renderView("user/register");
@@ -22,9 +15,9 @@ class UserController extends MasterController{
         $user->setFirstName($post['first_name']);
         $user->setLastName($post['last_name']);
 
-        if($this->auth->register($user, $fields)){
+        if($user->register($user, $fields)){
             $user->setPassword($post['password']);
-            if($this->auth->login($user)){
+            if($user->login($user)){
                 $this->redirect("/profile/index");
             }
         }
@@ -42,8 +35,9 @@ class UserController extends MasterController{
         $user->setUsername($post['username']);
         $user->setPassword($post['password']);
 
-        if($this->auth->login($user)){
-            if($this->userInfo->hasProfile()){
+        if($user->login($user)){
+            $user_detail = new UserDetail();
+            if($user_detail->hasUserDetail()){
                 $this->redirect("/profile/index");
             }else{
                 $this->redirect("/profile/edit");

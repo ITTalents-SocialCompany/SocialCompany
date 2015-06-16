@@ -1,21 +1,17 @@
 <?php
 class ProfileController extends MasterController {
-    private $auth;
-    private $userInfo;
 
-    public function __construct(){
-        $this->auth = new Auth();
-        $this->userInfo = new UserInfo();
-    }
 
     public function index(){
-        if(!$this->userInfo->hasProfile()){
+        $user_detail = new UserDetail();
+        if(!$user_detail->hasUserDetail()){
             $this->redirect("/profile/edit");
         }else{
-            $id = $this->auth->getUserId();
-            $user = $this->userInfo->getUser($id);
-            $profile_detail = $this->userInfo->getProfile($id);
-            $this->renderViewWithParams("profile/index", array("profile_detail", "user"), array($profile_detail, $user));
+            $id = getId();
+            $user = new User();
+            $user = $user->getUser($id);
+            $user_detail = $user_detail->getUserDetail($id);
+            $this->renderViewWithParams("profile/index", array("user_detail", "user"), array($user_detail, $user));
         }
     }
 
@@ -23,55 +19,60 @@ class ProfileController extends MasterController {
         $username = $args[0];
         $user = new User();
         $user = $user->findByUsername($username);
-        $profile_detail = $this->userInfo->getProfile($user->user_id);
-        $this->renderViewWithParams("profile/index", array("profile_detail", "user"), array($profile_detail, $user));
+        $user_detail = new UserDetail();
+        $user_detail = $user_detail->getUserDetail($user->user_id);
+        $this->renderViewWithParams("profile/index", array("user_detail", "user"), array($user_detail, $user));
     }
 
     public function edit(){
-        $id = $this->auth->getUserId();
-        $profile_detail = $this->userInfo->getProfile($id);
-        $this->renderViewWithParams("profile/edit", array("profile_detail"), array($profile_detail));
+        $id = getId();
+        $user_detail = new UserDetail();
+        $user_detail = $user_detail->getUserDetail($id);
+        $this->renderViewWithParams("profile/edit", array("user_detail"), array($user_detail));
     }
 
     public function editPost($post){
 
-        $profile_detail = new ProfileDetail();
-        $profile_detail->setAge($post['age']);
-        $profile_detail->setEmail($post['email']);
-        $profile_detail->setUserId($post['user_id']);
+        $user_detail = new UserDetail();
+        $user_detail->setAge($post['age']);
+        $user_detail->setEmail($post['email']);
+        $user_detail->setUserId($post['user_id']);
 
-        if(!$profile_detail_id = $this->userInfo->hasProfile()){
+        if(!$user_detail_id = $user_detail->hasUserDetail()){
             $fields = $this->takeFields($post);
-            if($profile_detail->save($profile_detail, $fields)){
+            if($user_detail->save($user_detail, $fields)){
                 $this->redirect("/profile/index");
             }else{
-                $this->renderViewWithError("profile/edit", "profile_detail",$profile_detail, "Error!");
+                $this->renderViewWithError("profile/edit", "user_detail",$user_detail, "Error!");
             }
         }else{
             $fields = $this->takeFieldsArr($post);
-            if($profile_detail->change($profile_detail, $fields, $profile_detail_id)){
+            if($user_detail->change($user_detail, $fields, $user_detail_id)){
                 $this->redirect("/profile/index");
             }else{
-                $this->renderViewWithError("profile/edit", "profile_detail", $profile_detail, "Error with Update!");
+                $this->renderViewWithError("profile/edit", "user_detail", $user_detail, "Error with Update!");
             }
         }
     }
 
     public function imgs(){
-        if(!$this->userInfo->hasProfile()){
+        $user_detail = new UserDetail();
+        if(!$user_detail->hasUserDetail()){
             $this->redirect("/profile/edit");
         }else{
-            $id = $this->auth->getUserId();
-            $profile_detail = $this->userInfo->getProfile($id);
-            $this->renderViewWithParams("profile/changeImgs", array("profile_detail"), array($profile_detail));
+            $id = getId();
+            $user_detail = $user_detail->getUserDetail($id);
+            $this->renderViewWithParams("profile/changeImgs", array("user_detail"), array($user_detail));
         }
     }
 
     public function changeImgs(){
-        $id = $this->auth->getUserId();
-        $user = $this->userInfo->getUser($id);
+        $id = getId();
+        $user_detail = new UserDetail();
+        $user = new User();
+        $user = $user->getUser($id);
         $folder = "/storage/imgs/$user->username";
-        $profile_detail = $this->userInfo->getProfile($id);
+        $user_detail = $user_detail->getUserDetail($id);
         $fields = array();
 
         if(strcmp($_FILES['profile_img_url']['name'], "") !== 0){
@@ -79,7 +80,7 @@ class ProfileController extends MasterController {
             $filenameProfile = $_FILES['profile_img_url']['tmp_name'];
             $realFilenameProfile = $_FILES['profile_img_url']['name'];
             $profileFilePath = "/storage/imgs/$user->username/$realFilenameProfile";
-            $profile_detail->setProfileImg($profileFilePath);
+            $user_detail->setProfileImg($profileFilePath);
         }
 
         if(strcmp($_FILES['cover_img_url']['name'], "") !== 0){
@@ -87,11 +88,11 @@ class ProfileController extends MasterController {
             $filenameCover = $_FILES['cover_img_url']['tmp_name'];
             $realFilenameCover = $_FILES['cover_img_url']['name'];
             $coverFilePath = "/storage/imgs/$user->username/$realFilenameCover";
-            $profile_detail->setCoverImg($coverFilePath);
+            $user_detail->setCoverImg($coverFilePath);
         }
 
-        $profile_detail_id = $this->userInfo->hasProfile();
-        if($profile_detail->changeImgs($profile_detail, $fields, $profile_detail_id)){
+        $user_detail_id = $user_detail->hasUserDetail();
+        if($user_detail->changeImgs($user_detail, $fields, $user_detail_id)){
             if(isset($filenameProfile)) {
                 $this->saveImg($filenameProfile, $profileFilePath, $folder);
             }

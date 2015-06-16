@@ -1,32 +1,7 @@
 <?php
-class Auth extends MasterModel{
-    private $table = "users";
+class Auth{
 
-    public function register(User $user, $fields){
-        $user->setPassword($this->hashPassword($user->password));
-        return $this->insert($this->table, $fields, $user->objectToArray()) ? true : false;
-    }
-
-    public function login(User $user){
-        if($res = $this->findByUsername($this->table, "$user->username")){
-            if (password_verify($user->password, $res['password'])) {
-                $_SESSION['first_name'] = $res['first_name'];
-                $_SESSION['id'] = $res['user_id'];
-                return true;
-            }else{
-                return false;
-            }
-        }
-    }
-
-    public function hashPassword($password){
-        $options = [
-            'cost' => 12,
-        ];
-        return password_hash($password, PASSWORD_BCRYPT, $options);
-    }
-
-    public function getUserId(){
+    public static function getUserId(){
         return isset($_SESSION['id']) ? $_SESSION['id'] : false;
     }
 

@@ -6,6 +6,7 @@ class User extends MasterModel{
     private $first_name;
     private $last_name;
     private $user_id;
+    private $table = "users";
 
     public function __get($name) {
         return $this->$name;
@@ -41,8 +42,39 @@ class User extends MasterModel{
         return $user;
     }
 
+    public function register(User $user, $fields){
+        $user->setPassword($this->hashPassword($user->password));
+        return $this->insert($this->table, $fields, $user->objectToArray()) ? true : false;
+    }
+
+    public function login(User $user){
+        if($res = $this->selectOne($this->table, "username = '$user->username'")){
+            if (password_verify($user->password, $res['password'])) {
+                $_SESSION['first_name'] = $res['first_name'];
+                $_SESSION['id'] = $res['user_id'];
+                return true;
+            }else{
+                return false;
+            }
+        }
+    }
+
+    public function hashPassword($password){
+        $options = [
+            'cost' => 12,
+        ];
+        return password_hash($password, PASSWORD_BCRYPT, $options);
+    }
+
     public function findByUsername($username){
-        $arr = $this->selectOne("users", "username = '$username'");
+        $arr = $this->selectOne($this->table, "username = '$username'");
         return $this->arrayToObject(new User(), $arr);
+    }
+
+    public function getUser($id){
+        $user = $this->selectOne($this->table, "user_id = '$id'");
+        $user = $this->arrayToObject($this, $user);
+
+        return $user;
     }
 } 

@@ -14,7 +14,6 @@ require_once 'vendor/db/DBConnect.php';
 require_once 'vendor/controller/MasterController.php';
 require_once 'vendor/model/MasterModel.php';
 require_once 'vendor/user/Authentication.php';
-require_once 'vendor/user/UserInfo.php';
 
 $request = $_SERVER["REQUEST_URI"];
 $method = $_SERVER["REQUEST_METHOD"];

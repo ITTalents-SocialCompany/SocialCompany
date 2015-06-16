@@ -1,6 +1,6 @@
 <?php
 
-class MasterModel {
+abstract class MasterModel {
     private $dbConn;
 
     public function __construct(){
@@ -93,4 +93,4 @@ class MasterModel {
     public function findById($table, $id){
         return $this->selectOne($table, "id = '$id'");
     }
-} 
+}

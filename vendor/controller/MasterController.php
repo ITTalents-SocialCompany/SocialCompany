@@ -2,8 +2,8 @@
 class MasterController {
 
     public function __construct(){
-        $userInfo = new UserInfo();
-        if(!$userInfo->hasProfile()){
+        $user_detail = new UserDetail();
+        if(!$user_detail->hasUserDetail()){
             $this->redirect("/profile/edit");
         }
     }

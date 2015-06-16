@@ -8,8 +8,8 @@
                 <input type="file" name="profile_img_url" onchange="readURL(this);">
             </div>
             <div class="col-lg-10">
-                <img class="thumbnail" id="profile_img_url" src="<?= $profile_detail->profile_img_url ?
-                    $profile_detail->profile_img_url : DEFAULT_PROFILE_IMG?>" width="200" height="200"/>
+                <img class="thumbnail" id="profile_img_url" src="<?= $user_detail->profile_img_url ?
+                    $user_detail->profile_img_url : DEFAULT_PROFILE_IMG?>" width="200" height="200"/>
             </div>
         </div>
 
@@ -19,8 +19,8 @@
                 <input type="file" name="cover_img_url" onchange="readURL(this);">
             </div>
             <div class="col-lg-10">
-                <img class="thumbnail" id="cover_img_url" src="<?= $profile_detail->cover_img_url ?
-                        $profile_detail->cover_img_url : DEFAULT_PROFILE_IMG?>" width="200" height="200"/>
+                <img class="thumbnail" id="cover_img_url" src="<?= $user_detail->cover_img_url ?
+                    $user_detail->cover_img_url : DEFAULT_PROFILE_IMG?>" width="200" height="200"/>
             </div>
         </div>
 

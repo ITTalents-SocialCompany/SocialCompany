@@ -5,7 +5,7 @@
             <label for="age" class="col-lg-2 control-label">Age</label>
             <div class="col-lg-10">
                 <input class="form-control" type="text" id="age" name="age" placeholder="Age"
-                       value="<?= $profile_detail->age?>">
+                       value="<?= $user_detail->age?>">
             </div>
         </div>
 
@@ -13,7 +13,7 @@
             <label for="inputEmail" class="col-lg-2 control-label">Email</label>
             <div class="col-lg-10">
                 <input class="form-control" id="inputEmail" name="email" placeholder="Email" type="email"
-                       value="<?= $profile_detail->email?>">
+                       value="<?= $user_detail->email?>">
             </div>
         </div>
 
