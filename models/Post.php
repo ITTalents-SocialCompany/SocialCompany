@@ -2,7 +2,15 @@
 class Post extends MasterModel{
     private $title;
     private $body;
+    private $author_id;
     private $table = "posts";
+
+    public function __construct($title = null, $body = null, $author_id = null){
+        parent::__construct();
+        $this->title = $title;
+        $this->body = $body;
+        $this->author_id = $author_id;
+    }
 
     public function __get($name) {
         return $this->$name;
@@ -16,8 +24,12 @@ class Post extends MasterModel{
     	$this->body = $body;
     }
 
+    public function setAuthorId($author_id){
+        $this->author_id = $author_id;
+    }
+
     public function savePost(Post $post, $fields){	
-        $this->insert($this->table, $fields, $this->objectToArray($post));
+        return $this->insert($this->table, $fields, $this->objectToArray($post));
     }
     
     public function objectToArray(){
@@ -28,9 +40,19 @@ class Post extends MasterModel{
     	foreach ($arr as $key => $value)
     	{
     		if(property_exists('Post', $key)){
-    			$user->$key = $value;
+                $post->$key = $value;
     		}
     	}
-    	return $user;
+    	return $post;
+    }
+
+    public function getAll($start){
+        $rows = $this->selectAll($this->table, "", "post_id DESC", "$start, 5");
+        if(count($rows) > 0){
+            foreach ($rows as $post){
+                $posts[] = new Post($post['title'], $post['body'], $post['author_id']);
+            }
+            return $posts;
+        }
     }
 }

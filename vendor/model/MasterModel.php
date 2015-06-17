@@ -22,7 +22,7 @@ abstract class MasterModel {
         $query = "INSERT INTO " . $table . " (" . $fields . ") " . " VALUES (" .
             rtrim(str_repeat("?,", count($values)), ",") . ")";
 
-        // var_dump($query, $values);
+//         var_dump($query);
 
         $prep = $this->dbConn->prepare($query);
         return $prep->execute($values);
@@ -60,12 +60,12 @@ abstract class MasterModel {
         return $this->dbConn->query($query)->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function selectAll($table, $where = "", $order = "", $limit = null, $offset = null){
+    public function selectAll($table, $where = "", $order = "", $limit = null){
         $query = "SELECT * FROM " . $table
-            . (($where) ? " WHERE " . $where : "")
-            . (($limit) ? " LIMIT " . $limit : "")
-            . (($offset && $limit) ? " OFFSET " . $offset : "")
-            . (($order) ? " ORDER BY " . $order : "");
+            . (($where && strcmp($where, "") !== 0) ? " WHERE " . $where : "")
+            . (($order && strcmp($order, "") !== 0) ? " ORDER BY " . $order : "")
+            . (($limit) ? " LIMIT " . $limit : "");
+//        var_dump($query);
         return $this->dbConn->query($query)->fetchAll(PDO::FETCH_ASSOC);
     }
 

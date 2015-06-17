@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="/libs/bootstrap/css/bootstrap-theme.min.css">
 
     <link rel="stylesheet" href="/libs/css/main.css">
+
+    <script src="/libs/jquery/jquery-2.1.4.min.js"></script>
+    <script src="/libs/bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
 <?php require_once "views/layouts/navbar.php";?>
