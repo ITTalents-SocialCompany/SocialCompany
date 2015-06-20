@@ -36,11 +36,16 @@ abstract class MasterModel {
         if(isset($data['user_id'])){
             unset($data['user_id']);
         }
-
         $set = array();
         foreach ($data as $field => $value) {
-            if(in_array($field, $fields) && !is_null($value)){
+            if(in_array($field, $fields) && !is_null($value) && !is_bool($value)){
                 $set[] = $field . '=' . "'$value'";
+            }elseif($value === false){
+                $set[] = $field . '=' . "0";
+            }elseif($value === true){
+                $set[] = $field . '=' . "1";
+            }elseif($value === null){
+                $set[] = $field . '=' . "NULL";
             }
         }
         $set = implode(',', $set);

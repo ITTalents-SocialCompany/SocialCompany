@@ -6,6 +6,8 @@ class User extends MasterModel{
     private $first_name;
     private $last_name;
     private $user_id;
+    private $is_approve;
+    private $soft_delete;
     private $table = "users";
 
     public function __get($name) {
@@ -48,8 +50,9 @@ class User extends MasterModel{
     }
 
     public function login(User $user){
-        if($res = $this->selectOne($this->table, "username = '$user->username'")){
+        if($res = $this->selectOne($this->table, "username = '$user->username' and soft_delete IS NULL")){
             if (password_verify($user->password, $res['password'])) {
+                $_SESSION['is_admin'] = $res['is_admin'];
                 $_SESSION['first_name'] = $res['first_name'];
                 $_SESSION['id'] = $res['user_id'];
                 return true;
@@ -76,5 +79,37 @@ class User extends MasterModel{
         $user = $this->arrayToObject($this, $user);
 
         return $user;
+    }
+
+    public function getUserDetail(){
+        $user_detail = new UserDetail();
+        $res = $this->selectOne($user_detail->table, "user_id = '$this->user_id'");
+        $user_detail = $user_detail->arrayToObject($user_detail, $res);
+
+        return $user_detail;
+    }
+
+    public function getAllUsers(){
+        $rows = $this->selectAll($this->table);
+        foreach($rows as $row){
+            $user = new User();
+            $user = $this->arrayToObject($user, $row);
+            $users[] = $user;
+        }
+
+        return $users;
+    }
+
+    public function approve($id){
+        $fields = array("is_approve", "soft_delete");
+        $data = array("is_approve"=> true, "soft_delete" => NULL);
+        $this->update($this->table, $fields, $data, "user_id = '$id'");
+    }
+
+    public function soft_delete($id){
+        $fields = array("is_approve", "soft_delete");
+        $data = array("is_approve"=> false, "soft_delete" => date('Y-m-d H:i:s'));
+//        var_dump($data);
+        $this->update($this->table, $fields, $data, "user_id = '$id'");
     }
 } 

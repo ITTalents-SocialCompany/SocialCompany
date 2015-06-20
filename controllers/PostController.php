@@ -1,5 +1,10 @@
 <?php
 class PostController extends MasterController{
+    public function __construct(){
+        parent::__construct();
+        Auth::isAuthorized();
+    }
+
 	public function savePost($post){
 		$fields = $this->takeFields($post);
 		
@@ -19,7 +24,6 @@ class PostController extends MasterController{
         $start = $args[0];
         $post = new Post();
         $posts = $post->getAll($start);
-//        var_dump($posts);
         $this->renderViewAjax("home/posts", "posts", $posts);
     }
 } 

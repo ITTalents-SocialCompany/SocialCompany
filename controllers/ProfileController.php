@@ -1,7 +1,9 @@
 <?php
 class ProfileController extends MasterController {
 
-    public function __construct(){}
+    public function __construct(){
+        Auth::isAuthorized();
+    }
 
     public function index(){
         $user_detail = new UserDetail();
@@ -11,7 +13,7 @@ class ProfileController extends MasterController {
             $id = Auth::getId();
             $user = new User();
             $user = $user->getUser($id);
-            $user_detail = $user_detail->getUserDetail($id);
+            $user_detail = $user->getUserDetail();
             $this->renderViewWithParams("profile/index", array("user_detail", "user"), array($user_detail, $user));
         }
     }
@@ -20,8 +22,7 @@ class ProfileController extends MasterController {
         $username = $args[0];
         $user = new User();
         $user = $user->findByUsername($username);
-        $user_detail = new UserDetail();
-        $user_detail = $user_detail->getUserDetail($user->user_id);
+        $user_detail = $user->getUserDetail();
         $this->renderViewWithParams("profile/index", array("user_detail", "user"), array($user_detail, $user));
     }
 
