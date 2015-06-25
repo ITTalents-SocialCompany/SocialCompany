@@ -1,11 +1,24 @@
 <?php
 class DBConnect{
-    private $db;
-    public function __construct(){
-        $this->db = new PDO(DNS, DB_USER, DB_PASS);
+    private static $db;
+    private static $instace;
+
+    private function __construct(){
+        self::$instace = null;
+        $db = new PDO(DNS, DB_USER, DB_PASS);
+        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        self::$db = $db;
     }
 
-    public function getInstance() {
-        return $this->db;
+    public static function getInstance() {
+        if(self::$instace === null){
+            self::$instace = new DBConnect();
+        }
+        return self::$instace;
+    }
+
+    public static function getDb(){
+        return self::$db;
     }
 }

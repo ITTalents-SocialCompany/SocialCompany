@@ -4,6 +4,8 @@ class UserDetail extends MasterModel{
     private $email;
     private $profile_img_url;
     private $cover_img_url;
+    private $phone;
+    private $gender_id;
     private $user_id;
     private $table = "user_details";
 
@@ -25,6 +27,14 @@ class UserDetail extends MasterModel{
 
     public function setCoverImg($cover_img_url){
         $this->cover_img_url = $cover_img_url;
+    }
+
+    public function setPhone($phone){
+        $this->phone = $phone;
+    }
+
+    public function setGenderId($gender_id){
+        $this->gender_id = $gender_id;
     }
 
     public function setUserId($user_id){
@@ -70,4 +80,4 @@ class UserDetail extends MasterModel{
         return $this->selectOne($this->table, "user_id = '$id'") ?
             $this->selectOne($this->table, "user_id = '$id'")['user_detail_id'] : false;
     }
-} 
+}

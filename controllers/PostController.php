@@ -11,8 +11,9 @@ class PostController extends MasterController{
 		$newPost = new Post();
 		$newPost->setTitle($post['title']);
         $newPost->setBody($post['body']);
+        $newPost->setCategoryId($post['category_id']);
         $newPost->setAuthorId($post['author_id']);
-		
+
 		if($newPost->savePost($newPost, $fields)){
             $this->redirect("/");
         }else{
@@ -23,7 +24,12 @@ class PostController extends MasterController{
     public function allPostAjax($args){
         $start = $args[0];
         $post = new Post();
-        $posts = $post->getAll($start);
+        if(count($args) > 1){
+            $id = $args[1];
+            $posts = $post->getAll($start, "category_id = '$id'");
+        }else{
+            $posts = $post->getAll($start);
+        }
         $this->renderViewAjax("home/posts", "posts", $posts);
     }
 } 

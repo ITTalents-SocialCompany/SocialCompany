@@ -1,15 +1,14 @@
-<div class="list-group col-md-2 affix">
-    <?php foreach($categories as $category):?>
-        <a href="/category/index/<?= $category->category_id?>" class="list-group-item">
-            <?= $category->name?>
-        </a>
-    <?php endforeach;?>
+<div class="page-header">
+    <h1><h1><?= $category->name?></h1></h1>
 </div>
 
-<div class="row col-md-offset-5" id="show_post_form">
-    <a class="btn btn-primary" onclick="showPostForm();">Add Post</a>
+<div class="row" id="show_post_form">
+    <div class="col-md-offset-5 col-md-1">
+        <a class="btn btn-primary" onclick="showPostForm();">Add Post</a>
+    </div>
 </div>
 <br>
+<input type="hidden" id="category_id" value="<?= $category->category_id?>">
 <form action="/post/savePost" method="POST" class="form-horizontal col-md-offset-3 col-md-5" id="post_form" hidden>
     <div class="form-group">
         <input class="form-control input-sm" name="title" type="text" id="inputSmall" placeholder="Type a title">
@@ -17,13 +16,8 @@
     <div class="form-group">
         <textarea class="form-control input-sm" rows="3" name="body" id="textArea" placeholder="Type a body"></textarea>
     </div>
-    <div class="form-group">
-        <select class="form-control input-sm" name="category_id">
-            <?php foreach($categories as $category):?>
-                <option value="<?= $category->category_id?>"><?= $category->name?></option>
-            <?php endforeach;?>
-        </select>
-    </div>
+
+    <input type="hidden" name="category_id" value="<?= $category->category_id?>">
     <input type="hidden" name="author_id" value="<?= Auth::getId()?>">
     <div class="form-group">
         <button type="submit" class="btn btn-primary">Post</button>
@@ -40,11 +34,12 @@
         document.getElementById("show_post_form").setAttribute("hidden", "hidden");
     }
 
-    var count = getAllPosts(0);
+    var id = document.getElementById("category_id").value;
+    var count = getAllPosts(0, id);
 
-    function getAllPosts(count) {
+    function getAllPosts(count, id) {
         var xhr = new XMLHttpRequest();
-        var url = "http://socialcompany/post/allPostAjax/"+ count;
+        var url = "http://socialcompany/post/allPostAjax/" + count + "/" + id;
 
         xhr.open("GET",url, true);
         xhr.onreadystatechange = function() {
@@ -60,7 +55,8 @@
 
     $(window).scroll(function() {
         if($(window).scrollTop() + $(window).height() > $(document).height() - 20) {
-            count = getAllPosts(count);
+
+            count = getAllPosts(count, id);
         }
     });
 </script>

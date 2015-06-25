@@ -2,6 +2,7 @@
 class Post extends MasterModel{
     private $title;
     private $body;
+    private $category_id;
     private $author_id;
     private $table = "posts";
 
@@ -28,6 +29,10 @@ class Post extends MasterModel{
         $this->author_id = $author_id;
     }
 
+    public function setCategoryId($category_id){
+        $this->category_id = $category_id;
+    }
+
     public function savePost(Post $post, $fields){	
         return $this->insert($this->table, $fields, $this->objectToArray($post));
     }
@@ -46,8 +51,8 @@ class Post extends MasterModel{
     	return $post;
     }
 
-    public function getAll($start){
-        $rows = $this->selectAll($this->table, "", "post_id DESC", "$start, 5");
+    public function getAll($start, $where = ""){
+        $rows = $this->selectAll($this->table, $where, "post_id DESC", "$start, 5");
         if(count($rows) > 0){
             foreach ($rows as $post){
                 $posts[] = new Post($post['title'], $post['body'], $post['author_id']);

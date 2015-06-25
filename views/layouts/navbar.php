@@ -18,7 +18,9 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Admin Controll <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="/admin/users">Users</a></li>
+                            <li><a href="/admin/users">All Users</a></li>
+                            <li><a href="/admin/teams">All Teams</a></li>
+                            <li><a href="/admin/categories">All Categories</a></li>
                         </ul>
                     </li>
                 <?php endif; ?>
