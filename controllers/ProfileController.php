@@ -26,6 +26,10 @@ class ProfileController extends MasterController {
         $this->renderViewWithParams("profile/index", array("user_detail", "user"), array($user_detail, $user));
     }
 
+    public function information(){
+        $this->renderView("profile/information");
+    }
+
     public function edit(){
         $id = Auth::getId();
         $user_detail = new UserDetail();
@@ -38,6 +42,8 @@ class ProfileController extends MasterController {
         $user_detail = new UserDetail();
         $user_detail->setAge($post['age']);
         $user_detail->setEmail($post['email']);
+        $user_detail->setPhone($post['phone']);
+        $user_detail->setGenderId($post['gender_id']);
         $user_detail->setUserId($post['user_id']);
 
         if(!$user_detail_id = $user_detail->hasUserDetail()){

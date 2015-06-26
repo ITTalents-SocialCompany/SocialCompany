@@ -1,6 +1,6 @@
 function approve(id){
     var xhr = new XMLHttpRequest();
-    var url = "http://socialcompany/admin/approve/"+ id;
+    var url = "http://socialcompany/admin/approveUser/"+ id;
 
     xhr.open("GET",url, true);
     xhr.onreadystatechange = function() {
@@ -13,7 +13,7 @@ function approve(id){
 
 function deleteUser(id){
     var xhr = new XMLHttpRequest();
-    var url = "http://socialcompany/admin/delete/"+ id;
+    var url = "http://socialcompany/admin/deleteUser/"+ id;
 
     xhr.open("GET",url, true);
     xhr.onreadystatechange = function() {

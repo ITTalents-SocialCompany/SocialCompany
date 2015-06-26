@@ -5,8 +5,9 @@ class HomeController extends MasterController{
     }
 
     public function index(){
-        $this->renderView("home/index");
+        $category = new Category();
+        $categories = $category->getAllCategories();
+        $this->renderViewWithParams("home/index", array("categories"), array($categories));
     }
-
 
 } 

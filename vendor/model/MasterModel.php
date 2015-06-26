@@ -4,8 +4,8 @@ abstract class MasterModel {
     private $dbConn;
 
     public function __construct(){
-        $db = new DBConnect();
-        $this->dbConn = $db->getInstance();
+        $db = DBConnect::getInstance();
+        $this->dbConn = $db::getDb();
     }
 
     public function insert($table, $fields, array $data)
@@ -21,10 +21,9 @@ abstract class MasterModel {
 
         $query = "INSERT INTO " . $table . " (" . $fields . ") " . " VALUES (" .
             rtrim(str_repeat("?,", count($values)), ",") . ")";
-        
- 		
-          var_dump($query);
-          var_dump($values);
+
+
+         //var_dump($query, $values);
 
 
         $prep = $this->dbConn->prepare($query);
