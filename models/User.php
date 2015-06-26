@@ -90,6 +90,7 @@ class User extends MasterModel{
     }
 
     public function getAllUsers(){
+        $users = array();
         $rows = $this->selectAll($this->table, "soft_delete IS NULL AND is_approve IS TRUE AND user_id <>".Auth::getId());
         foreach($rows as $row){
             $user = new User();
