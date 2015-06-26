@@ -10,7 +10,7 @@
             </div>
             <div class="col-md-6 col-md-offset-6"><p class="text-muted"><small>Posted by Username</small></p></div>
             <div class="col-md-4">
-                <p><small>Like Comment</small> <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>x</p>
+                <p><small>Like Comment</small> <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span></p>
             </div>
         </div>
     </div>
