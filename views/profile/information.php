@@ -1,1 +1,1 @@
-<div class="col-md-offset-1 col-md-3"><h1>Information</h1></div>
+<div class="col-md-offset-1 col-md-10 text-center"><h1>Information</h1></div>

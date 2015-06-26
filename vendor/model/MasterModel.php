@@ -4,12 +4,12 @@ abstract class MasterModel {
     private $dbConn;
 
     public function __construct(){
-        $db = DBConnect::getInstance();
-        $this->dbConn = $db::getDb();
+        $dbIntance = DBConnect::getInstance();
+        $this->dbConn = $dbIntance::getDb();
     }
 
-    public function insert($table, $fields, array $data)
-    {
+    public function insert($table, $fields, array $data){
+//        $this->dbConn = DBConnect::getInstance();
         if(isset($data['table'])){
             unset($data['table']);
         }
@@ -22,10 +22,11 @@ abstract class MasterModel {
         $query = "INSERT INTO " . $table . " (" . $fields . ") " . " VALUES (" .
             rtrim(str_repeat("?,", count($values)), ",") . ")";
 
-         var_dump($query, $values);
+//        var_dump($this->dbConn);
 
         $prep = $this->dbConn->prepare($query);
-        return $prep->execute($values);
+        $prep->execute($values);
+        return $this->dbConn->lastInsertId();
     }
 
     public function update($table, $fields, array $data, $where = ""){
@@ -74,15 +75,15 @@ abstract class MasterModel {
         return $this->dbConn->query($query)->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function selectOneWithJoin($table, $joinTable, $on, $where = "", $fields = "*"){
-        $aliasTable = substr($table, 0, 2);
+    public function selectAllWithJoin($table, $joinTable, $on, $where = "", $fields = "*"){
+        $aliasTable = substr($table, 0, 1);
         $aliasJoinTable = substr($joinTable, 0, 2);
         $query = "SELECT " . $fields . " FROM " . $table . " " . $aliasTable
-            . (($joinTable) ? " LEFT JOIN " . $joinTable . " " . $aliasJoinTable : "")
+            . (($joinTable) ? " JOIN " . $joinTable . " " . $aliasJoinTable : "")
             . (($on) ? " ON " . "$aliasJoinTable.$on = $aliasTable.$on" : "")
             . (($where) ? " WHERE " . "$aliasTable.$where" : "");
-//        var_dump($query);
-        return $this->dbConn->query($query)->fetch(PDO::FETCH_ASSOC);
+        var_dump($query);
+        return $this->dbConn->query($query)->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function delete($table, $where = ''){

@@ -6,6 +6,13 @@ class PostController extends MasterController{
     }
 
 	public function savePost($post){
+        $tagged_users = array();
+        if(isset($post['tagged_users'])){
+            $tagged_users = $post["tagged_users"];
+            unset($post['tagged_users']);
+        }
+        $tagged_users[] = Auth::getId();
+
 		$fields = $this->takeFields($post);
 		
 		$newPost = new Post();
@@ -13,8 +20,14 @@ class PostController extends MasterController{
         $newPost->setBody($post['body']);
         $newPost->setCategoryId($post['category_id']);
         $newPost->setAuthorId($post['author_id']);
+//        var_dump($tagged_users);
+        $post_id = $newPost->savePost($newPost, $fields);
 
-		if($newPost->savePost($newPost, $fields)){
+		if($post_id !== 0){
+            foreach($tagged_users as $tagged_user){
+                $post_to_user = new PostToUser($post_id, $tagged_user);
+                $post_to_user->save("post_id,user_id");
+            }
             $this->redirect("/");
         }else{
             echo "Error!";

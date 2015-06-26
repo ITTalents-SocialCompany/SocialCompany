@@ -4,7 +4,7 @@ class DBConnect{
     private static $instace;
 
     private function __construct(){
-        self::$instace = null;
+
         $db = new PDO(DNS, DB_USER, DB_PASS);
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 

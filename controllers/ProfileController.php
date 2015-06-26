@@ -26,8 +26,10 @@ class ProfileController extends MasterController {
         $this->renderViewWithParams("profile/index", array("user_detail", "user"), array($user_detail, $user));
     }
 
-    public function information(){
-        $this->renderView("profile/information");
+    public function timelineAjax(){
+        $id = Auth::getId();
+        $post = new PostToUser();
+        $post->getAllPostForUser($id);
     }
 
     public function edit(){
@@ -48,7 +50,7 @@ class ProfileController extends MasterController {
 
         if(!$user_detail_id = $user_detail->hasUserDetail()){
             $fields = $this->takeFields($post);
-            if($user_detail->save($user_detail, $fields)){
+            if($user_detail->save($user_detail, $fields) !== 0){
                 $this->redirect("/profile/index");
             }else{
                 $this->renderViewWithError("profile/edit", "user_detail",$user_detail, "Error!");
@@ -100,7 +102,7 @@ class ProfileController extends MasterController {
         }
 
         $user_detail_id = $user_detail->hasUserDetail();
-        if($user_detail->changeImgs($user_detail, $fields, $user_detail_id)){
+        if($user_detail->changeImgs($user_detail, $fields, $user_detail_id) !== 0){
             if(isset($filenameProfile)) {
                 $this->saveImg($filenameProfile, $profileFilePath, $folder);
             }

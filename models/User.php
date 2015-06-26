@@ -46,7 +46,7 @@ class User extends MasterModel{
 
     public function register(User $user, $fields){
         $user->setPassword($this->hashPassword($user->password));
-        return $this->insert($this->table, $fields, $user->objectToArray()) ? true : false;
+        return $this->insert($this->table, $fields, $user->objectToArray());
     }
 
     public function login(User $user){
@@ -90,7 +90,7 @@ class User extends MasterModel{
     }
 
     public function getAllUsers(){
-        $rows = $this->selectAll($this->table);
+        $rows = $this->selectAll($this->table, "soft_delete IS NULL AND is_approve IS TRUE AND user_id <>".Auth::getId());
         foreach($rows as $row){
             $user = new User();
             $user = $this->arrayToObject($user, $row);

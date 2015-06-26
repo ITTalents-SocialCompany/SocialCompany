@@ -16,7 +16,7 @@ class UserController extends MasterController{
         $user->setFirstName($post['first_name']);
         $user->setLastName($post['last_name']);
 
-        if($user->register($user, $fields)){
+        if($user->register($user, $fields) !== 0){
             $user->setPassword($post['password']);
             if($user->login($user)){
                 $this->redirect("/profile/index");

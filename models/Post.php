@@ -33,7 +33,7 @@ class Post extends MasterModel{
         $this->category_id = $category_id;
     }
 
-    public function savePost(Post $post, $fields){	
+    public function savePost(Post $post, $fields){
         return $this->insert($this->table, $fields, $this->objectToArray($post));
     }
     
