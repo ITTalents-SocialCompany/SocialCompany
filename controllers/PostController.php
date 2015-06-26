@@ -14,7 +14,7 @@ class PostController extends MasterController{
         $tagged_users[] = Auth::getId();
 
 		$fields = $this->takeFields($post);
-		
+		var_dump($post);
 		$newPost = new Post();
 		$newPost->setTitle($post['title']);
         $newPost->setBody($post['body']);

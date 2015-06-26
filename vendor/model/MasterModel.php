@@ -71,19 +71,43 @@ abstract class MasterModel {
             . (($where && strcmp($where, "") !== 0) ? " WHERE " . $where : "")
             . (($order && strcmp($order, "") !== 0) ? " ORDER BY " . $order : "")
             . (($limit) ? " LIMIT " . $limit : "");
-//        var_dump($query);
+//         var_dump($query);
         return $this->dbConn->query($query)->fetchAll(PDO::FETCH_ASSOC);
     }
 
+<<<<<<< HEAD
     public function selectAllWithJoin($table, $joinTable, $on, $where = "", $fields = "*"){
         $aliasTable = substr($table, 0, 1);
+=======
+    public function selectOneWithJoin($table, $joinTable, $on, $where = "", $fields = "*",$order = ""){
+        $aliasTable = substr($table, 0, 2);
+>>>>>>> origin/master
         $aliasJoinTable = substr($joinTable, 0, 2);
         $query = "SELECT " . $fields . " FROM " . $table . " " . $aliasTable
             . (($joinTable) ? " JOIN " . $joinTable . " " . $aliasJoinTable : "")
             . (($on) ? " ON " . "$aliasJoinTable.$on = $aliasTable.$on" : "")
+<<<<<<< HEAD
             . (($where) ? " WHERE " . "$aliasTable.$where" : "");
         var_dump($query);
         return $this->dbConn->query($query)->fetchAll(PDO::FETCH_ASSOC);
+=======
+            . (($where) ? " WHERE " . "$aliasTable.$where" : "")
+            . (($order) ? " ORDER BY " . $order : "");
+        //var_dump($query);
+        return $this->dbConn->query($query)->fetch(PDO::FETCH_ASSOC);
+>>>>>>> origin/master
+    }
+    
+    public function selectAllWithJoin($table, $joinTable, $on, $where = "", $fields = "*",$order = ""){
+    	$aliasTable = substr($table, 0, 2);
+    	$aliasJoinTable = substr($joinTable, 0, 2);
+    	$query = "SELECT " . $fields . " FROM " . $table . " " . $aliasTable
+    	. (($joinTable) ? " LEFT JOIN " . $joinTable . " " . $aliasJoinTable : "")
+    	. (($on) ? " ON " . "$aliasJoinTable.$on = $aliasTable.$on" : "")
+    	. (($where) ? " WHERE " . "$aliasTable.$where" : "")
+    	. (($order) ? " ORDER BY " . $order : "");
+    	//var_dump($query);
+    	return $this->dbConn->query($query)->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function delete($table, $where = ''){
