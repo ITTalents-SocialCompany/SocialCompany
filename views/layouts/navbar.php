@@ -13,6 +13,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li><a href="/">Home</a></li>
+                <li><a href="/message/index">Messages <span class="badge">3</span></a></li>
                 <?php if(Auth::isAdmin()):?>
                     <li><a href="/admin/index">Admin Panel</a></li>
                     <li class="dropdown">

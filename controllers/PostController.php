@@ -7,7 +7,7 @@ class PostController extends MasterController{
 
 	public function savePost($post){
 		$fields = $this->takeFields($post);
-		
+		var_dump($post);
 		$newPost = new Post();
 		$newPost->setTitle($post['title']);
         $newPost->setBody($post['body']);

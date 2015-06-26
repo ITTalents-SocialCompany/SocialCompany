@@ -1,7 +1,7 @@
 <?php
 
 define("HOST", "localhost");
-define("DB_NAME", "socialCompany");
+define("DB_NAME", "socialcompany");
 
 define("DNS", "mysql:host=" . HOST . ";dbname=" . DB_NAME);
 define("DB_USER", "root");

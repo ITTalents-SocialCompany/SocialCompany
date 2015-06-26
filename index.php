@@ -20,7 +20,7 @@ $action = DEFAULT_ACTION;
 if(isset($request)){
 
     $requestArgs = explode("/", $request);
-
+	
     if(count($requestArgs) > 1 && strcmp($requestArgs[1], "") !== 0){
         $controller = strtolower($requestArgs[1]);
         $controller = ucfirst($controller);
