@@ -75,7 +75,7 @@ abstract class MasterModel {
         return $this->dbConn->query($query)->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function selectAllWithJoin($table, $joinTable, $on, $where = "", $fields = "*"){
+    public function selectOneWithJoin($table, $joinTable, $on, $where = "", $fields = "*", $order = ""){
         $aliasTable = substr($table, 0, 1);
         $aliasJoinTable = substr($joinTable, 0, 2);
         $query = "SELECT " . $fields . " FROM " . $table . " " . $aliasTable
