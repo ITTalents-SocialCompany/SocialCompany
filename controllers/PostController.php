@@ -5,6 +5,13 @@ class PostController extends MasterController{
         Auth::isAuthorized();
     }
 
+    public function index($args){
+        $id = $args[0];
+        $post = new Post();
+        $post = $post->getPostInfo($id);
+        $this->renderViewWithParams("post/index", array("post"), array($post));
+    }
+
 	public function savePost($post){
         $tagged_users = array();
         if(isset($post['tagged_users'])){
@@ -34,6 +41,25 @@ class PostController extends MasterController{
         }
 	}
 
+    public function edit($args){
+        $id = $args[0];
+        $post = new Post();
+        $post->getOne($post, $id);
+        $this->renderViewWithParams("post/edit", array("post"), array($post));
+    }
+
+    public function editPost($post){
+        $id = $post['post_id'];
+        unset($post['post_id']);
+        $fields = array('title', 'body');
+        $changePost = new Post();
+        $changePost->setTitle($post['title']);
+        $changePost->setBody($post['body']);
+        if($changePost->change($post, $fields, $id)){
+            $this->redirect("/");
+        }
+    }
+
     public function allPostAjax($args){
         $start = $args[0];
         $post = new Post();
@@ -43,6 +69,22 @@ class PostController extends MasterController{
         }else{
             $posts = $post->getAll($start);
         }
-        $this->renderViewAjax("home/posts", "posts", $posts);
+        $this->renderViewAjax("home/posts", array("posts"), array($posts));
+    }
+
+    public function likePost($args){
+        $post_id = $args[0];
+        $user_id = Auth::getId();
+        $likePost = new LikePost();
+        $likePost->setPostId($post_id);
+        $likePost->setUserId($user_id);
+        $likePost->save("post_id,user_id");
+    }
+
+    public function unlikePost($args){
+        $post_id = $args[0];
+        $user_id = Auth::getId();
+        $likePost = new LikePost();
+        $likePost->unlike($post_id, $user_id);
     }
 } 

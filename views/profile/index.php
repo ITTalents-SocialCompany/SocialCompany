@@ -15,9 +15,9 @@
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a onclick="timeline();">Timeline</a></li>
-                    <li><a onclick="information();">Information</a></li>
-                    <li><a onclick="members();">Members</a></li>
+                    <li><a href="#timeline" onclick="timeline();">Timeline</a></li>
+                    <li><a href="#information" onclick="information();">Information</a></li>
+                    <li><a href="#members" onclick="members();">Members</a></li>
                 </ul>
             </div>
         </div>

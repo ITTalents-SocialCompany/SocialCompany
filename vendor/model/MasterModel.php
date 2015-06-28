@@ -22,7 +22,7 @@ abstract class MasterModel {
         $query = "INSERT INTO " . $table . " (" . $fields . ") " . " VALUES (" .
             rtrim(str_repeat("?,", count($values)), ",") . ")";
 
-//        var_dump($this->dbConn);
+//        var_dump($query);
 
         $prep = $this->dbConn->prepare($query);
         $prep->execute($values);
@@ -52,7 +52,7 @@ abstract class MasterModel {
         $set = implode(',', $set);
         $query = 'UPDATE ' . $table . ' SET ' . $set
                 . (($where) ? ' WHERE ' . $where : '');
-//        var_dump($query);
+        var_dump($query);
         return $this->dbConn->exec($query);
     }
 
@@ -75,28 +75,53 @@ abstract class MasterModel {
         return $this->dbConn->query($query)->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function selectOneWithJoin($table, $joinTable, $on, $where = "", $fields = "*", $order = ""){
+    public function selectOneWithJoin($table, array $joinTables, array $onFirst, array $onSecond, $where = "", $fields = "*",
+                                      $order = "", $limit = null){
         $aliasTable = substr($table, 0, 1);
-        $aliasJoinTable = substr($joinTable, 0, 2);
+        $text = "";
+        for($i = 0; $i < count($joinTables); $i++){
+            $aliasJoinTable = substr($joinTables[$i], 0, 2);
+            $text .= " JOIN $joinTables[$i] $aliasJoinTable ON $aliasJoinTable.$onFirst[$i] = $onSecond[$i]";
+        }
+
         $query = "SELECT " . $fields . " FROM " . $table . " " . $aliasTable
-            . (($joinTable) ? " JOIN " . $joinTable . " " . $aliasJoinTable : "")
-            . (($on) ? " ON " . "$aliasJoinTable.$on = $aliasTable.$on" : "")
+            . (($text) ? "$text" : "")
             . (($where) ? " WHERE " . "$aliasTable.$where" : "")
-            . (($order) ? " ORDER BY " . $order : "");
-        //var_dump($query);
+            . (($order) ? " ORDER BY " . "$aliasTable.$order" : "")
+            . (($limit) ? " LIMIT " . $limit : "");
+//    	var_dump($query);
         return $this->dbConn->query($query)->fetch(PDO::FETCH_ASSOC);
     }
     
-    public function selectAllWithJoin($table, $joinTable, $on, $where = "", $fields = "*",$order = ""){
-    	$aliasTable = substr($table, 0, 2);
+    public function selectAllWithJoin($table, $joinTable, $on, $where = "", $fields = "*",$order = "", $limit = null){
+    	$aliasTable = substr($table, 0, 1);
     	$aliasJoinTable = substr($joinTable, 0, 2);
     	$query = "SELECT " . $fields . " FROM " . $table . " " . $aliasTable
     	. (($joinTable) ? " LEFT JOIN " . $joinTable . " " . $aliasJoinTable : "")
     	. (($on) ? " ON " . "$aliasJoinTable.$on = $aliasTable.$on" : "")
     	. (($where) ? " WHERE " . "$aliasTable.$where" : "")
-    	. (($order) ? " ORDER BY " . $order : "");
-    	//var_dump($query);
+    	. (($order) ? " ORDER BY " . "$aliasTable.$order" : "")
+        . (($limit) ? " LIMIT " . $limit : "");
+//    	var_dump($query);
     	return $this->dbConn->query($query)->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function selectAllWithJoins($table, array $joinTables, array $onFirst, array $onSecond, $where = "", $fields = "*",
+                                       $order = "", $limit = null){
+        $aliasTable = substr($table, 0, 1);
+        $text = "";
+        for($i = 0; $i < count($joinTables); $i++){
+            $aliasJoinTable = substr($joinTables[$i], 0, 2);
+            $text .= " JOIN $joinTables[$i] $aliasJoinTable ON $aliasJoinTable.$onFirst[$i] = $onSecond[$i]";
+        }
+
+        $query = "SELECT " . $fields . " FROM " . $table . " " . $aliasTable
+            . (($text) ? "$text" : "")
+            . (($where) ? " WHERE " . "$aliasTable.$where" : "")
+            . (($order) ? " ORDER BY " . "$aliasTable.$order" : "")
+            . (($limit) ? " LIMIT " . $limit : "");
+//    	var_dump($query);
+        return $this->dbConn->query($query)->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function delete($table, $where = ''){
@@ -110,6 +135,6 @@ abstract class MasterModel {
     }
 
     public function findById($table, $id){
-        return $this->selectOne($table, "id = '$id'");
+        return $this->selectOne($table, "id = $id");
     }
 }

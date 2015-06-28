@@ -12,8 +12,9 @@
 
     <script src="/libs/jquery/jquery-2.1.4.min.js"></script>
     <script src="/libs/bootstrap/js/bootstrap.min.js"></script>
-    
-    <script src="http://code.jquery.com/jquery-1.9.0.js"></script>
+
+<!--    <script src="http://code.jquery.com/jquery-1.9.0.js"></script>-->
+    <script src="/libs/js/main.js"></script>
 </head>
 <body>
 <?php require_once "views/layouts/navbar.php";?>

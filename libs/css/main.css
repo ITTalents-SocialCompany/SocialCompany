@@ -21,3 +21,16 @@
 .page-header{
     margin-top: -20px;
 }
+
+.comments > hr{
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+
+.comment-body{
+    margin-top: 1%;
+}
+
+a:hover {
+    cursor:pointer;
+}

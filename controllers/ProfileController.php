@@ -26,10 +26,12 @@ class ProfileController extends MasterController {
         $this->renderViewWithParams("profile/index", array("user_detail", "user"), array($user_detail, $user));
     }
 
-    public function timelineAjax(){
-        $id = Auth::getId();
+    public function timelineAjax($args){
+        $id = $args[0];
+        $start = $args[1];
         $post = new PostToUser();
-        $post->getAllPostForUser($id);
+        $posts = $post->getAllPostForUser($id, $start);
+        $this->renderViewAjax("home/posts", array("posts"), array($posts));
     }
 
     public function edit(){
@@ -57,7 +59,7 @@ class ProfileController extends MasterController {
             }
         }else{
             $fields = $this->takeFieldsArr($post);
-            if($user_detail->change($user_detail, $fields, $user_detail_id)){
+            if($user_detail->change($post, $fields, $user_detail_id)){
                 $this->redirect("/profile/index");
             }else{
                 $this->renderViewWithError("profile/edit", "user_detail", $user_detail, "Error with Update!");

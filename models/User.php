@@ -8,6 +8,7 @@ class User extends MasterModel{
     private $user_id;
     private $is_approve;
     private $soft_delete;
+    private $user_detail;
     private $table = "users";
 
     public function __get($name) {
@@ -28,6 +29,10 @@ class User extends MasterModel{
 
     public function setLastName($last_name){
         $this->last_name = $last_name;
+    }
+
+    public function addUserDetail(UserDetail $user_detail){
+        $this->user_detail = $user_detail;
     }
 
     public function objectToArray(){

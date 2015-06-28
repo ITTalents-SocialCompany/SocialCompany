@@ -59,12 +59,11 @@ class UserDetail extends MasterModel{
         return $this->insert($this->table, $fields, $profile_detail->objectToArray());
     }
 
-    public function change(UserDetail $profile_detail, $fields, $id){
-        return $this->update($this->table, $fields, $profile_detail->objectToArray(), "user_detail_id = '$id'");
+    public function change($profile_detail, $fields, $id){
+        return $this->update($this->table, $fields, $profile_detail, "user_detail_id = '$id'");
     }
 
     public function changeImgs(UserDetail $profile_detail, $fields, $id){
-//        var_dump($profileDetail->objectToArray());
         return $this->update($this->table, $fields, $profile_detail->objectToArray(), "user_detail_id = '$id'");
     }
 
