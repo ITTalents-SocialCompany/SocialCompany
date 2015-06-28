@@ -14,11 +14,11 @@ class MasterController {
         require_once 'views/layouts/footer.php';
     }
 
-    public function renderViewAjax($view, $params, $arr){
-        $$params = $arr;
-//        for($i = 0; $i < count($params); $i++){
-//            $$params[$i] = $arr[$i];
-//        }
+    public function renderViewAjax($view, array $params, array $arr){
+//         $$params = $arr;
+       for($i = 0; $i < count($params); $i++){
+           $$params[$i] = $arr[$i];
+       }
         require_once "views/$view.php";
     }
 

@@ -22,7 +22,7 @@ abstract class MasterModel {
         $query = "INSERT INTO " . $table . " (" . $fields . ") " . " VALUES (" .
             rtrim(str_repeat("?,", count($values)), ",") . ")";
 
-//        var_dump($this->dbConn);
+//        var_dump($query);
 
         $prep = $this->dbConn->prepare($query);
         $prep->execute($values);
@@ -66,8 +66,8 @@ abstract class MasterModel {
         return $this->dbConn->query($query)->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function selectAll($table, $where = "", $order = "", $limit = null){
-        $query = "SELECT * FROM " . $table
+    public function selectAll($table, $where = "", $order = "",$fields = "*", $limit = null){
+        $query = "SELECT ". $fields ." FROM " . $table
             . (($where && strcmp($where, "") !== 0) ? " WHERE " . $where : "")
             . (($order && strcmp($order, "") !== 0) ? " ORDER BY " . $order : "")
             . (($limit) ? " LIMIT " . $limit : "");
@@ -87,15 +87,17 @@ abstract class MasterModel {
         return $this->dbConn->query($query)->fetch(PDO::FETCH_ASSOC);
     }
     
-    public function selectAllWithJoin($table, $joinTable, $on, $where = "", $fields = "*",$order = ""){
+    public function selectAllWithJoin($table, $joinTable, $on, $joinType, $where = "", $fields = "*",$order = ""){
     	$aliasTable = substr($table, 0, 2);
     	$aliasJoinTable = substr($joinTable, 0, 2);
     	$query = "SELECT " . $fields . " FROM " . $table . " " . $aliasTable
-    	. (($joinTable) ? " LEFT JOIN " . $joinTable . " " . $aliasJoinTable : "")
+    	. (($joinTable) ? " "
+    			. (($joinType) ?  $joinType ." JOIN " : "")
+    			. $joinTable . " " . $aliasJoinTable : "")
     	. (($on) ? " ON " . "$aliasJoinTable.$on = $aliasTable.$on" : "")
     	. (($where) ? " WHERE " . "$aliasTable.$where" : "")
     	. (($order) ? " ORDER BY " . $order : "");
-    	//var_dump($query);
+//     	var_dump($query);
     	return $this->dbConn->query($query)->fetchAll(PDO::FETCH_ASSOC);
     }
 

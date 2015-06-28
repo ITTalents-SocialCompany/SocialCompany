@@ -5,13 +5,16 @@ class Message extends MasterModel{
 	private $message;
 	private $time;
 	private $username;
+	private $user_id;
 	private $table = "messages";
 	
-	public function __construct($username = null, $message = null, $time = null){
+	public function __construct($username = null, $message = null, $time = null, $chatroom_id = null, $user_id = null){
 		parent::__construct();
 		$this->setUsername($username);
 		$this->setMessage($message);
 		$this->setTime($time);
+		$this->setChatroomId($chatroom_id);
+		$this->setUserId($user_id);
 	}
 	
 	public function getChatroomId(){
@@ -54,16 +57,23 @@ class Message extends MasterModel{
 		$this->username = $username;
 	}
 	
+	public function getUserId(){
+		return $this->user_id;
+	}
+	
+	public function setUserId($user_id){
+		$this->user_id = $user_id;
+	}
+	
 	public function saveMessage(Message $message, $fields){
 		return $this->insert($this->table, $fields, $message->objectToArray());
 	}
 	
-	public function getAllMessages(){
-		$rows = $this->selectAllWithJoin("messages", "users", "user_id", "","*", "me.message_id");
-
+	public function getAllMessagesForChat($chatroom_id){
+		$rows = $this->selectAllWithJoin("messages", "users", "user_id", "LEFT", "chatroom_id=$chatroom_id","*", "me.message_id");
 		if(count($rows) > 0){
 			foreach ($rows as $message){
-				$messages[] = new Message($message["username"], $message['message'], $message['add_time']);
+				$messages[] = new Message($message["username"], $message['message'], $message['add_time'], $message['chatroom_id'], $message['user_id']);
 			}
 			return $messages;
 			

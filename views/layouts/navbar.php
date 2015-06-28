@@ -25,6 +25,7 @@
                         </ul>
                     </li>
                 <?php endif; ?>
+                <li><a href="/event/index">Events</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <?php if(Auth::isLoggedIn()): ?>
