@@ -15,10 +15,10 @@ class MasterController {
     }
 
     public function renderViewAjax($view, array $params, array $arr){
-//         $$params = $arr;
-       for($i = 0; $i < count($params); $i++){
-           $$params[$i] = $arr[$i];
-       }
+//        $$params = $arr;
+        for($i = 0; $i < count($params); $i++){
+            $$params[$i] = $arr[$i];
+        }
         require_once "views/$view.php";
     }
 
