@@ -101,6 +101,24 @@ abstract class MasterModel {
     	return $this->dbConn->query($query)->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function selectAllWithJoins($table, array $joinTables, array $onFirst, array $onSecond, $where = "", $fields = "*",
+                                       $order = "", $limit = null){
+        $aliasTable = substr($table, 0, 1);
+        $text = "";
+        for($i = 0; $i < count($joinTables); $i++){
+            $aliasJoinTable = substr($joinTables[$i], 0, 2);
+            $text .= " JOIN $joinTables[$i] $aliasJoinTable ON $aliasJoinTable.$onFirst[$i] = $onSecond[$i]";
+        }
+
+        $query = "SELECT " . $fields . " FROM " . $table . " " . $aliasTable
+            . (($text) ? "$text" : "")
+            . (($where) ? " WHERE " . "$aliasTable.$where" : "")
+            . (($order) ? " ORDER BY " . "$aliasTable.$order" : "")
+            . (($limit) ? " LIMIT " . $limit : "");
+//    	var_dump($query);
+        return $this->dbConn->query($query)->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function delete($table, $where = ''){
         $query = 'DELETE FROM ' . $table
         . (($where) ? ' WHERE ' . $where : '');
