@@ -10,43 +10,54 @@ class MessageController extends MasterController{
         $this->renderView("messages/index");
     }
     
-    public function addChatroom($post){
-    	//$this->getAllUsers("messages/addChatroom");
-    	$this->renderView("messages/addChatroom");
+    
+    
+    public function addChatroom(){
+    	$user = new User();
+    	$user = $user->getAllUsers();
+    	$this->renderViewWithParams("messages/addChatroom", array("users"), array($user));
+    }
+    
+    public function addChatroomPost($post){
     	if(isset($post)){
-    		$fields = $this->takeFields($post);
-    		var_dump($post);
-	    	$newChatroom = new Chatroom();
-	    	$newChatroom->setParticipants(implode(",",$post['participants']));
-	    	$newChatroom->setTitle($post['chat_title']);
-	    	 
-	    	if(!$newChatroom->saveChatroom($newChatroom, $fields)){
-	    		$this->redirect("/message/index");
-	    	}else{
-	    		echo "Error!";
-	    	}
+    		$participants = array();
+    		if(isset($post['participants'])){
+    			$participants = $post["participants"];
+    			unset($post['participants']);
+    		}
+    		$participants[] = Auth::getId();
+    		//     		var_dump($participants);
+    	
+    		//$fields = $this->takeFields($post);
+    	
+    		$newChatroom = new Chatroom();
+    		$newChatroom->setTitle($post['chat_title']);
+    		$chatroom_id = $newChatroom->saveChatroom($newChatroom, "chat_title");
+    	
+    		if($chatroom_id !== 0){
+    			foreach($participants as $participant){
+    				$chatroom_to_user = new ChatroomToUser($chatroom_id, $participant);
+    				$chatroom_to_user->save("chatroom_id,user_id");
+    			}
+    			$this->redirect("/message/index");
+    		}else{
+    			echo "Error!";
+    		}
     	}
     }
     
-    public function getAllUsers($url = "messages/getAllUsers"){
-    	$user = new User();
-    	$user = $user->getAllUsers();
-    	$this->renderViewAjax($url, "users", $user);
-    }
-    
     public function getAllChatrooms(){
-    	//$this->getAllUsers("messages/chatrooms");
-    	$chatroom = new Chatroom();
-    	$chatroom = $chatroom->getAllChatrooms();
-    	$this->renderViewAjax("messages/chatrooms", "chatrooms", $chatroom);
+    	
+    	$chatroomToUser = new ChatroomToUser();
+    	$chatroomToUser = $chatroomToUser->getAllChatroomsForUser(Auth::getId());
+//     	var_dump($chatroomToUser);
+    	$this->renderViewAjax("messages/chatrooms", array("chatrooms"), array($chatroomToUser));
     }
     
     public function addMessage($post){
-    		var_dump($post);
+	
 	    	$fields = $this->takeFields($post);
-	    	
 	    	$newMessage = new Message();
-	    	//$newMessage->setTitle("test");//$message['title']);
 	    	$newMessage->setUsername($post['user_id']);
 	    	$newMessage->setMessage($post['message']);
 	    	$newMessage->setChatroomId($post['chatroom_id']);
@@ -57,11 +68,12 @@ class MessageController extends MasterController{
     	
     }
     
-    public function getAllMessages(){
-
+    public function getAllMessages($args){
+//     	var_dump($post);
+		$id = $args[0];
     	$message = new Message();
-    	$message = $message->getAllMessages();
-    	$this->renderViewAjax("messages/logs", "messages", $message);
+    	$message = $message->getAllMessagesForChat($id);
+    	$this->renderViewAjax("messages/logs", array("messages"), array($message));
     }
     
     public function getLocalTime(){

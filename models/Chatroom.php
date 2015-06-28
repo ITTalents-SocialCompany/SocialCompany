@@ -45,7 +45,7 @@ class Chatroom extends MasterModel{
 
 		if(count($rows) > 0){
 			foreach ($rows as $chatroom){
-				$chatrooms[] = new Chatroom($chatroom["chat_title"], $chatroom['participants'], $chatroom['chatroom_id']);
+				$chatrooms[] = new Chatroom($chatroom["chat_title"], $chatroom['chatroom_id']);
 			}
 			return $chatrooms;				
 		} 

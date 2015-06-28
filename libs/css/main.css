@@ -34,3 +34,12 @@
 a:hover {
     cursor:pointer;
 }
+
+#chatrooms{
+	overflow: auto;
+	height: 430px;
+}
+
+.messages{
+	font-size: 15px;
+}

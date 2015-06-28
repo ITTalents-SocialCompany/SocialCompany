@@ -66,8 +66,8 @@ abstract class MasterModel {
         return $this->dbConn->query($query)->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function selectAll($table, $where = "", $order = "", $limit = null){
-        $query = "SELECT * FROM " . $table
+    public function selectAll($table, $where = "", $order = "",$fields = "*", $limit = null){
+        $query = "SELECT ". $fields ." FROM " . $table
             . (($where && strcmp($where, "") !== 0) ? " WHERE " . $where : "")
             . (($order && strcmp($order, "") !== 0) ? " ORDER BY " . $order : "")
             . (($limit) ? " LIMIT " . $limit : "");
@@ -93,16 +93,20 @@ abstract class MasterModel {
         return $this->dbConn->query($query)->fetch(PDO::FETCH_ASSOC);
     }
     
+
     public function selectAllWithJoin($table, $joinTable, $on, $where = "", $fields = "*",$order = "", $limit = null){
     	$aliasTable = substr($table, 0, 1);
+
     	$aliasJoinTable = substr($joinTable, 0, 2);
     	$query = "SELECT " . $fields . " FROM " . $table . " " . $aliasTable
-    	. (($joinTable) ? " LEFT JOIN " . $joinTable . " " . $aliasJoinTable : "")
+    	. (($joinTable) ? " "
+    			. (($joinType) ?  $joinType ." JOIN " : "")
+    			. $joinTable . " " . $aliasJoinTable : "")
     	. (($on) ? " ON " . "$aliasJoinTable.$on = $aliasTable.$on" : "")
     	. (($where) ? " WHERE " . "$aliasTable.$where" : "")
-    	. (($order) ? " ORDER BY " . "$aliasTable.$order" : "")
-        . (($limit) ? " LIMIT " . $limit : "");
-//    	var_dump($query);
+    	. (($order) ? " ORDER BY " . $order : "");
+//     	var_dump($query);
+
     	return $this->dbConn->query($query)->fetchAll(PDO::FETCH_ASSOC);
     }
 
