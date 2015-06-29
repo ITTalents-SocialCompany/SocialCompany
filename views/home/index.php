@@ -1,4 +1,5 @@
-<div class="list-group col-md-2 affix">
+<div class="list-group col-md-2 col-md-offset-0 affix">
+	<h3>Categories</h3>
     <?php foreach($categories as $category):?>
         <a href="/category/index/<?= $category->category_id?>" class="list-group-item">
             <?= $category->name?>
@@ -8,6 +9,17 @@
 
 <div class="row col-md-offset-5" id="show_post_form">
     <a class="btn btn-primary" onclick="showPostForm();">Add Post</a>
+</div>
+<div class="list-group col-md-offset-8 col-md-3 affix" >
+	<h3>Coming events</h3>
+    <?php foreach($events as $event):
+    	$time = explode("-",$event->event_time);
+		$time = $time[2].".".$time[1];?>
+	
+        <a href="/event/event/<?= $event->event_id?>" class="list-group-item">
+            <b><?= $time;?></b>&nbsp;&nbsp;<?= $event->title?>
+        </a>
+    <?php endforeach;?>
 </div>
 <br>
 <form action="/post/savePost" method="POST" class="form-horizontal col-md-offset-3 col-md-5" id="post_form" hidden>

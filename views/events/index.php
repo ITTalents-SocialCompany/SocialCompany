@@ -4,12 +4,14 @@
 </div>
 
 <div class="list-group">
-  <a href="#" class="list-group-item">
-    <h4 class="list-group-item-heading">List group item heading</h4>
-    <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+<?php if(count($events) > 0) foreach($events as $event):
+$time = explode("-",$event->event_time);
+$time = "<font size='18'>".$time[2]."</font>.".$time[1];
+?>
+  <a href="event/<?= $event->event_id;?>" class="list-group-item">
+  	<span  class="col-lg-offset-0"><?= $time;?></span>
+    	<h4 class="list-group-item-heading col-lg-offset-1"><?= $event->title; ?></h4>
+    	<p class="list-group-item-text col-lg-offset-1"><?= $event->body; ?></p>
   </a>
-  <a href="#" class="list-group-item">
-    <h4 class="list-group-item-heading">List group item heading</h4>
-    <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-  </a>
+<?php endforeach;?>
 </div>

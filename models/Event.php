@@ -4,13 +4,17 @@ class Event extends MasterModel{
     private $body;
     private $add_time;
     private $event_time;
-    private $cover_img_url;    
+    private $cover_img_url; 
+    private $event_id;   
     private $table = "events";
 
-    public function __construct($title = null, $body = null){
+    public function __construct($event_id = null, $title = null, $body = null,$event_time = null, $cover_img_url = null){
         parent::__construct();
+        $this->event_id = $event_id;
         $this->title = $title;
         $this->body = $body;
+        $this->event_time = $event_time;
+        $this->setCoverImg($cover_img_url);
     }
 
     public function __get($name) {
@@ -43,13 +47,20 @@ class Event extends MasterModel{
     	return $event;
     }
 
-//     public function getAll($start, $where = ""){
-//         $rows = $this->selectAll($this->table, $where, "post_id DESC", "$start, 5");
-//         if(count($rows) > 0){
-//             foreach ($rows as $post){
-//                 $posts[] = new Post($post['title'], $post['body'], $post['author_id']);
-//             }
-//             return $posts;
-//         }
-//     }
+    public function getEvent($id){
+    	$row = $this->selectOne($this->table, "event_id = $id", "*", "", null, null);
+		$oneEvent = new Event($row['event_id'], $row['title'], $row['body'], $row['event_time'], $row['cover_img_url']);
+		return $oneEvent;
+        
+    }
+    
+    public function getAllEvents(){
+        $rows = $this->selectAll($this->table, "", "event_time", "*","");
+        if(count($rows) > 0){
+            foreach ($rows as $event){
+                $events[] = new Event($event['event_id'], $event['title'], $event['body'], $event['event_time'], $event['cover_img_url']);
+            }
+            return $events;
+        }
+    }
 }

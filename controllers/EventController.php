@@ -6,7 +6,16 @@ class EventController extends MasterController{
     }
     
     public function index(){
-    	$this->renderView("events/index");
+    	$event = new Event();
+    	$event = $event->getAllEvents();
+    	$this->renderViewWithParams("events/index", array("events"), array($event));	
+    }
+    
+    public function event($args){
+  		$id = $args[0];
+    	$event = new Event();
+    	$event = $event->getEvent($id);
+    	$this->renderViewWithParams("events/event", array("event"), array($event));
     }
     
     public function addEvent(){
@@ -14,41 +23,40 @@ class EventController extends MasterController{
     }
     
 	public function addEventPost($post){
-		var_dump($_FILES['cover_img_url']['name']);
+		$fields = $this->takeFields($post);
+		$newEvent = new Event();
 		$folder = "/storage/events";
+		
 		if(strcmp($_FILES['cover_img_url']['name'], "") !== 0){
-			$fields[] = "cover_img_url";
-			$filenameCover = $_FILES['cover_img_url']['tmp_name'];
-			$realFilenameCover = $_FILES['cover_img_url']['name'];
+			$fields .= ",cover_img_url";
+			
+			$filenameCover = $_FILES['cover_img_url']['tmp_name'];// = temp file
+			$realFilenameCover = $_FILES['cover_img_url']['name'];// = cv_photo.jpg
 			$coverFilePath = "/storage/events/$realFilenameCover";
 			$newEvent->setCoverImg($coverFilePath);
-			 
+			if(isset($filenameCover)){
+				$this->saveImg($filenameCover, $coverFilePath, $folder);
+			}
 		}
-		
-// 		if(isset($filenameCover)){
-// 			$this->saveImg($filenameCover, $coverFilePath, $folder);
-// 		}
-		
-		$fields = $this->takeFields($post);
-		$fields .= ",cover_img_url";
 		
 		$event_time = explode("/",$post['event_time']);
 		$this->swap($event_time[0], $event_time[2]);
 		$this->swap($event_time[1], $event_time[2]);
 		$event_time = implode("-",$event_time);
 		
-		$newEvent = new Event();
+		
 		$newEvent->title = $post['title'];
         $newEvent->body = $post['body'];
-        $newEvent->add_time = $post['add_time'];
+        $newEvent->add_time = $this->getLocalTime();
         $newEvent->event_time = $event_time;
-        $newEvent->setCoverImg($_FILES['cover_img_url']['tmp_name']);
         
+        if($newEvent->saveEvent($newEvent, $fields)){
+        	$this->redirect("/event");
+        }else{
+        	echo "Error Uploading info";
+        }
         
-        $newEvent->saveEvent($newEvent, $fields);
-        	var_dump($newEvent);
-        	echo "<br/>";
-        	var_dump($fields);
+       
 	}
 
 //     public function allPostAjax($args){
