@@ -7,6 +7,7 @@ class User extends MasterModel{
     private $last_name;
     private $user_id;
     private $is_approve;
+    private $is_admin;
     private $soft_delete;
     private $user_detail;
     private $table = "users";
@@ -88,10 +89,11 @@ class User extends MasterModel{
 
     public function getUserDetail(){
         $user_detail = new UserDetail();
-        $res = $this->selectOne($user_detail->table, "user_id = '$this->user_id'");
+        $res = $this->selectOneWithJoin($user_detail->table, array("genders"), array("gender_id"), array("u.gender_id"),
+                               "user_id = '$this->user_id'");
         $user_detail = $user_detail->arrayToObject($user_detail, $res);
 
-        return $user_detail;
+        $this->user_detail = $user_detail;
     }
 
     public function getAllUsers(){

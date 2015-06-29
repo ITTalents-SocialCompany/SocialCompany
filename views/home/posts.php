@@ -27,7 +27,6 @@
                 </p>
             </div>
             <div class="col-md-4">
-
                 <small>
                     <?php if(!$post->isLike):?>
                         <a id="<?= $post->post_id?>" onclick="like(this.id)">
@@ -48,9 +47,9 @@
                 </small>
             </div>
             <div class="col-md-offset-5 col-md-3">
-                <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+<!--                <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>-->
                 <small>
-                    <a id="like_<?= $post->post_id?>"><?= $post->numberOfLikes?></a>
+                    <span id="like_<?= $post->post_id?>"><?= $post->numberOfLikes?></span> Likes
                 </small>
                 <a id="<?= $post->post_id?>" onclick="showComments(this.id)">
                     <span class="glyphicon glyphicon-comment" aria-hidden="true"></span><small> <?= $post->numberOfComments?></small>
