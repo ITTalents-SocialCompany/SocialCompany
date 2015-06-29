@@ -10,8 +10,7 @@ class MessageController extends MasterController{
         $this->renderView("messages/index");
     }
     
-    
-    
+   
     public function addChatroom(){
     	$user = new User();
     	$user = $user->getAllUsers();

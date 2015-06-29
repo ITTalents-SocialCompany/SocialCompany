@@ -15,6 +15,7 @@
                 <?php if(Auth::isLoggedIn()): ?>
                     <li><a href="/">Home</a></li>
                     <li><a href="/message/index">Messages <span class="badge">3</span></a></li>
+                	<li><a href="/event/index">Events</a></li>
                 <?php endif;?>
                 <?php if(Auth::isAdmin()):?>
                     <li><a href="/admin/index">Admin Panel</a></li>
@@ -27,7 +28,7 @@
                         </ul>
                     </li>
                 <?php endif; ?>
-                <li><a href="/event/index">Events</a></li>
+                
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <?php if(Auth::isLoggedIn()): ?>

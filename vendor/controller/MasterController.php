@@ -73,4 +73,15 @@ class MasterController {
             return false;
         }
     }
+    
+    public function swap(&$a, &$b){
+    	$temp = $a;
+    	$a = $b;
+    	$b = $temp;
+    }
+    
+    public function getLocalTime(){
+    	$mydate = getdate(date("U"));
+    	return "$mydate[year]-$mydate[mon]-$mydate[mday] $mydate[hours]:$mydate[minutes]:$mydate[seconds]";
+    }
 } 

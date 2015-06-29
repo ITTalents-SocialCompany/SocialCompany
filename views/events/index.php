@@ -1,19 +1,15 @@
-<form action="" method="POST" class="form-horizontal col-md-offset-3 col-md-5" id="event_form">
-    <div class="form-group">
-        <input class="form-control input-sm" name="title" type="text" id="inputSmall" placeholder="Type a title">
-    </div>
-    <div class="form-group">
-        <textarea class="form-control input-sm" rows="3" name="body" id="textArea" placeholder="Type a body"></textarea>
-    </div>
-    <div class="form-group" id="select_tag_users">
-        <select class="form-control input-sm" multiple="" name="tagged_users[]">
-            <?php foreach($users as $user):?>
-                <option value="<?= $user->user_id?>"><?= "$user->first_name $user->last_name"?></option>
-            <?php endforeach;?>
-        </select>
-    </div>
-    <input type="hidden" name="user_id" value="<?= Auth::getId()?>">
-    <div class="form-group">
-        <button type="submit" class="btn btn-primary">Post</button>
-    </div>
-</form>
+<div class="page-header">
+    <h1>Events</h1>
+    <a href="/event/addEvent" class="btn btn-success">Add Event</a>
+</div>
+
+<div class="list-group">
+  <a href="#" class="list-group-item">
+    <h4 class="list-group-item-heading">List group item heading</h4>
+    <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+  </a>
+  <a href="#" class="list-group-item">
+    <h4 class="list-group-item-heading">List group item heading</h4>
+    <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+  </a>
+</div>

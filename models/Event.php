@@ -20,9 +20,13 @@ class Event extends MasterModel{
     public function __set($name, $value){
     	$this->$name = $value;
     }
+    
+    public function setCoverImg($cover_img_url){
+    	$this->cover_img_url = $cover_img_url;
+    }
 
     public function saveEvent(Event $event, $fields){
-        return $this->insert($this->table, $fields, $this->objectToArray($post));
+        return $this->insert($this->table, $fields, $this->objectToArray($event));
     }
     
     public function objectToArray(){
