@@ -5,7 +5,9 @@ class UserDetail extends MasterModel{
     private $profile_img_url;
     private $cover_img_url;
     private $phone;
+    private $birthdate;
     private $gender_id;
+    private $gender;
     private $user_id;
     private $table = "user_details";
 
@@ -50,6 +52,8 @@ class UserDetail extends MasterModel{
         {
             if(property_exists('UserDetail', $key)){
                 $userDetail->$key = $value;
+            }elseif(strcmp($key, "name") == 0){
+                $userDetail->gender = $value;
             }
         }
         return $userDetail;
@@ -64,11 +68,12 @@ class UserDetail extends MasterModel{
     }
 
     public function changeImgs(UserDetail $profile_detail, $fields, $id){
-        return $this->update($this->table, $fields, $profile_detail->objectToArray(), "user_detail_id = '$id'");
+        return $this->update($this->table, $fields, array("profile_img_url" => $profile_detail->profile_img_url,
+                "cover_img_url" => $profile_detail->cover_img_url), "user_detail_id = '$id'");
     }
 
     public function getUserDetail($id){
-        $user_detail = $this->selectOne($this->table, "user_id = '$id'");
+        $user_detail = $this->selectOneWithJoin($this->table, array("genders"), array("gender_id"), array("u.gender_id"), "user_id = '$id'");
         $user_detail = $this->arrayToObject($this, $user_detail);
 
         return $user_detail;

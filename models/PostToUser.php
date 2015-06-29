@@ -47,7 +47,15 @@ class PostToUser extends MasterModel{
                         array("post_id", "user_id"), array("p.post_id", "po.author_id"), "user_id = $id", $fields, "post_id DESC", "$start , 2");
         if(count($rows) > 0){
             foreach ($rows as $row){
-                $post = new Post($row['post_id'], $row['title'], $row['body'], $row['author_id']);
+                $numberOfComments =  $this->selectOne("comments", "post_id = ".$row['post_id'], "count(comment_id) as count", "post_id");
+                $numberOfLikes =  $this->selectOne("likes_posts", "post_id = ".$row['post_id'], "count(like_id) as count", "post_id");
+                $isLikeWhere = "post_id = " . $row['post_id'] . " AND user_id = " . Auth::getId();
+                $isLike = $this->selectOne("likes_posts", $isLikeWhere);
+                if($isLike !== false){
+                    $isLike = true;
+                }
+                $post = new Post($row['post_id'], $row['title'], $row['body'], $row['author_id'],
+                                        $numberOfComments['count'], $numberOfLikes['count'], $isLike);
                 $user = new User();
                 $user->arrayToObject($user, $row);
                 $post->addAuthor($user);

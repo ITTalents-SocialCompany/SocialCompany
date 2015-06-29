@@ -13,8 +13,8 @@ class ProfileController extends MasterController {
             $id = Auth::getId();
             $user = new User();
             $user = $user->getUser($id);
-            $user_detail = $user->getUserDetail();
-            $this->renderViewWithParams("profile/index", array("user_detail", "user"), array($user_detail, $user));
+            $user->getUserDetail();
+            $this->renderViewWithParams("profile/index", array("user"), array($user));
         }
     }
 

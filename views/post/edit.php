@@ -3,7 +3,7 @@
         <input class="form-control input-sm" name="title" type="text" id="inputSmall" placeholder="Type a title" value="<?= $post->title?>">
     </div>
     <div class="form-group">
-        <textarea class="form-control input-sm" rows="3" name="body" id="textArea" placeholder="Type a body"><?= $post->body?></textarea>
+        <textarea class="form-control input-sm" rows="20" name="body" id="textArea" placeholder="Type a body"><?= $post->body?></textarea>
     </div>
     <input type="hidden" name="post_id" value="<?= $post->post_id?>">
     <div class="form-group">

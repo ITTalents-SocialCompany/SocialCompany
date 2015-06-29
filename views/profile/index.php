@@ -1,6 +1,6 @@
-<div class="well col-md-offset-1 col-md-10" style="background: url(<?= $user_detail->cover_img_url?>) no-repeat center">
+<div class="well col-md-offset-1 col-md-10" style="background: url(<?= $user->user_detail->cover_img_url?>) no-repeat center">
     <div class="profile-img">
-        <img class="thumbnail" src="<?= $user_detail->profile_img_url ? $user_detail->profile_img_url : DEFAULT_PROFILE_IMG?>" width="200px" height="200px">
+        <img class="thumbnail" src="<?= $user->user_detail->profile_img_url ? $user->user_detail->profile_img_url : DEFAULT_PROFILE_IMG?>" width="200px" height="200px">
     </div>
     <nav class="navbar navbar-inverse profile-navbar">
         <div class="container-fluid">

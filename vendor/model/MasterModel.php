@@ -52,7 +52,7 @@ abstract class MasterModel {
         $set = implode(',', $set);
         $query = 'UPDATE ' . $table . ' SET ' . $set
                 . (($where) ? ' WHERE ' . $where : '');
-//        var_dump($query);
+        var_dump($query);
         return $this->dbConn->exec($query);
     }
 
@@ -75,12 +75,15 @@ abstract class MasterModel {
         return $this->dbConn->query($query)->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function selectOneWithJoin($table, $joinTable, $on, $where = "", $fields = "*", $order = ""){
+    public function selectOneWithJoin($table, array $joinTables, array $onFirst, array $onSecond, $where = "", $fields = "*", $order = ""){
         $aliasTable = substr($table, 0, 1);
-        $aliasJoinTable = substr($joinTable, 0, 2);
+        $text = "";
+        for($i = 0; $i < count($joinTables); $i++){
+            $aliasJoinTable = substr($joinTables[$i], 0, 2);
+            $text .= " JOIN $joinTables[$i] $aliasJoinTable ON $aliasJoinTable.$onFirst[$i] = $onSecond[$i]";
+        }
         $query = "SELECT " . $fields . " FROM " . $table . " " . $aliasTable
-            . (($joinTable) ? " JOIN " . $joinTable . " " . $aliasJoinTable : "")
-            . (($on) ? " ON " . "$aliasJoinTable.$on = $aliasTable.$on" : "")
+            . (($text) ? "$text" : "")
             . (($where) ? " WHERE " . "$aliasTable.$where" : "")
             . (($order) ? " ORDER BY " . $order : "");
         //var_dump($query);
