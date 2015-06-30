@@ -91,14 +91,28 @@ class User extends MasterModel{
         $user_detail = new UserDetail();
         $res = $this->selectOneWithJoin($user_detail->table, array("genders"), array("gender_id"), array("u.gender_id"),
                                "user_id = '$this->user_id'");
-        $user_detail = $user_detail->arrayToObject($user_detail, $res);
+        if($res !== false){
+            $user_detail = $user_detail->arrayToObject($user_detail, $res);
 
-        $this->user_detail = $user_detail;
+            $this->user_detail = $user_detail;
+        }
     }
 
     public function getAllUsers(){
         $users = array();
         $rows = $this->selectAll($this->table, "soft_delete IS NULL AND is_approve IS TRUE AND user_id <>".Auth::getId());
+        foreach($rows as $row){
+            $user = new User();
+            $user = $this->arrayToObject($user, $row);
+            $users[] = $user;
+        }
+
+        return $users;
+    }
+
+    public function getAllUsersForAdmin(){
+        $users = array();
+        $rows = $this->selectAll($this->table, "user_id <>".Auth::getId());
         foreach($rows as $row){
             $user = new User();
             $user = $this->arrayToObject($user, $row);

@@ -13,7 +13,7 @@ class AdminController extends MasterController{
 
     public function users(){
         $user = new User();
-        $users = $user->getAllUsers();
+        $users = $user->getAllUsersForAdmin();
         $this->renderViewWithParams("admin/user/users", array("users"), array($users));
     }
 

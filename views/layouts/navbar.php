@@ -18,7 +18,6 @@
                 	<li><a href="/event/index">Events</a></li>
                 <?php endif;?>
                 <?php if(Auth::isAdmin()):?>
-                    <li><a href="/admin/index">Admin Panel</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Admin Controll <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">

@@ -35,12 +35,12 @@
             </div>
         </div>
 
-        <div class="form-group">
-            <label for="event_time" class="col-lg-2 control-label">Birthdate</label>
-            <div class="col-lg-10">
-                <input type="text" id="datepicker" name="birthdate" class="form-control input-sm"/>
-            </div>
-        </div>
+<!--        <div class="form-group">-->
+<!--            <label for="event_time" class="col-lg-2 control-label">Birthdate</label>-->
+<!--            <div class="col-lg-10">-->
+<!--                <input type="text" id="datepicker" name="birthdate" class="form-control input-sm"/>-->
+<!--            </div>-->
+<!--        </div>-->
 
         <input type="hidden" name="user_id" value="<?= Auth::getId()?>">
 

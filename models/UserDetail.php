@@ -74,9 +74,11 @@ class UserDetail extends MasterModel{
 
     public function getUserDetail($id){
         $user_detail = $this->selectOneWithJoin($this->table, array("genders"), array("gender_id"), array("u.gender_id"), "user_id = '$id'");
-        $user_detail = $this->arrayToObject($this, $user_detail);
-
-        return $user_detail;
+        if($user_detail !== false){
+            $user_detail = $this->arrayToObject($this, $user_detail);
+            return $user_detail;
+        }
+        return new UserDetail();
     }
 
     public function hasUserDetail(){
