@@ -7,7 +7,7 @@ class EventController extends MasterController{
     
     public function index(){
     	$event = new Event();
-    	$event = $event->getAllEvents();
+    	$event = $event->getAllEvents("");
     	$this->renderViewWithParams("events/index", array("events"), array($event));	
     }
     

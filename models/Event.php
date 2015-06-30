@@ -54,8 +54,8 @@ class Event extends MasterModel{
         
     }
     
-    public function getAllEvents(){
-        $rows = $this->selectAll($this->table, "", "event_time", "*","");
+    public function getAllEvents($limit){
+        $rows = $this->selectAll($this->table, "", "event_time", "*",$limit);
         if(count($rows) > 0){
             foreach ($rows as $event){
                 $events[] = new Event($event['event_id'], $event['title'], $event['body'], $event['event_time'], $event['cover_img_url']);

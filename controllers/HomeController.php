@@ -6,7 +6,7 @@ class HomeController extends MasterController{
 
     public function index(){
     	$event = new Event();
-    	$event = $event->getAllEvents();
+    	$event = $event->getAllEvents("0,10");
         $category = new Category();
         $categories = $category->getAllCategories();
         $user = new User();
