@@ -1,3 +1,17 @@
+function searchUser(value){
+    if(value !== ""){
+        value = "searchStr=" + value;
+        $(document).ready(function(){
+            $.post('/home/searchUser', value, function(result){
+                $('#findUsers').show();
+                $('#findUsers').html(result);
+            });
+        });
+    }else{
+        $('#findUsers').hide();
+    }
+}
+
 $(function() {
     $( "#datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' });
 });

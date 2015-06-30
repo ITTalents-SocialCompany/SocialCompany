@@ -14,4 +14,10 @@ class HomeController extends MasterController{
         $this->renderViewWithParams("home/index", array("categories", "users","events"), array($categories, $users, $event));
     }
 
+    public function searchUser($post){
+        $user = new User();
+        $users = $user->searchUser($post['searchStr']);
+//var_dump($users);
+        $this->renderViewAjax("user/usersFind", array("users"), array($users));
+    }
 } 

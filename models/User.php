@@ -134,4 +134,21 @@ class User extends MasterModel{
 //        var_dump($data);
         $this->update($this->table, $fields, $data, "user_id = '$id'");
     }
+
+    public function searchUser($searchStr){
+        $rows = $this->selectAllWithJoins($this->table, array("user_details"), array("user_id"), array("u.user_id"),
+                        "first_name LIKE '$searchStr%'", "u.user_id, username, first_name, last_name, profile_img_url", "", "0, 5");
+        if(count($rows) > 0){
+            foreach($rows as $row){
+                $user = new User();
+                $user = $this->arrayToObject($user, $row);
+                $user_detail = new UserDetail();
+                $user_detail->arrayToObject($user_detail, $row);
+                $user->addUserDetail($user_detail);
+                $users[] = $user;
+            }
+
+            return $users;
+        }
+    }
 } 
