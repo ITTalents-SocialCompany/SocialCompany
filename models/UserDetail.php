@@ -5,9 +5,12 @@ class UserDetail extends MasterModel{
     private $profile_img_url;
     private $cover_img_url;
     private $phone;
-    private $birthdate;
     private $gender_id;
     private $gender;
+    private $birthdate;
+    private $university_name;
+    private $university_spec;
+    private $skills;
     private $user_id;
     private $table = "user_details";
 
@@ -37,6 +40,22 @@ class UserDetail extends MasterModel{
 
     public function setGenderId($gender_id){
         $this->gender_id = $gender_id;
+    }
+
+    public function setBirthDate($birth_date){
+        $this->birthdate = $birth_date;
+    }
+
+    public function setUniversityName($university_name){
+        $this->university_name = $university_name;
+    }
+
+    public function setUniversitySpec($university_spec){
+        $this->university_spec = $university_spec;
+    }
+
+    public function setSkills($skills){
+        $this->skills = $skills;
     }
 
     public function setUserId($user_id){

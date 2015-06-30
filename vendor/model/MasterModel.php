@@ -23,7 +23,6 @@ abstract class MasterModel {
             rtrim(str_repeat("?,", count($values)), ",") . ")";
 
 //        var_dump($query);
-
         $prep = $this->dbConn->prepare($query);
         $prep->execute($values);
         return $this->dbConn->lastInsertId();

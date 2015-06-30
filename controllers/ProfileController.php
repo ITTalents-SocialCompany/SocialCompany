@@ -41,6 +41,10 @@ class ProfileController extends MasterController {
         $this->renderViewWithParams("profile/edit", array("user_detail"), array($user_detail));
     }
 
+    public function addLanguages(){
+        $this->renderView("profile/addLanguages");
+    }
+
     public function editPost($post){
 
         $user_detail = new UserDetail();
@@ -49,6 +53,10 @@ class ProfileController extends MasterController {
         $user_detail->setPhone($post['phone']);
         $user_detail->setGenderId($post['gender_id']);
         $user_detail->setUserId($post['user_id']);
+        $user_detail->setBirthDate($post['birthdate']);
+        $user_detail->setUniversityName($post['university_name']);
+        $user_detail->setUniversitySpec($post['university_spec']);
+        $user_detail->setSkills($post['skills']);
 
         if(!$user_detail_id = $user_detail->hasUserDetail()){
             $fields = $this->takeFields($post);

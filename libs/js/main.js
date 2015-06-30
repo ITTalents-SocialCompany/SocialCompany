@@ -1,5 +1,5 @@
 $(function() {
-    $( "#datepicker" ).datepicker();
+    $( "#datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' });
 });
 
 function comment(id){
@@ -78,5 +78,11 @@ function unlikeComment(comment_id){
             var val = parseInt($('#likeComment_'+comment_id).html())-1;
             $('#likeComment_'+comment_id).html(val);
         })
+    })
+}
+
+function showAddLanguages(){
+    $(document).ready(function(){
+        $("#add_languages").toggle();
     })
 }
