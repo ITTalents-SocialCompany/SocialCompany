@@ -1,6 +1,6 @@
 <div class="well col-md-offset-1 col-md-10" style="background: url(<?= $user->user_detail->cover_img_url?>) no-repeat center">
     <div class="profile-img">
-        <img class="thumbnail" src="<?= $user->user_detail->profile_img_url ? $user->user_detail->profile_img_url : DEFAULT_PROFILE_IMG?>" width="200px" height="200px">
+        <img class="thumbnail" src="<?= $user->user_detail->profile_img_url ? $user->user_detail->profile_img_url : DEFAULT_PROFILE_IMG?>" height="200px">
     </div>
     <nav class="navbar navbar-inverse profile-navbar">
         <div class="container-fluid">
@@ -37,18 +37,18 @@
 
 <script>
     function timeline(){
-        document.getElementById("timeline").hidden = null;
-        document.getElementById("information").hidden = "hidden";
-        document.getElementById("members").hidden = "hidden";
+        $('#timeline').show();
+        $('#information').hide();
+        $('#members').hide();
     }
     function information(){
-        document.getElementById("timeline").hidden = "hidden";
-        document.getElementById("information").hidden = null;
-        document.getElementById("members").hidden = "hidden";
+        $('#timeline').hide();
+        $('#information').show();
+        $('#members').hide();
     }
     function members(){
-        document.getElementById("timeline").hidden = "hidden";
-        document.getElementById("information").hidden = "hidden";
-        document.getElementById("members").hidden = null;
+        $('#timeline').hide();
+        $('#information').hide();
+        $('#members').show();
     }
 </script>

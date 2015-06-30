@@ -16,19 +16,23 @@
                     <li><a href="/">Home</a></li>
                     <li><a href="/message/index">Messages <span class="badge">3</span></a></li>
                 	<li><a href="/event/index">Events</a></li>
+                    <?php if(Auth::isAdmin()):?>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Admin Controll <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="/admin/users">All Users</a></li>
+                                <li><a href="/admin/teams">All Teams</a></li>
+                                <li><a href="/admin/categories">All Categories</a></li>
+                            </ul>
+                        </li>
+                    <?php endif; ?>
+                    <div class="navbar-form navbar-left">
+                        <div class="form-group">
+                            <input type="text" id="search" class="form-control" placeholder="Search" oninput="searchUser(this.value)">
+                        </div>
+                        <div class="list-group fixed" id="findUsers"></div>
+                    </div>
                 <?php endif;?>
-                <?php if(Auth::isAdmin()):?>
-                    <li><a href="/admin/index">Admin Panel</a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Admin Controll <span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="/admin/users">All Users</a></li>
-                            <li><a href="/admin/teams">All Teams</a></li>
-                            <li><a href="/admin/categories">All Categories</a></li>
-                        </ul>
-                    </li>
-                <?php endif; ?>
-                
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <?php if(Auth::isLoggedIn()): ?>

@@ -23,18 +23,31 @@
             <?php if(!$user->is_approve):?>
                 <td>
                     <a onclick="approve(<?= $user->user_id?>);" class="btn btn-success btn-xs" id="approve_<?= $user->user_id?>">Approve</a>
+                    <p id="approve_success_<?= $user->user_id?>" hidden>Approve Success</p>
                 </td>
             <?php else:?>
-                <td>Approve Success</td>
+                <td>
+                    <a onclick="approve(<?= $user->user_id?>)" style="display: none" class="btn btn-success btn-xs" id="approve_<?= $user->user_id?>">
+                        Approve
+                    </a>
+                    <p id="approve_success_<?= $user->user_id?>">Approve Success</p>
+                </td>
             <?php endif;?>
             <?php if(!$user->soft_delete):?>
                 <td>
                     <a onclick="deleteUser(<?= $user->user_id?>);" class="btn btn-danger btn-xs" id="delete_user_<?= $user->user_id?>">
                         Soft Delete
                     </a>
+                    <p id="delete_success_<?= $user->user_id?>" hidden>Deleted User</p>
                 </td>
             <?php else:?>
-                <td>Deleted User</td>
+                <td>
+                    <a onclick="deleteUser(<?= $user->user_id?>);" style="display: none" class="btn btn-danger btn-xs"
+                       id="delete_user_<?= $user->user_id?>">
+                        Soft Delete
+                    </a>
+                    <p id="delete_success_<?= $user->user_id?>">Deleted User</p>
+                </td>
             <?php endif; ?>
         </tr>
     <?php endforeach;?>

@@ -59,13 +59,12 @@ class Comment extends MasterModel{
         $rows = $this->selectAll("comment_view", "post_id = $id");
         if(count($rows) > 0){
             foreach ($rows as $row){
-                $numberOfLikes =  $this->selectOne("likes_comments", "comment_id = ".$row['comment_id'], "count(like_id) as count", "comment_id");
                 $isLikeWhere = "comment_id = " . $row['comment_id'] . " AND user_id = " . Auth::getId();
                 $isLike = $this->selectOne("likes_comments", $isLikeWhere);
                 if($isLike !== false){
                     $isLike = true;
                 }
-                $comment = new Comment($row['comment_id'], $row['body'], $numberOfLikes['count'], $isLike);
+                $comment = new Comment($row['comment_id'], $row['body'], $row['numOfLikes'], $isLike);
                 $user = new User();
                 $user->arrayToObject($user, $row);
                 $user_detail = new UserDetail();

@@ -11,7 +11,7 @@ class EventController extends MasterController{
     	$this->renderViewWithParams("events/index", array("events"), array($event));	
     }
     
-    public function event($args){
+    public function show($args){
   		$id = $args[0];
     	$event = new Event();
     	$event = $event->getEvent($id);
@@ -38,17 +38,11 @@ class EventController extends MasterController{
 				$this->saveImg($filenameCover, $coverFilePath, $folder);
 			}
 		}
-		
-		$event_time = explode("/",$post['event_time']);
-		$this->swap($event_time[0], $event_time[2]);
-		$this->swap($event_time[1], $event_time[2]);
-		$event_time = implode("-",$event_time);
-		
-		
+
 		$newEvent->title = $post['title'];
         $newEvent->body = $post['body'];
         $newEvent->add_time = $this->getLocalTime();
-        $newEvent->event_time = $event_time;
+        $newEvent->event_time = $post['event_time'];
         
         if($newEvent->saveEvent($newEvent, $fields)){
         	$this->redirect("/event");
@@ -59,15 +53,4 @@ class EventController extends MasterController{
        
 	}
 
-//     public function allPostAjax($args){
-//         $start = $args[0];
-//         $post = new Post();
-//         if(count($args) > 1){
-//             $id = $args[1];
-//             $posts = $post->getAll($start, "category_id = '$id'");
-//         }else{
-//             $posts = $post->getAll($start);
-//         }
-//         $this->renderViewAjax("home/posts", "posts", $posts);
-//     }
 } 

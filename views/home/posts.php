@@ -52,7 +52,10 @@
                     <span id="like_<?= $post->post_id?>"><?= $post->numberOfLikes?></span> Likes
                 </small>
                 <a id="<?= $post->post_id?>" onclick="showComments(this.id)">
-                    <span class="glyphicon glyphicon-comment" aria-hidden="true"></span><small> <?= $post->numberOfComments?></small>
+                    <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+                    <small>
+                        <span id="comment_num_<?= $post->post_id?>"><?= $post->numberOfComments?></span>
+                    </small>
                 </a>
             </div>
         </div>

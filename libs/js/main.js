@@ -1,3 +1,21 @@
+function searchUser(value){
+    if(value !== ""){
+        value = "searchStr=" + value;
+        $(document).ready(function(){
+            $.post('/home/searchUser', value, function(result){
+                $('#findUsers').show();
+                $('#findUsers').html(result);
+            });
+        });
+    }else{
+        $('#findUsers').hide();
+    }
+}
+
+$(function() {
+    $( "#datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' });
+});
+
 function comment(id){
     if($('#post_'+id).is(':visible')){
         document.getElementById("post_"+id).setAttribute("hidden", "hidden");
@@ -15,9 +33,10 @@ function addComment(id){
     }
     $(document).ready(function(){
         $.post('/comment/saveComment', dataString, function(result){
-            console.log(result);
             document.getElementById("form_"+id).reset();
             document.getElementById("post_"+id).setAttribute("hidden", "hidden");
+            var numOfComments = parseInt($("#comment_num_"+id).html())+1;
+            $("#comment_num_"+id).html(numOfComments);
         });
     });
 }
@@ -73,5 +92,11 @@ function unlikeComment(comment_id){
             var val = parseInt($('#likeComment_'+comment_id).html())-1;
             $('#likeComment_'+comment_id).html(val);
         })
+    })
+}
+
+function showAddLanguages(){
+    $(document).ready(function(){
+        $("#add_languages").toggle();
     })
 }

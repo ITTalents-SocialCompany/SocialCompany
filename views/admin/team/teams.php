@@ -13,7 +13,7 @@
     </tr>
     </thead>
     <tbody>
-    <?php foreach($teams as $team):?>
+    <?php if(isset($teams)) foreach($teams as $team):?>
         <tr class="info">
             <td><?= $team->team_id?></td>
             <td><?= $team->name?></td>

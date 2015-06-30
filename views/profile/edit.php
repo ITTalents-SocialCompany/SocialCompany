@@ -35,6 +35,37 @@
             </div>
         </div>
 
+        <div class="form-group">
+            <label for="birthdate" class="col-lg-2 control-label">Birthdate</label>
+            <div class="col-lg-10">
+                <input type="text" id="datepicker" name="birthdate" class="form-control input-sm" placeholder="Birth Date"
+                       value="<?= $user_detail->birthdate?>"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="university_name" class="col-lg-2 control-label">University Name</label>
+            <div class="col-lg-10">
+                <input class="form-control" id="university_name" name="university_name" placeholder="University Name" type="text"
+                       value="<?= $user_detail->university_name?>">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="university_spec" class="col-lg-2 control-label">University Speciality</label>
+            <div class="col-lg-10">
+                <input class="form-control" id="university_spec" name="university_spec" placeholder="University Speciality" type="text"
+                       value="<?= $user_detail->university_spec?>">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="skills" class="col-lg-2 control-label">Skills</label>
+            <div class="col-lg-10">
+                <textarea class="form-control" rows="3" id="skills" name="skills" placeholder="Skills"><?= $user_detail->skills?></textarea>
+            </div>
+        </div>
+
         <input type="hidden" name="user_id" value="<?= Auth::getId()?>">
 
         <div class="form-group">
