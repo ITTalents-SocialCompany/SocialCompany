@@ -1,3 +1,7 @@
+$(function() {
+    $( "#datepicker" ).datepicker();
+});
+
 function comment(id){
     if($('#post_'+id).is(':visible')){
         document.getElementById("post_"+id).setAttribute("hidden", "hidden");
