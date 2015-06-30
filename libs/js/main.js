@@ -19,9 +19,10 @@ function addComment(id){
     }
     $(document).ready(function(){
         $.post('/comment/saveComment', dataString, function(result){
-            console.log(result);
             document.getElementById("form_"+id).reset();
             document.getElementById("post_"+id).setAttribute("hidden", "hidden");
+            var numOfComments = parseInt($("#comment_num_"+id).html())+1;
+            $("#comment_num_"+id).html(numOfComments);
         });
     });
 }

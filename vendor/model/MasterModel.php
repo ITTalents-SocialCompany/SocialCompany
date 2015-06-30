@@ -38,22 +38,29 @@ abstract class MasterModel {
             unset($data['user_id']);
         }
         $set = array();
+        $values = array();
+
         foreach ($data as $field => $value) {
             if(in_array($field, $fields) && !is_null($value) && !is_bool($value)){
-                $set[] = $field . '=' . "'$value'";
+                $set[] = $field . '=' . "?";
+                $values[] = $value;
             }elseif($value === false){
-                $set[] = $field . '=' . "0";
+                $set[] = $field . '=' . "?";
+                $values[] = "0";
             }elseif($value === true){
-                $set[] = $field . '=' . "1";
+                $set[] = $field . '=' . "?";
+                $values[] = "1";
             }elseif($value === null){
-                $set[] = $field . '=' . "NULL";
+                $set[] = $field . '=' . "?";
+                $values[] = null;
             }
         }
         $set = implode(',', $set);
         $query = 'UPDATE ' . $table . ' SET ' . $set
                 . (($where) ? ' WHERE ' . $where : '');
-        var_dump($query);
-        return $this->dbConn->exec($query);
+//        var_dump($query);
+        $prep = $this->dbConn->prepare($query);
+        return $prep->execute($values);
     }
 
     public function selectOne($table, $where = "", $fields = "*", $order = "", $limit = null, $offset = null){

@@ -12,7 +12,7 @@
     </tr>
     </thead>
     <tbody>
-    <?php foreach($categories as $category):?>
+    <?php if(count($categories) > 0) foreach($categories as $category):?>
         <tr class="info">
             <td><?= $category->category_id?></td>
             <td><?= $category->name?></td>

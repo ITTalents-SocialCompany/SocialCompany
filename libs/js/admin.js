@@ -1,25 +1,21 @@
 function approve(id){
-    var xhr = new XMLHttpRequest();
-    var url = "http://socialcompany/admin/approveUser/"+ id;
-
-    xhr.open("GET",url, true);
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            document.getElementById("approve_" + id).className += " disabled";
-        }
-    };
-    xhr.send(null);
+    $(document).ready(function(){
+        $.get('/admin/approveUser/'+id, function(result){
+            $("#approve_" + id).hide();
+            $("#approve_success_"+id).show();
+            $("#delete_user_" + id).show();
+            $("#delete_success_"+id).hide();
+        });
+    });
 }
 
 function deleteUser(id){
-    var xhr = new XMLHttpRequest();
-    var url = "http://socialcompany/admin/deleteUser/"+ id;
-
-    xhr.open("GET",url, true);
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            document.getElementById("delete_user_" + id).className += " disabled";
-        }
-    };
-    xhr.send(null);
+    $(document).ready(function(){
+        $.get('/admin/deleteUser/'+id, function(result){
+            $("#delete_user_" + id).hide();
+            $("#delete_success_"+id).show();
+            $("#approve_" + id).show();
+            $("#approve_success_"+id).hide();
+        });
+    });
 }

@@ -32,12 +32,14 @@ class Team extends MasterModel{
 
     public function getAllTeams(){
         $rows = $this->selectAll($this->table);
-        foreach($rows as $row){
-            $team = new Team();
-            $team = $this->arrayToObject($team, $row);
-            $teams[] = $team;
-        }
+        if(count($rows) > 0){
+            foreach($rows as $row){
+                $team = new Team();
+                $team = $this->arrayToObject($team, $row);
+                $teams[] = $team;
+            }
 
-        return $teams;
+            return $teams;
+        }
     }
 } 
