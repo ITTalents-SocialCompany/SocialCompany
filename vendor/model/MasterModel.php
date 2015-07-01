@@ -56,7 +56,7 @@ abstract class MasterModel {
         $set = implode(',', $set);
         $query = 'UPDATE ' . $table . ' SET ' . $set
                 . (($where) ? ' WHERE ' . $where : '');
-//        var_dump($query);
+       var_dump($query);
         $prep = $this->dbConn->prepare($query);
         return $prep->execute($values);
     }

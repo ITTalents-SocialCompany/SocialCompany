@@ -5,23 +5,23 @@
     <div class="form-group">
       <label for="title" class="col-lg-2 control-label">Title</label>
       <div class="col-lg-10">
-        <input type="text" class="form-control" id="title" name="title" placeholder="Type a Title..">
+        <input type="text" class="form-control" id="title" name="title" placeholder="Type a Title.." required>
       </div>
     </div>
     
     <div class="form-group">
       <label for="title" class="col-lg-2 control-label">Body</label>
       <div class="col-lg-10">
-		<textarea class="form-control input-sm" rows="3" name="body" id="textArea" placeholder="Type a body"></textarea>     
+		<textarea class="form-control input-sm" rows="3" name="body" id="textArea" placeholder="Type a body" required></textarea>     
       </div>
     </div>
     
     <input type="hidden" name="add_time" value="">
     
     <div class="form-group">
-    	 <label for="event_time" class="col-lg-2 control-label">Title</label>
+    	 <label for="event_time" class="col-lg-2 control-label">Time event</label>
     	 <div class="col-lg-10">
-    	 	<input type="text" id="datepicker" name="event_time" class="form-control input-sm" placeholder="Pick a date (yyyy-mm-dd)"/>
+    	 	<input type="text" id="datepicker" name="event_time" class="form-control input-sm" placeholder="Pick a date (yyyy-mm-dd)" required/>
     	 </div>
 	</div>
 	
@@ -42,3 +42,6 @@
     </div>
     </fieldset>
 </form>
+
+
+

@@ -11,10 +11,10 @@ class Event extends MasterModel{
     public function __construct($event_id = null, $title = null, $body = null,$event_time = null, $cover_img_url = null){
         parent::__construct();
         $this->event_id = $event_id;
-        $this->title = $title;
-        $this->body = $body;
-        $this->event_time = $event_time;
-        $this->setCoverImg($cover_img_url);
+        $this->setTitle($title);
+        $this->setBody($body);
+        $this->setEventTime($event_time);
+        $this->setCoverImgUrl($cover_img_url);
     }
 
     public function __get($name) {
@@ -25,12 +25,28 @@ class Event extends MasterModel{
     	$this->$name = $value;
     }
     
-    public function setCoverImg($cover_img_url){
+    public function setTitle($title){
+    	$this->title = $title;
+    }
+    
+    public function setBody($body){
+    	$this->body = $body;
+    }
+    
+    public function setEventTime($event_time){
+    	$this->event_time = $event_time;
+    }
+    
+    public function setCoverImgUrl($cover_img_url){
     	$this->cover_img_url = $cover_img_url;
     }
 
     public function saveEvent(Event $event, $fields){
         return $this->insert($this->table, $fields, $this->objectToArray($event));
+    }
+    
+    public function change($post, $fields, $id){
+    	return $this->update($this->table, $fields, $post, "event_id = '$id'");
     }
     
     public function objectToArray(){
@@ -52,6 +68,15 @@ class Event extends MasterModel{
 		$oneEvent = new Event($row['event_id'], $row['title'], $row['body'], $row['event_time'], $row['cover_img_url']);
 		return $oneEvent;
         
+    }
+    
+	public function getOne(Event $event, $id){
+        $eventArr = $this->selectOne($this->table, "event_id = $id");
+        return $this->arrayToObject($event, $eventArr);
+    }
+    
+    public function deleteOne($id){
+    	return $this->delete($this->table, "event_id = $id");
     }
     
     public function getAllEvents($limit){
