@@ -67,13 +67,14 @@ class UserTeam extends MasterModel{
     }
 
     public function getAllUsersByTeam($user_id){
+        $userTeams = array();
         $teams = $this->selectAllWithJoin($this->table, "teams", "team_id", "", "user_id = $user_id");
         foreach($teams as $team){
             $userTeam = new UserTeam();
             $newTeam = new Team();
             $newTeam->arrayToObject($newTeam, $team);
             $userTeam->setTeam($newTeam);
-            $rows = $this->selectAll("team_view", "team_id = ". $team['team_id']);
+            $rows = $this->selectAll("team_view", "team_id = ". $team['team_id'] . " AND user_id <> $user_id");
             foreach($rows as $row){
                 $user = new User();
                 $user->arrayToObject($user, $row);
@@ -84,6 +85,10 @@ class UserTeam extends MasterModel{
             }
             $userTeams[] = $userTeam;
         }
-        return $userTeams;
+        if(count($userTeams) > 0){
+            return $userTeams;
+        }else{
+            return false;
+        }
     }
 } 

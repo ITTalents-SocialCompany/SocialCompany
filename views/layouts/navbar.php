@@ -43,6 +43,7 @@
                             <li class="divider"></li>
                             <li><a href="/profile/edit">Profile Info Edit</a></li>
                             <li><a href="/profile/imgs">Profile Images</a></li>
+                            <li><a href="/user/changePassword">Change Password</a></li>
                             <li class="divider"></li>
                             <li><a href="/user/logout">Logout</a></li>
                         </ul>

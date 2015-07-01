@@ -55,8 +55,8 @@ try{
         require_once "views/error/404.php";
     }
 }catch (PDOException $e){
-//    echo $e->getMessage();
-    session_destroy();
-    require_once "views/error/500.php";
+    echo $e->getMessage();
+//    session_destroy();
+//    require_once "views/error/500.php";
 }
 

@@ -52,4 +52,17 @@ class UserController extends MasterController{
         session_destroy();
         $this->redirect("/user/login");
     }
+
+    public function changePassword(){
+        $this->renderView("user/changePassword");
+    }
+
+    public function changePasswordPost($post){
+        $user = new User();
+        if($user->changePassword($post)){
+            $this->redirect('/profile/');
+        }else{
+            $this->renderViewWithError("user/changePassword", null, null, "Old Password is wrong!");
+        }
+    }
 } 

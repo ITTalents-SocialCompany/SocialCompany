@@ -21,13 +21,13 @@ abstract class MasterModel {
         $query = "INSERT INTO " . $table . " (" . $fields . ") " . " VALUES (" .
             rtrim(str_repeat("?,", count($values)), ",") . ")";
 
-       var_dump($query);
+//       var_dump($query);
         $prep = $this->dbConn->prepare($query);
         $prep->execute($values);
         return $this->dbConn->lastInsertId();
     }
 
-    public function update($table, $fields, array $data, $where = ""){
+    public function update($table, array $fields, array $data, $where = ""){
         if(isset($data['table'])){
             unset($data['table']);
         }
@@ -56,7 +56,7 @@ abstract class MasterModel {
         $set = implode(',', $set);
         $query = 'UPDATE ' . $table . ' SET ' . $set
                 . (($where) ? ' WHERE ' . $where : '');
-//        var_dump($query);
+        var_dump($query);
         $prep = $this->dbConn->prepare($query);
         return $prep->execute($values);
     }

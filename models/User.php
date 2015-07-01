@@ -56,7 +56,7 @@ class User extends MasterModel{
     }
 
     public function login(User $user){
-        if($res = $this->selectOne($this->table, "username = '$user->username' and soft_delete IS NULL")){
+        if($res = $this->selectOne($this->table, "username = '$user->username' and soft_delete IS NULL AND is_approve IS TRUE")){
             if (password_verify($user->password, $res['password'])) {
                 $_SESSION['is_admin'] = $res['is_admin'];
                 $_SESSION['first_name'] = $res['first_name'];
@@ -82,9 +82,8 @@ class User extends MasterModel{
 
     public function getUser($id){
         $user = $this->selectOne($this->table, "user_id = '$id'");
-        $user = $this->arrayToObject($this, $user);
 
-        return $user;
+        return $this->arrayToObject($this, $user);
     }
 
     public function getUserDetail(){
@@ -167,5 +166,19 @@ class User extends MasterModel{
 
             return $users;
         }
+    }
+
+    public function changePassword($passwords){
+        $user_id = Auth::getId();
+        if($res = $this->selectOne($this->table, "user_id = $user_id")){
+            if (password_verify($passwords['old_password'], $res['password'])) {
+                $newPassword = $this->hashPassword($passwords['new_password']);
+                $this->update($this->table, array("password"), array("password" => $newPassword), "user_id = $user_id");
+                return true;
+            }else{
+                return false;
+            }
+        }
+        return false;
     }
 } 
