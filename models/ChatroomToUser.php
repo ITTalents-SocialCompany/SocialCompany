@@ -42,28 +42,29 @@ class ChatroomToUser extends MasterModel{
 	}
 
 	public function save($fields){
-		var_dump($this->objectToArray($this));
+// 		var_dump($this->objectToArray($this));
 		return $this->insert("users_chatrooms", $fields, $this->objectToArray($this));
 	}
 
 	public function getAllChatroomsForUser($id){
-			
-		$users_chatooms = $this->selectAll("users_chatrooms", "user_id = $id","","DISTINCT chatroom_id,user_id",null);
-		foreach ($users_chatooms as $users_chatoom){
-			$arr[] = $users_chatoom['chatroom_id'];
-		}
-		$arr = implode(",", $arr);
-// 		var_dump($arr);
-		$rows = $this->selectAll($this->table, "chatroom_id IN ($arr)","chatroom_id desc" , "*", null);
-		
-		if(count($rows) > 0){
-			foreach ($rows as $chat){
-				$chats[] = new Chatroom($chat['chat_title'], $chat["participants"],$chat['chatroom_id'] );
+		$users_chatrooms = $this->selectAll("users_chatrooms", "user_id = $id","","DISTINCT chatroom_id,user_id",null);
+		if(!empty($users_chatrooms)){
+			foreach ($users_chatrooms as $users_chatroom){
+				$arr[] = $users_chatroom['chatroom_id'];
 			}
-// 			var_dump($chats);
-			return $chats;				
-		}else{
-			throw new Exception('No chats');
+			$arr = implode(",", $arr);
+	// 		var_dump($arr);
+			$rows = $this->selectAll($this->table, "chatroom_id IN ($arr)","chatroom_id desc" , "*", null);
+		
+			if(count($rows) > 0){
+				foreach ($rows as $chat){
+					$chats[] = new Chatroom($chat['chat_title'], $chat["participants"],$chat['chatroom_id'] );
+				}
+	// 			var_dump($chats);
+				return $chats;				
+			}else{
+				throw new Exception('No chats');
+			}
 		}
 	}
 	

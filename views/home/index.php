@@ -16,7 +16,7 @@
     	$time = explode("-",$event->event_time);
 		$time = $time[2].".".$time[1];?>
 	
-        <a href="/event/event/<?= $event->event_id?>" class="list-group-item">
+        <a href="/event/show/<?= $event->event_id?>" class="list-group-item">
             <b><?= $time;?></b>&nbsp;&nbsp;<?= $event->title?>
         </a>
     <?php endforeach;?>

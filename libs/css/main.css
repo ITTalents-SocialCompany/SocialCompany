@@ -75,6 +75,14 @@ a:hover {
 	float: left;
 }
 
+#events-list{	
+	height: 60px;	
+}
+
+#event-time{
+	float: left;
+	margin-right: 10px;	
+}
 
 
 

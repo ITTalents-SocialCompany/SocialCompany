@@ -24,11 +24,10 @@ class MessageController extends MasterController{
     			$participants = $post["participants"];
     			unset($post['participants']);
     		}
+    		
+    		$usersToNotify = $participants;
     		$participants[] = Auth::getId();
-    		//     		var_dump($participants);
-    	
-    		//$fields = $this->takeFields($post);
-    	
+
     		$newChatroom = new Chatroom();
     		$newChatroom->setTitle($post['chat_title']);
     		$chatroom_id = $newChatroom->saveChatroom($newChatroom, "chat_title");
@@ -38,19 +37,15 @@ class MessageController extends MasterController{
     				$chatroom_to_user = new ChatroomToUser($chatroom_id, $participant);
     				$chatroom_to_user->save("chatroom_id,user_id");
     			}
+    			foreach ($usersToNotify as $userToNotify){
+    				$notification = new Notification($userToNotify, $chatroom_id, "0");
+    				$notification->saveNotification("user_id,chatroom_id,seen");
+    			}
     			$this->redirect("/message/index");
     		}else{
     			echo "Error!";
     		}
     	}
-    }
-    
-    public function getAllChatrooms(){
-    	
-    	$chatroomToUser = new ChatroomToUser();
-    	$chatroomToUser = $chatroomToUser->getAllChatroomsForUser(Auth::getId());
-//     	var_dump($chatroomToUser);
-    	$this->renderViewAjax("messages/chatrooms", array("chatrooms"), array($chatroomToUser));
     }
     
     public function addMessage($post){
@@ -67,12 +62,30 @@ class MessageController extends MasterController{
     	
     }
     
+    public function getAllChatrooms(){
+    	 
+    	$chatroomToUser = new ChatroomToUser();
+    	$chatroomToUser = $chatroomToUser->getAllChatroomsForUser(Auth::getId());		
+    	$this->renderViewAjax("messages/chatrooms", array("chatrooms"), array($chatroomToUser));
+ 
+    }
+    
     public function getAllMessages($args){
-//     	var_dump($post);
+
 		$id = $args[0];
     	$message = new Message();
     	$message = $message->getAllMessagesForChat($id);
     	$this->renderViewAjax("messages/logs", array("messages"), array($message));
+	
+    }
+    
+    public function sendNotification(){
+    	$id = Auth::getId();
+    	$this->renderViewAjax("messages/logs", array("messages"), array($message));
+    }
+    
+    public function noMessages(){
+    	$this->renderView("messages/noChats");
     }
     
     public function getLocalTime(){

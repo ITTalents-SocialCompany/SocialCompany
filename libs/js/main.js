@@ -12,10 +12,6 @@ function searchUser(value){
     }
 }
 
-$(function() {
-    $( "#datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' });
-});
-
 function comment(id){
     if($('#post_'+id).is(':visible')){
         document.getElementById("post_"+id).setAttribute("hidden", "hidden");
@@ -100,3 +96,8 @@ function showAddLanguages(){
         $("#add_languages").toggle();
     })
 }
+
+
+
+
+
