@@ -28,7 +28,7 @@
                     <?php endif; ?>
                     <div class="navbar-form navbar-left">
                         <div class="form-group">
-                            <input type="text" id="search" class="form-control" placeholder="Search" oninput="searchUser(this.value)">
+                            <input type="text" id="search" class="form-control" placeholder="Search" oninput="searchUser(this.value)" autocomplete="off">
                         </div>
                         <div class="list-group fixed" id="findUsers"></div>
                     </div>
@@ -42,7 +42,7 @@
                             <li><a href="/profile/index">Profile</a></li>
                             <li class="divider"></li>
                             <li><a href="/profile/edit">Profile Info Edit</a></li>
-                            <li><a href="/profile/imgs">Profile Imgs</a></li>
+                            <li><a href="/profile/imgs">Profile Images</a></li>
                             <li class="divider"></li>
                             <li><a href="/user/logout">Logout</a></li>
                         </ul>

@@ -1,4 +1,4 @@
-<form action="/admin/addUserToTeamPost" method="post" class="form-horizontal col-md-offset-3 col-md-5">
+<form action="/admin/addUserToTeamPost" method="post" class="form-horizontal col-md-offset-4 col-md-5">
     <fieldset>
         <legend>Add User to Team</legend>
         <div class="form-group col-md-12">
@@ -12,7 +12,7 @@
         <div class="form-group col-md-12">
             <select class="form-control input-sm" name="user_id">
                 <?php foreach($users as $user):?>
-                    <option value="<?= $user->user_id?>"><?php echo "$user->first_name $user->last_name";?></option>
+                    <option value="<?= $user->user_id?>"><?php echo "$user->first_name $user->last_name ($user->username)";?></option>
                 <?php endforeach;?>
             </select>
         </div>

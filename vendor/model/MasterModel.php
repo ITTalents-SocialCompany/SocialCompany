@@ -9,7 +9,6 @@ abstract class MasterModel {
     }
 
     public function insert($table, $fields, array $data){
-//        $this->dbConn = DBConnect::getInstance();
         if(isset($data['table'])){
             unset($data['table']);
         }
@@ -62,19 +61,19 @@ abstract class MasterModel {
         return $prep->execute($values);
     }
 
-    public function selectOne($table, $where = "", $fields = "*", $order = "", $limit = null, $offset = null){
+    public function selectOne($table, $where = "", $fields = "*", $order = "", $group = ""){
         $query = "SELECT " . $fields . " FROM " . $table
                . (($where) ? " WHERE " . $where : "")
-               . (($limit) ? " LIMIT " . $limit : "")
-               . (($offset && $limit) ? " OFFSET " . $offset : "")
+               . (($group && strcmp($group, "") !== 0) ? " GROUP BY " . $group : "")
                . (($order) ? " ORDER BY " . $order : "");
 //        var_dump($query);
         return $this->dbConn->query($query)->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function selectAll($table, $where = "", $order = "",$fields = "*", $limit = null){
+    public function selectAll($table, $where = "", $order = "",$fields = "*", $limit = null, $group = ""){
         $query = "SELECT ". $fields ." FROM " . $table
             . (($where && strcmp($where, "") !== 0) ? " WHERE " . $where : "")
+            . (($group && strcmp($group, "") !== 0) ? " GROUP BY " . $group : "")
             . (($order && strcmp($order, "") !== 0) ? " ORDER BY " . $order : "")
             . (($limit) ? " LIMIT " . $limit : "");
 //         var_dump($query);
@@ -101,7 +100,7 @@ abstract class MasterModel {
     	$aliasJoinTable = substr($joinTable, 0, 2);
     	$query = "SELECT " . $fields . " FROM " . $table . " " . $aliasTable
     	. (($joinTable) ? " "
-    			. (($joinType) ?  $joinType ." JOIN " : "")
+    			. (($joinType) ?  $joinType ." JOIN " : " JOIN ")
     			. $joinTable . " " . $aliasJoinTable : "")
     	. (($on) ? " ON " . "$aliasJoinTable.$on = $aliasTable.$on" : "")
     	. (($where) ? " WHERE " . "$aliasTable.$where" : "")

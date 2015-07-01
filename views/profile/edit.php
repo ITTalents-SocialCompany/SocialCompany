@@ -5,7 +5,7 @@
             <label for="age" class="col-lg-2 control-label">Age</label>
             <div class="col-lg-10">
                 <input class="form-control" type="text" id="age" name="age" placeholder="Age"
-                       value="<?= $user_detail->age?>">
+                       value="<?= $user_detail->age?>" required>
             </div>
         </div>
 
@@ -13,7 +13,7 @@
             <label for="inputEmail" class="col-lg-2 control-label">Email</label>
             <div class="col-lg-10">
                 <input class="form-control" id="inputEmail" name="email" placeholder="Email" type="email"
-                       value="<?= $user_detail->email?>">
+                       value="<?= $user_detail->email?>" required>
             </div>
         </div>
 
@@ -21,14 +21,14 @@
             <label for="inputPhone" class="col-lg-2 control-label">Phone</label>
             <div class="col-lg-10">
                 <input class="form-control" id="inputPhone" name="phone" placeholder="Phone" type="text"
-                       value="<?= $user_detail->phone?>">
+                       value="<?= $user_detail->phone?>" required>
             </div>
         </div>
 
         <div class="form-group">
             <label for="select" class="col-lg-2 control-label">Gender</label>
             <div class="col-lg-10">
-                <select name="gender_id" class="form-control" id="select">
+                <select name="gender_id" class="form-control" id="select" required>
                     <option value="1" <?= $user_detail->gender_id == 1 ? "selected" : ""?>>Male</option>
                     <option value="2" <?= $user_detail->gender_id == 2 ? "selected" : ""?>>Female</option>
                 </select>

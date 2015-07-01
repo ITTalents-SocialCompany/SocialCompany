@@ -2,6 +2,7 @@
 class Team extends MasterModel{
     private $team_id;
     private $name;
+    private $team_members_str;
     private $table = "teams";
 
     public function __get($name) {
@@ -31,8 +32,17 @@ class Team extends MasterModel{
     }
 
     public function getAllTeams(){
-        $rows = $this->selectAll($this->table);
+        $rows = $this->selectAll("team_view", "", "", "team_id, name, group_concat(username, ' ') as team_members_str", null, "team_id");
         if(count($rows) > 0){
+            foreach($rows as $row){
+                $team = new Team();
+                $team = $this->arrayToObject($team, $row);
+                $teams[] = $team;
+            }
+
+            return $teams;
+        }else{
+            $rows = $this->selectAll($this->table);
             foreach($rows as $row){
                 $team = new Team();
                 $team = $this->arrayToObject($team, $row);
@@ -42,4 +52,4 @@ class Team extends MasterModel{
             return $teams;
         }
     }
-} 
+}

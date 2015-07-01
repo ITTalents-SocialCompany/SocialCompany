@@ -18,6 +18,18 @@
     </div>
 
     <input type="hidden" name="category_id" value="<?= $category->category_id?>">
+
+    <div class="form-group" id="btn_tag_users">
+        <a class="btn btn-info btn-sm" onclick="tagUsers();">Tag Users</a>
+    </div>
+    <div class="form-group" id="select_tag_users" hidden>
+        <select class="form-control input-sm" multiple="" name="tagged_users[]">
+            <?php foreach($users as $user):?>
+                <option value="<?= $user->user_id?>"><?= "$user->first_name $user->last_name"?></option>
+            <?php endforeach;?>
+        </select>
+    </div>
+
     <input type="hidden" name="author_id" value="<?= Auth::getId()?>">
     <div class="form-group">
         <button type="submit" class="btn btn-primary">Post</button>
@@ -32,6 +44,11 @@
     function showPostForm(){
         document.getElementById("post_form").removeAttribute("hidden");
         document.getElementById("show_post_form").setAttribute("hidden", "hidden");
+    }
+
+    function tagUsers(){
+        document.getElementById("select_tag_users").removeAttribute("hidden");
+        document.getElementById("btn_tag_users").setAttribute("hidden", "hidden");
     }
 
     var id = document.getElementById("category_id").value;

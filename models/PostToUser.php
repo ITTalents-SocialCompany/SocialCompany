@@ -41,17 +41,23 @@ class PostToUser extends MasterModel{
     }
 
     public function getAllPostForUser($id, $start){
+        $user_posts = $this->selectAll($this->table, "user_id = $id", "", "post_id");
+        foreach($user_posts as $user_post){
+            $arr[] = $user_post['post_id'];
+        }
+        $arr = implode(",", $arr);
+
         $fields = "*";
-        $rows = $this->selectAll("posts_view", "author_id = $id", "", $fields, "$start, 2");
+        $rows = $this->selectAll("posts_view", "post_id IN ($arr)", "", $fields, "$start, 2");
 
         if(count($rows) > 0){
             foreach ($rows as $row){
-                $isLikeWhere = "post_id = " . $row['post_id'] . " AND user_id = " . Auth::getId();
+                $isLikeWhere = "post_id = " . $row['post_id'] . " AND user_id = " . $id;
                 $isLike = $this->selectOne("likes_posts", $isLikeWhere);
                 if($isLike !== false){
                     $isLike = true;
                 }
-                $post = new Post($row['post_id'], $row['title'], $row['body'], $row['author_id'],
+                $post = new Post($row['post_id'], $row['title'], $row['body'], $row['author_id'], $row['post_img_url'],
                                         $row['numOfComments'], $row['numOfLikes'], $isLike);
                 $user = new User();
                 $user->arrayToObject($user, $row);

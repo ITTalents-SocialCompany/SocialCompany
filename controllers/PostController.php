@@ -20,14 +20,23 @@ class PostController extends MasterController{
         }
         $tagged_users[] = Auth::getId();
 
-		$fields = $this->takeFields($post);
-		var_dump($post);
-		$newPost = new Post();
+        $newPost = new Post();
+        $fields = $this->takeFields($post);
+        $folder = "/storage/posts/";
+
+        if(strcmp($_FILES['post_img_url']['name'], "") !== 0){
+            $fields .= ",post_img_url";
+            $filenamePost = $_FILES['post_img_url']['tmp_name'];
+            $realFilenameProfile = $_FILES['post_img_url']['name'];
+            $postFilePath = "/storage/posts/$realFilenameProfile";
+            $newPost->setPostImg($postFilePath);
+        }
+
 		$newPost->setTitle($post['title']);
         $newPost->setBody($post['body']);
         $newPost->setCategoryId($post['category_id']);
         $newPost->setAuthorId($post['author_id']);
-//        var_dump($tagged_users);
+
         $post_id = $newPost->savePost($newPost, $fields);
 
 		if($post_id !== 0){
@@ -35,9 +44,12 @@ class PostController extends MasterController{
                 $post_to_user = new PostToUser($post_id, $tagged_user);
                 $post_to_user->save("post_id,user_id");
             }
+            if(strcmp($_FILES['post_img_url']['name'], "") !== 0){
+                $this->saveImg($filenamePost, $postFilePath, $folder);
+            }
             $this->redirect("/");
         }else{
-            echo "Error!";
+
         }
 	}
 

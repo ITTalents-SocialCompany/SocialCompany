@@ -51,6 +51,11 @@ a:hover {
     font-size: 15px;
 }
 
+.team-member{
+    display: inline-block;
+    margin: 1%;
+}
+
 .event-title{
     height: 300px;
 }

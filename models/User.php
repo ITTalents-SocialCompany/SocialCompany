@@ -112,7 +112,19 @@ class User extends MasterModel{
 
     public function getAllUsersForAdmin(){
         $users = array();
-        $rows = $this->selectAll($this->table, "user_id <>".Auth::getId());
+        $rows = $this->selectAll($this->table);
+        foreach($rows as $row){
+            $user = new User();
+            $user = $this->arrayToObject($user, $row);
+            $users[] = $user;
+        }
+
+        return $users;
+    }
+
+    public function getAllUsersDeleted(){
+        $users = array();
+        $rows = $this->selectAll($this->table, "soft_delete IS NOT NULL");
         foreach($rows as $row){
             $user = new User();
             $user = $this->arrayToObject($user, $row);
@@ -131,7 +143,12 @@ class User extends MasterModel{
     public function soft_delete($id){
         $fields = array("is_approve", "soft_delete");
         $data = array("is_approve"=> false, "soft_delete" => date('Y-m-d H:i:s'));
-//        var_dump($data);
+        $this->update($this->table, $fields, $data, "user_id = '$id'");
+    }
+
+    public function makeAdmin($id){
+        $fields = array("is_admin");
+        $data = array("is_admin"=> true);
         $this->update($this->table, $fields, $data, "user_id = '$id'");
     }
 

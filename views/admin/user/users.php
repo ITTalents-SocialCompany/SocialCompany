@@ -1,8 +1,9 @@
 <div class="page-header">
     <h1>All Users</h1>
+    <a href="/admin/deletedUsers" class="btn btn-success">Log of deleted users</a>
 </div>
 
-<table class="table table-striped table-hover ">
+<table class="table table-striped table-hover">
     <thead>
     <tr>
         <th>#</th>
@@ -11,6 +12,7 @@
         <th>Last Name</th>
         <th>Approve</th>
         <th>Delete</th>
+        <th>Admin</th>
     </tr>
     </thead>
     <tbody>
@@ -49,6 +51,17 @@
                     <p id="delete_success_<?= $user->user_id?>">Deleted User</p>
                 </td>
             <?php endif; ?>
+            <?php if($user->is_admin): ?>
+                <td>Admin</td>
+            <?php else: ?>
+                <td>
+                    <a onclick="makeAdmin(<?= $user->user_id?>);" class="btn btn-warning btn-xs"
+                       id="admin_user_<?= $user->user_id?>">
+                        Make Admin
+                    </a>
+                    <span id="is_admin_<?= $user->user_id?>" hidden>Admin</span>
+                </td>
+            <?php endif;?>
         </tr>
     <?php endforeach;?>
     </tbody>

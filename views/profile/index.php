@@ -17,7 +17,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#timeline" onclick="timeline();">Timeline</a></li>
                     <li><a href="#information" onclick="information();">Information</a></li>
-                    <li><a href="#members" onclick="members();">Members</a></li>
+                    <li><a href="#teams" onclick="teams(<?= $user->user_id?>);">Teams</a></li>
                 </ul>
             </div>
         </div>
@@ -31,24 +31,29 @@
     <?php require_once "views/profile/information.php";?>
 </div>
 
-<div id="members" hidden="hidden">
-    <?php require_once "views/profile/members.php";?>
+<div id="teams" hidden="hidden">
+
 </div>
 
 <script>
     function timeline(){
         $('#timeline').show();
         $('#information').hide();
-        $('#members').hide();
+        $('#teams').hide();
     }
     function information(){
         $('#timeline').hide();
         $('#information').show();
-        $('#members').hide();
+        $('#teams').hide();
     }
-    function members(){
+    function teams(user_id){
         $('#timeline').hide();
         $('#information').hide();
-        $('#members').show();
+        $('#teams').show();
+        $(document).ready(function(){
+            $.get('/profile/teamsAjax/'+user_id, function(result){
+                $('#teams').html(result);
+            })
+        })
     }
 </script>

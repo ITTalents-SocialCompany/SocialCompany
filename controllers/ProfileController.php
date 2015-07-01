@@ -34,6 +34,13 @@ class ProfileController extends MasterController {
         $this->renderViewAjax("home/posts", array("posts"), array($posts));
     }
 
+    public function teamsAjax($args){
+        $user_id = $args[0];
+        $user_team = new UserTeam();
+        $user_teams = $user_team->getAllUsersByTeam($user_id);
+        $this->renderViewAjax("profile/teams", array("user_teams"), array($user_teams));
+    }
+
     public function edit(){
         $id = Auth::getId();
         $user_detail = new UserDetail();

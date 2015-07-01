@@ -17,6 +17,12 @@ class AdminController extends MasterController{
         $this->renderViewWithParams("admin/user/users", array("users"), array($users));
     }
 
+    public function deletedUsers(){
+        $user = new User();
+        $users = $user->getAllUsersDeleted();
+        $this->renderViewWithParams("admin/user/usersDelete", array("users"), array($users));
+    }
+
     public function teams(){
         $team = new Team();
         $teams = $team->getAllTeams();
@@ -34,7 +40,7 @@ class AdminController extends MasterController{
         $team->setName($post['name']);
         $team->save($team, $fields);
 
-        $this->redirect("/admin/team/teams");
+        $this->redirect("/admin/teams");
     }
 
     public function categories(){
@@ -63,6 +69,12 @@ class AdminController extends MasterController{
         $user->soft_delete($id);
     }
 
+    public function makeAdmin($args){
+        $id = $args[0];
+        $user = new User();
+        $user->makeAdmin($id);
+    }
+
     public function approveUser($args){
         $id = $args[0];
         $user = new User();
@@ -72,7 +84,7 @@ class AdminController extends MasterController{
     public function usersTeam(){
         $team = new Team();
         $user = new User();
-        $users = $user->getAllUsers();
+        $users = $user->getAllUsersForAdmin();
         $teams = $team->getAllTeams();
         $this->renderViewWithParams("admin/team/usersTeam", array("teams", "users"), array($teams, $users));
     }
@@ -84,9 +96,15 @@ class AdminController extends MasterController{
         $user_team->setTeamId($post['team_id']);
         $user_team->setUserId($post['user_id']);
 
-        $user_team->save($user_team, $fields);
-
-        $this->redirect("/teams");
+        if($user_team->save($user_team, $fields) > 0){
+            $this->redirect("/admin/teams");
+        }else{
+            $team = new Team();
+            $user = new User();
+            $users = $user->getAllUsersForAdmin();
+            $teams = $team->getAllTeams();
+            $this->renderViewWithParams("/admin/team/usersTeam", array("teams", "users"), array($teams, $users), "User is in this team!");
+        }
     }
 
 } 

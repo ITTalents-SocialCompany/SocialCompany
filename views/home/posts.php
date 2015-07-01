@@ -11,6 +11,9 @@
             </h3>
         </div>
         <div class="panel-body">
+            <?php if($post->post_img_url): ?>
+                <img src="<?= $post->post_img_url?>" width="100%">
+            <?php endif;?>
             <div class="well well-sm">
                 <?php
                     if (strlen($post->body) > 180) {
@@ -21,7 +24,7 @@
                     }
                 ?>
             </div>
-            <div class="col-md-6 col-md-offset-6">
+            <div class="col-md-5 col-md-offset-7">
                 <p class="text-muted">
                     <small>Posted by <?= $post->author->username?></small>
                 </p>
@@ -46,7 +49,7 @@
                     <a id="<?= $post->post_id?>" onclick="comment(this.id)">Comment</a>
                 </small>
             </div>
-            <div class="col-md-offset-5 col-md-3">
+            <div class="col-md-offset-4 col-md-4">
 <!--                <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>-->
                 <small>
                     <span id="like_<?= $post->post_id?>"><?= $post->numberOfLikes?></span> Likes

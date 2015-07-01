@@ -36,20 +36,27 @@ if(isset($request)){
     }
 
 }
+try{
+    if(file_exists("controllers/$controller.php")){
+        require_once "controllers/$controller.php";
 
-if(file_exists("controllers/$controller.php")){
-    require_once "controllers/$controller.php";
+        if(class_exists($controller)){
+            $controller = new $controller();
 
-    if(class_exists($controller)){
-        $controller = new $controller();
-
-        if(method_exists($controller, $action)){
-            if($method === "POST"){
-                call_user_func_array(array($controller, $action), array($_POST));
-            }else{
-                call_user_func_array(array($controller, $action), $args);
+            if(method_exists($controller, $action)){
+                if($method === "POST"){
+                    call_user_func_array(array($controller, $action), array($_POST));
+                }else{
+                    call_user_func_array(array($controller, $action), $args);
+                }
             }
         }
+    }else{
+        require_once "views/error/404.php";
     }
+}catch (PDOException $e){
+//    echo $e->getMessage();
+    session_destroy();
+    require_once "views/error/500.php";
 }
 

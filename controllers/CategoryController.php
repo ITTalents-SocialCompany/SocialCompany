@@ -4,7 +4,9 @@ class CategoryController extends MasterController{
         $id = $args[0];
         $category = new Category();
         $category->getCategory($id);
-        $this->renderViewWithParams("category/index", array("category"), array($category));
+        $user = new User();
+        $users = $user->getAllUsers();
+        $this->renderViewWithParams("category/index", array("category", "users"), array($category, $users));
     }
 
 } 

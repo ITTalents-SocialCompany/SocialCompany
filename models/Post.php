@@ -5,19 +5,21 @@ class Post extends MasterModel{
     private $body;
     private $category_id;
     private $author_id;
+    private $post_img_url;
     private $author;
     private $numberOfComments;
     private $numberOfLikes;
     private $isLike;
     private $table = "posts";
 
-    public function __construct($post_id = null, $title = null, $body = null, $author_id = null,
+    public function __construct($post_id = null, $title = null, $body = null, $author_id = null, $post_img_url = null,
                                 $numberOfComments = null, $numberOfLikes = null, $isLike = null){
         parent::__construct();
         $this->post_id = $post_id;
         $this->title = $title;
         $this->body = $body;
         $this->author_id = $author_id;
+        $this->post_img_url = $post_img_url;
         $this->numberOfComments = $numberOfComments;
         $this->numberOfLikes = $numberOfLikes;
         $this->isLike = $isLike;
@@ -41,6 +43,10 @@ class Post extends MasterModel{
 
     public function setCategoryId($category_id){
         $this->category_id = $category_id;
+    }
+
+    public function setPostImg($post_img_url){
+        $this->post_img_url = $post_img_url;
     }
 
     public function addAuthor(User $user){
@@ -83,7 +89,7 @@ class Post extends MasterModel{
         if($isLike !== false){
             $isLike = true;
         }
-        $post = new Post($row['post_id'], $row['title'], $row['body'], $row['author_id'],
+        $post = new Post($row['post_id'], $row['title'], $row['body'], $row['author_id'], $row['post_img_url'],
             $numberOfComments['count'], $numberOfLikes['count'], $isLike);
         $user = new User();
         $user->arrayToObject($user, $row);
@@ -102,7 +108,7 @@ class Post extends MasterModel{
                 if($isLike !== false){
                     $isLike = true;
                 }
-                $post = new Post($row['post_id'], $row['title'], $row['body'], $row['author_id'],
+                $post = new Post($row['post_id'], $row['title'], $row['body'], $row['author_id'], $row['post_img_url'],
                                 $row['numOfComments'], $row['numOfLikes'], $isLike);
                 $user = new User();
                 $user->arrayToObject($user, $row);

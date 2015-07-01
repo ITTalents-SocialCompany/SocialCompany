@@ -43,12 +43,15 @@ class MasterController {
         require_once 'views/layouts/footer.php';
     }
 
-    public function renderViewWithParams($view, array $params, array $arr){
+    public function renderViewWithParams($view, array $params, array $arr, $error = null){
         for($i = 0; $i < count($params); $i++){
             $$params[$i] = $arr[$i];
         }
 
         require_once 'views/layouts/header.php';
+        if($error !== null){
+            require_once 'views/layouts/error.php';
+        }
         require_once "views/$view.php";
         require_once 'views/layouts/footer.php';
     }

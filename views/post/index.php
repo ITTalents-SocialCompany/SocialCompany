@@ -10,6 +10,11 @@
         </h3>
     </div>
     <div class="panel-body">
+        <div class="text-center">
+            <?php if($post->post_img_url): ?>
+                <img src="<?= $post->post_img_url?>" width="40%">
+            <?php endif;?>
+        </div>
         <div class="well well-sm">
             <?= $post->body?>
         </div>
@@ -39,9 +44,9 @@
             </small>
         </div>
         <div class="col-md-offset-8 col-md-2">
-            <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+<!--            <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>-->
             <small>
-                <a id="like_<?= $post->post_id?>"><?= $post->numberOfLikes?></a>
+                <span id="like_<?= $post->post_id?>"><?= $post->numberOfLikes?></span> Likes
             </small>
             <a id="<?= $post->post_id?>" onclick="showComments(this.id)">
                 <span class="glyphicon glyphicon-comment" aria-hidden="true"></span><small> <?= $post->numberOfComments?></small>
