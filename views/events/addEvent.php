@@ -21,7 +21,7 @@
     <div class="form-group">
     	 <label for="event_time" class="col-lg-2 control-label">Title</label>
     	 <div class="col-lg-10">
-    	 	<input type="text" id="datepicker" name="event_time" class="form-control input-sm"/>
+    	 	<input type="text" id="datepicker" name="event_time" class="form-control input-sm" placeholder="Pick a date (yyyy-mm-dd)"/>
     	 </div>
 	</div>
 	
@@ -42,9 +42,3 @@
     </div>
     </fieldset>
 </form>
-
-<script>
-  $(function() {
-    $( "#datepicker" ).datepicker();
-  });
-</script>

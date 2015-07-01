@@ -21,7 +21,7 @@ abstract class MasterModel {
         $query = "INSERT INTO " . $table . " (" . $fields . ") " . " VALUES (" .
             rtrim(str_repeat("?,", count($values)), ",") . ")";
 
-//        var_dump($query);
+       var_dump($query);
         $prep = $this->dbConn->prepare($query);
         $prep->execute($values);
         return $this->dbConn->lastInsertId();
