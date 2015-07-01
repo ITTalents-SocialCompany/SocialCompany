@@ -33,7 +33,7 @@ class EventController extends MasterController{
 			$filenameCover = $_FILES['cover_img_url']['tmp_name'];// = temp file
 			$realFilenameCover = $_FILES['cover_img_url']['name'];// = cv_photo.jpg
 			$coverFilePath = "/storage/events/$realFilenameCover";
-			$newEvent->setCoverImg($coverFilePath);
+			$newEvent->setCoverImgUrl($coverFilePath);
 			if(isset($filenameCover)){
 				$this->saveImg($filenameCover, $coverFilePath, $folder);
 			}
@@ -52,5 +52,42 @@ class EventController extends MasterController{
         
        
 	}
+	
+	public function edit($args){
+		$id = $args[0];
+		$event = new Event();
+		$event->getOne($event, $id);
+		$this->renderViewWithParams("events/edit", array("event"), array($event));
+	}
+	
+	public function editEvent($post){
+		$id = $post['event_id'];
+		unset($post['event_id']);
+		$fields = array('title', 'body', 'event_time');
+		$changeEvent = new Event();
+		$changeEvent->setTitle($post['title']);
+		$changeEvent->setBody($post['body']);
+		$changeEvent->setEventTime($post['event_time']);
+		if($changeEvent->change($post, $fields, $id)){
+			$this->redirect("/event/index");
+		}
+	}
+	
+	public function delete($args){
+		$id = $args[0];
+		$event = new Event();
+		if($event->deleteOne($id)){
+			$this->redirect("/event/index");
+		}
+		
+	}
 
+	
+	
+	
+	
+	
+	
+	
+	
 } 

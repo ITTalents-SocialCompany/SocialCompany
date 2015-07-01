@@ -1,5 +1,6 @@
 $(function() {
-    $( "#datepicker" ).datepicker({dateFormat: 'yy-mm-dd'});
+	$('#datepicker').datepicker({ dateFormat: 'yy-mm-dd' });
+
 });
 
 function searchUser(value){
@@ -100,6 +101,7 @@ function showAddLanguages(){
         $("#add_languages").toggle();
     })
 }
+
 
 
 

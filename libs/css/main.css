@@ -84,11 +84,15 @@ a:hover {
 	height: 60px;	
 }
 
-#event-time{
-	float: left;
-	margin-right: 10px;	
+.delete_img{
+	margin-top: 10px;
+	width: 50%;
 }
 
+#remove_button{
+	margin-left: 10px;
+
+}
 
 
 
