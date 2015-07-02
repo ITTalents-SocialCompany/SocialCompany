@@ -19,23 +19,23 @@ class UserDetail extends MasterModel{
     }
 
     public function setAge($age){
-        $this->age = $age;
+        $this->age = strip_tags($age);
     }
 
     public function setEmail($email){
-        $this->email = $email;
+        $this->email = strip_tags($email);
     }
 
     public function setProfileImg($profile_img_url){
-        $this->profile_img_url = $profile_img_url;
+        $this->profile_img_url = strip_tags($profile_img_url);
     }
 
     public function setCoverImg($cover_img_url){
-        $this->cover_img_url = $cover_img_url;
+        $this->cover_img_url = strip_tags($cover_img_url);
     }
 
     public function setPhone($phone){
-        $this->phone = $phone;
+        $this->phone = strip_tags($phone);
     }
 
     public function setGenderId($gender_id){
@@ -43,19 +43,19 @@ class UserDetail extends MasterModel{
     }
 
     public function setBirthDate($birth_date){
-        $this->birthdate = $birth_date;
+        $this->birthdate = strip_tags($birth_date);
     }
 
     public function setUniversityName($university_name){
-        $this->university_name = $university_name;
+        $this->university_name = strip_tags($university_name);
     }
 
     public function setUniversitySpec($university_spec){
-        $this->university_spec = $university_spec;
+        $this->university_spec = strip_tags($university_spec);
     }
 
     public function setSkills($skills){
-        $this->skills = $skills;
+        $this->skills = strip_tags($skills);
     }
 
     public function setUserId($user_id){

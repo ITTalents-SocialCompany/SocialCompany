@@ -5,10 +5,16 @@ class DBConnect{
 
     private function __construct(){
 
-        $db = new PDO(DNS, DB_USER, DB_PASS);
-        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        try{
+            $db = new PDO(DNS, DB_USER, DB_PASS);
 
-        self::$db = $db;
+            //Comment next row when app is in production
+    //        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            self::$db = $db;
+        }catch (PDOException $e){
+            header("Location: /home/errorDb");
+        }
     }
 
     public static function getInstance() {

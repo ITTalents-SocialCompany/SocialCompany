@@ -17,7 +17,12 @@ class HomeController extends MasterController{
     public function searchUser($post){
         $user = new User();
         $users = $user->searchUser($post['searchStr']);
-//var_dump($users);
+
         $this->renderViewAjax("user/usersFind", array("users"), array($users));
+    }
+
+    public function errorDb(){
+        session_destroy();
+        require_once "views/error/500.php";
     }
 } 

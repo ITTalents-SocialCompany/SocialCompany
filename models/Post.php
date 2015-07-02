@@ -25,16 +25,36 @@ class Post extends MasterModel{
         $this->isLike = $isLike;
     }
 
+    public function validate($post){
+        try{
+            $this->setTitle(strip_tags($post['title']));
+            $this->setBody(strip_tags($post['body']));
+            $this->setCategoryId($post['category_id']);
+            $this->setAuthorId($post['author_id']);
+            return true;
+        }catch (InvalidArgumentException $e){
+            return false;
+        }
+    }
+
     public function __get($name) {
         return $this->$name;
     }
     
     public function setTitle($title){
-    	$this->title = $title;
+        if(is_null($title)){
+            $this->title = $title;
+        }else{
+            throw new InvalidArgumentException("Title must be required!");
+        }
     }
     
     public function setBody($body){
-    	$this->body = $body;
+        if(is_null($body)){
+            $this->body = $body;
+        }else{
+            throw new InvalidArgumentException("Body must be required!");
+        }
     }
 
     public function setAuthorId($author_id){

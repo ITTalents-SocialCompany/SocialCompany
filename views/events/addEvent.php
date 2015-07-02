@@ -24,15 +24,12 @@
     	 	<input type="text" id="datepicker" name="event_time" class="form-control input-sm" placeholder="Pick a date (yyyy-mm-dd)" required/>
     	 </div>
 	</div>
-	
-    <div class="form-group">
-            </div>
-	<div class="form-group">
-            <label class="col-lg-2 control-label" for="cover_img_url">Upload Cover Img:</label>
-            <div class="col-lg-10">
-                 <input type="file" name="cover_img_url" ><!--onchange="readURL(this);" -->
-            </div>
 
+	<div class="form-group">
+        <label class="col-lg-2 control-label" for="cover_img_url">Upload Cover Img:</label>
+        <div class="col-lg-10">
+             <input type="file" name="cover_img_url" accept="image/*">
+        </div>
     </div>
         
     <div class="form-group">

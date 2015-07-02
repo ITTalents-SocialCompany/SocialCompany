@@ -2,7 +2,9 @@
 session_start();
 
 function __autoload($classname) {
-    include_once("models/$classname.php");
+    if(strcmp($classname, "UserData") !== 0){
+        include_once("models/$classname.php");
+    }
 }
 
 require_once 'config/config.php';
@@ -10,6 +12,7 @@ require_once 'vendor/db/DBConnect.php';
 require_once 'vendor/controller/MasterController.php';
 require_once 'vendor/model/MasterModel.php';
 require_once 'vendor/user/Authentication.php';
+require_once 'vendor/user/UserData.php';
 
 $request = $_SERVER["REQUEST_URI"];
 $method = $_SERVER["REQUEST_METHOD"];
@@ -36,27 +39,23 @@ if(isset($request)){
     }
 
 }
-try{
-    if(file_exists("controllers/$controller.php")){
-        require_once "controllers/$controller.php";
 
-        if(class_exists($controller)){
-            $controller = new $controller();
+if(file_exists("controllers/$controller.php")){
+    require_once "controllers/$controller.php";
 
-            if(method_exists($controller, $action)){
-                if($method === "POST"){
-                    call_user_func_array(array($controller, $action), array($_POST));
-                }else{
-                    call_user_func_array(array($controller, $action), $args);
-                }
+    if(class_exists($controller)){
+        $controller = new $controller();
+
+        if(method_exists($controller, $action)){
+            if($method === "POST"){
+                call_user_func_array(array($controller, $action), array($_POST));
+            }else{
+                call_user_func_array(array($controller, $action), $args);
             }
         }
-    }else{
-        require_once "views/error/404.php";
     }
-}catch (PDOException $e){
-   echo $e->getMessage();
-//     session_destroy();
-//     require_once "views/error/500.php";
+}else{
+    require_once "views/error/404.php";
 }
+
 

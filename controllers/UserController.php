@@ -10,21 +10,19 @@ class UserController extends MasterController{
     public function registerPost($post){
         $fields = $this->takeFields($post);
 
-        try{
-            $user = new User();
-            $user->setUsername($post['username']);
-            $user->setPassword($post['password']);
-            $user->setFirstName($post['first_name']);
-            $user->setLastName($post['last_name']);
-        }catch (Exception $e){
-            $this->renderViewWithParams("user/register", array("user"), array($user), "Invalid values!");
-        }
 
-        if($user->register($user, $fields) !== 0){
-            $this->redirect("/user/login");
-        }
-        else{
-            $this->renderViewWithParams("user/register", array("user"), array($user), "Username is occupied!");
+        $user = new User();
+        $error = $user->validate($post);
+        if($error !== true){
+            $this->renderViewWithParams("user/register", array("user"), array($user), $error);
+        }else{
+
+            if($user->register($user, $fields) !== 0){
+                $this->redirect("/user/login");
+            }
+            else{
+                $this->renderViewWithParams("user/register", array("user"), array($user), "Username is occupied!");
+            }
         }
     }
 
@@ -34,18 +32,23 @@ class UserController extends MasterController{
 
     public function loginPost($post){
         $user = new User();
-        $user->setUsername($post['username']);
-        $user->setPassword($post['password']);
-
-        if($user->login($user)){
-            $user_detail = new UserDetail();
-            if($user_detail->hasUserDetail()){
-                $this->redirect("/profile/index");
-            }else{
-                $this->redirect("/profile/edit");
-            }
+        $error = $user->validate($post);
+        if($error !== true){
+            $this->renderViewWithParams("user/login", array("user"), array($user), $error);
         }else{
-            $this->renderViewWithParams("user/login", array("user"), array($user), "Username or password is wrong!");
+            $user->setUsername($post['username']);
+            $user->setPassword($post['password']);
+
+            if($user->login($user)){
+                $user_detail = new UserDetail();
+                if($user_detail->hasUserDetail()){
+                    $this->redirect("/profile/index");
+                }else{
+                    $this->redirect("/profile/edit");
+                }
+            }else{
+                $this->renderViewWithParams("user/login", array("user"), array($user), "Username or password is wrong!");
+            }
         }
     }
 

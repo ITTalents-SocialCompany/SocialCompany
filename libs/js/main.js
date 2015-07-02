@@ -28,21 +28,18 @@ function comment(id){
 
 function addComment(id){
     var element = document.getElementById("form_"+id).elements;
-    var reg = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
-    if($('#comment_body_'+id).val().match(reg)){
-        var dataString = "";
-        for(var i = 0; i < element.length; i++){
-            dataString += element.item(i).name + "=" + element.item(i).value + "&";
-        }
-        $(document).ready(function(){
-            $.post('/comment/saveComment', dataString, function(result){
-                document.getElementById("form_"+id).reset();
-                document.getElementById("post_"+id).setAttribute("hidden", "hidden");
-                var numOfComments = parseInt($("#comment_num_"+id).html())+1;
-                $("#comment_num_"+id).html(numOfComments);
-            });
-        });
+    var dataString = "";
+    for(var i = 0; i < element.length; i++){
+        dataString += element.item(i).name + "=" + element.item(i).value + "&";
     }
+    $(document).ready(function(){
+        $.post('/comment/saveComment', dataString, function(result){
+            document.getElementById("form_"+id).reset();
+            document.getElementById("post_"+id).setAttribute("hidden", "hidden");
+            var numOfComments = parseInt($("#comment_num_"+id).html())+1;
+            $("#comment_num_"+id).html(numOfComments);
+        });
+    });
 }
 
 function showComments(id){

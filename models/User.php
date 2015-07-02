@@ -16,8 +16,24 @@ class User extends MasterModel{
         return $this->$name;
     }
 
+    public function validate($post){
+        try{
+            $this->setUsername($post['username']);
+            $this->setPassword($post['password']);
+            if(isset($post['first_name'])){
+                $this->setFirstName($post['first_name']);
+            }
+            if(isset($post['last_name'])){
+                $this->setLastName($post['last_name']);
+            }
+            return true;
+        }catch (InvalidArgumentException $e){
+            return $e->getMessage();
+        }
+    }
+
     public function setUsername($username){
-        if(preg_match('/^[a-zA-Z][a-zA-Z0-9\_\-]+/', $username)){
+        if(preg_match('/^[a-zA-Z][a-zA-Z0-9\_\-]+/', $username) === 1){
             $this->username = $username;
         }else{
             throw new InvalidArgumentException("Username must be string!");
@@ -29,7 +45,7 @@ class User extends MasterModel{
     }
 
     public function setFirstName($first_name){
-        if(preg_match('/[a-zA-Z]+/',$first_name)){
+        if(preg_match('/[a-zA-Z]+/',$first_name) === 1){
             $this->first_name = $first_name;
         }else{
             throw new InvalidArgumentException("First name must be string!");
@@ -37,7 +53,7 @@ class User extends MasterModel{
     }
 
     public function setLastName($last_name){
-        if(preg_match('/[a-zA-Z]+/',$last_name)){
+        if(preg_match('/[a-zA-Z]+/',$last_name) === 1){
             $this->last_name = $last_name;
         }else{
             throw new InvalidArgumentException("Last name must be string!");
@@ -70,9 +86,9 @@ class User extends MasterModel{
     public function login(User $user){
         if($res = $this->selectOne($this->table, "username = '$user->username' and soft_delete IS NULL AND is_approve IS TRUE")){
             if (password_verify($user->password, $res['password'])) {
-                $_SESSION['is_admin'] = $res['is_admin'];
-                $_SESSION['first_name'] = $res['first_name'];
-                $_SESSION['id'] = $res['user_id'];
+                $newUserData = new UserData();
+                $newUserData->arrayToObject($newUserData, $res);
+                $_SESSION['logged_user'] = serialize($newUserData);
                 return true;
             }else{
                 return false;
@@ -123,7 +139,7 @@ class User extends MasterModel{
 
     public function getAllUsersForAdmin(){
         $users = array();
-        $rows = $this->selectAll($this->table);
+        $rows = $this->selectAll($this->table, "is_approve IS TRUE AND soft_delete IS NULL");
         foreach($rows as $row){
             $user = new User();
             $user = $this->arrayToObject($user, $row);

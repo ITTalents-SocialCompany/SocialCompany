@@ -2,15 +2,34 @@
 class Auth{
 
     public static function getId(){
-        return isset($_SESSION['id']) ? $_SESSION['id'] : false;
+        if(isset($_SESSION['logged_user'])){
+            $user = unserialize($_SESSION['logged_user']);
+            return $user->user_id;
+        }
+        return false;
+    }
+
+    public static function getFirstName(){
+        if(isset($_SESSION['logged_user'])){
+            $user = unserialize($_SESSION['logged_user']);
+            return $user->first_name;
+        }
+        return false;
     }
 
     public static function isAdmin(){
-        return isset($_SESSION['is_admin']) && $_SESSION['is_admin'] ? true : false;
+        if(isset($_SESSION['logged_user'])){
+            $user = unserialize($_SESSION['logged_user']);
+            return $user->is_admin ? true : false;
+        }
     }
 
     public static function isLoggedIn(){
-        return isset($_SESSION['id']) ? true : false;
+        if(isset($_SESSION['logged_user'])){
+            $user = unserialize($_SESSION['logged_user']);
+            return true;
+        }
+        return false;
     }
 
     public static function isAuthorized(){

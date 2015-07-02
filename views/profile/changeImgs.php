@@ -5,7 +5,7 @@
         <div class="form-group">
             <label class="col-lg-2 control-label" for="profile_img_url">Upload Profile Img:</label>
             <div class="col-lg-10">
-                <input type="file" name="profile_img_url" onchange="readURL(this);">
+                <input type="file" name="profile_img_url" onchange="readURL(this);" accept="image/*">
             </div>
             <div class="col-lg-10">
                 <img class="thumbnail" id="profile_img_url" src="<?= $user_detail->profile_img_url ?
@@ -16,7 +16,7 @@
         <div class="form-group">
             <label class="col-lg-2 control-label" for="cover_img_url">Upload Cover Img:</label>
             <div class="col-lg-10">
-                <input type="file" name="cover_img_url" onchange="readURL(this);">
+                <input type="file" name="cover_img_url" onchange="readURL(this);" accept="image/*">
             </div>
             <div class="col-lg-10">
                 <img class="thumbnail" id="cover_img_url" src="<?= $user_detail->cover_img_url ?

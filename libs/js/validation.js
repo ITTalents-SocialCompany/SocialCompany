@@ -23,7 +23,7 @@ $(document).ready(function() {
             password: {
                 validators: {
                     notEmpty: {
-                        message: 'The full name is required and cannot be empty'
+                        message: 'Required and cannot be empty'
                     },
                     stringLength: {
                         min: 4,
@@ -81,7 +81,42 @@ $(document).ready(function() {
             password: {
                 validators: {
                     notEmpty: {
-                        message: 'The full name is required and cannot be empty'
+                        message: 'Required and cannot be empty'
+                    }
+                }
+            }
+        }
+    });
+
+    $('#changePasswordForm').bootstrapValidator({
+        err: {
+            container: 'tooltip'
+        },
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            new_password: {
+                validators: {
+                    notEmpty: {
+                        message: 'Required and cannot be empty'
+                    },
+                    identical: {
+                        field: 'old_password',
+                        message: 'The password and its confirm are not the same'
+                    }
+                }
+            },
+            new_password: {
+                validators: {
+                    notEmpty: {
+                        message: 'Required and cannot be empty'
+                    },
+                    identical: {
+                        field: 'new_password',
+                        message: 'The password and its confirm are not the same'
                     }
                 }
             }
@@ -111,7 +146,7 @@ $(document).ready(function() {
             email: {
                 validators: {
                     notEmpty: {
-                        message: 'The full name is required and cannot be empty'
+                        message: 'Required and cannot be empty'
                     },
                     emailAddress: {
                         message: 'The input is not a valid email address'
@@ -129,6 +164,40 @@ $(document).ready(function() {
                 }
             },
             gender_id: {
+                validators: {
+                    notEmpty: {
+                        message: 'Required and cannot be empty'
+                    }
+                }
+            }
+        }
+    });
+
+    $('#post_form').bootstrapValidator({
+        err: {
+            container: 'tooltip'
+        },
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            title: {
+                validators: {
+                    notEmpty: {
+                        message: 'Required and cannot be empty'
+                    }
+                }
+            },
+            body: {
+                validators: {
+                    notEmpty: {
+                        message: 'Required and cannot be empty'
+                    }
+                }
+            },
+            category_id: {
                 validators: {
                     notEmpty: {
                         message: 'Required and cannot be empty'

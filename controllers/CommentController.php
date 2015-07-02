@@ -2,14 +2,13 @@
 class CommentController extends MasterController{
 
     public function saveComment($post){
-//        var_dump($post);
         $fields = $this->takeFields($post);
-//        var_dump($fields);
+
         $comment = new Comment();
-        $comment->setBody($post['body']);
+        $comment->setBody(strip_tags($post['body']));
         $comment->setPostId($post['post_id']);
         $comment->setAuthorId($post['author_id']);
-        var_dump($comment);
+//        var_dump($comment);
         $comment->save($comment, $fields);
     }
 

@@ -21,35 +21,34 @@ class PostController extends MasterController{
         $tagged_users[] = Auth::getId();
 
         $newPost = new Post();
-        $fields = $this->takeFields($post);
-        $folder = "/storage/posts/";
+        $error = $newPost->validate($post);
+        if($error === true){
 
-        if(strcmp($_FILES['post_img_url']['name'], "") !== 0){
-            $fields .= ",post_img_url";
-            $filenamePost = $_FILES['post_img_url']['tmp_name'];
-            $realFilenameProfile = $_FILES['post_img_url']['name'];
-            $postFilePath = "/storage/posts/$realFilenameProfile";
-            $newPost->setPostImg($postFilePath);
-        }
+            $fields = $this->takeFields($post);
+            $folder = "/storage/posts/";
 
-		$newPost->setTitle($post['title']);
-        $newPost->setBody($post['body']);
-        $newPost->setCategoryId($post['category_id']);
-        $newPost->setAuthorId($post['author_id']);
-
-        $post_id = $newPost->savePost($newPost, $fields);
-
-		if($post_id !== 0){
-            foreach($tagged_users as $tagged_user){
-                $post_to_user = new PostToUser($post_id, $tagged_user);
-                $post_to_user->save("post_id,user_id");
-            }
             if(strcmp($_FILES['post_img_url']['name'], "") !== 0){
-                $this->saveImg($filenamePost, $postFilePath, $folder);
+                $fields .= ",post_img_url";
+                $filenamePost = $_FILES['post_img_url']['tmp_name'];
+                $realFilenameProfile = $_FILES['post_img_url']['name'];
+                $postFilePath = "/storage/posts/$realFilenameProfile";
+                $newPost->setPostImg($postFilePath);
             }
-            $this->redirect("/");
-        }else{
 
+            $post_id = $newPost->savePost($newPost, $fields);
+
+            if($post_id !== 0){
+                foreach($tagged_users as $tagged_user){
+                    $post_to_user = new PostToUser($post_id, $tagged_user);
+                    $post_to_user->save("post_id,user_id");
+                }
+                if(strcmp($_FILES['post_img_url']['name'], "") !== 0){
+                    $this->saveImg($filenamePost, $postFilePath, $folder);
+                }
+                $this->redirect("/");
+            }
+        }else{
+            $this->redirect("/");
         }
 	}
 
@@ -65,8 +64,8 @@ class PostController extends MasterController{
         unset($post['post_id']);
         $fields = array('title', 'body');
         $changePost = new Post();
-        $changePost->setTitle($post['title']);
-        $changePost->setBody($post['body']);
+        $changePost->setTitle(strip_tags($post['title']));
+        $changePost->setBody(strip_tags($post['body']));
         if($changePost->change($post, $fields, $id)){
             $this->redirect("/");
         }
