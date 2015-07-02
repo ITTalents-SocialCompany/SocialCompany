@@ -13,20 +13,26 @@ class NotificationController extends MasterController{
     public function countNotifications(){
     	$id = Auth::getId();
     	$notification = new Notification();
-    	$notifications = $notification->getAllchatNotifications($id);
+    	$notifications = $notification->getAllChatNotifications($id);
      	echo count($notifications);
+    }
+    
+    public function countPostNotifications(){
+    	$id = Auth::getId();
+    	$postNotification = new Notification();
+    	$postNotifications = $postNotification->getAllPostNotifications($id);
+    	echo count($postNotifications);
     }
     
     public function getAllNotifications(){
     	$id = Auth::getId();
     	$chatNotification = new Notification();
-    	$chatNotifications = $chatNotification->getAllchatNotifications($id);
+    	$chatNotifications = $chatNotification->getAllChatNotifications($id);
 
-//     	$postNotification = new Notification();
-//     	$postNotifications = $chatNotification->getAll($id);
-//     	$postNotifications = $postNotification->getAllpostNotifications($id);
+    	$postNotification = new Notification();
+    	$postNotifications = $postNotification->getAllPostNotifications($id);
     	
-    	$this->renderViewAjax("notifications/log", array('chatNotifications'), array($chatNotifications));
+    	$this->renderViewAjax("notifications/log", array('chatNotifications','postNotifications'), array($chatNotifications,$postNotifications));
     }
     
     public function changeNotificationStatus($args){

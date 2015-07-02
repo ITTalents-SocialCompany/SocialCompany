@@ -45,7 +45,11 @@ class Notification extends MasterModel{
 		return $this->insert("notifications", $fields, $this->objectToArray($this));		
 	}
 	
-	public function getAllchatNotifications($id){
+	public function savePostNotification($fields){
+		return $this->insert("postnotification", $fields, $this->objectToArray($this));
+	}
+	
+	public function getAllChatNotifications($id){
 		$rows = $this->selectAllWithJoin("notifications","chatrooms_view","chatroom_id","LEFT", "user_id = $id AND seen = 0","*","");
 		if(count($rows) > 0){
 			foreach ($rows as $notification){
@@ -53,14 +57,14 @@ class Notification extends MasterModel{
 			}
 			return $notifications;
 			//var_dump($notifications);
-		}	
+		}
 	}
 	
-	public function getAllpostNotifications($id){
-		$rows = $this->selectAll("postNotifications", "user_id = $id AND seen = 0");
+	public function getAllPostNotifications($id){
+		$rows = $this->selectAllWithJoin("postNotifications","posts","post_id","LEFT", "user_id = $id AND is_seen = 0","*", "");
 		if(count($rows) > 0){
 			foreach ($rows as $postNotification){
-				$notifications[] = new Notification($notification['notification_id'], $notification['user_id'], $notification['chatroom_id'], $notification['seen']);
+				$notifications[] = new Notification($postNotification['notification_id'], $postNotification['user_id'], $postNotification['post_id'], $postNotification['is_seen'], $postNotification['title']);
 			}
 			return $notifications;
 			//var_dump($notifications);

@@ -42,6 +42,10 @@ class PostController extends MasterController{
                     $post_to_user = new PostToUser($post_id, $tagged_user);
                     $post_to_user->save("post_id,user_id");
                 }
+                foreach ($usersToNotify as $userToNotify){
+                	$postNotification = new Notification($userToNotify, $post_id, "0");
+                	$postNotification->savePostNotification("user_id,post_id,is_seen");
+                }
                 if(strcmp($_FILES['post_img_url']['name'], "") !== 0){
                     $this->saveImg($filenamePost, $postFilePath, $folder);
                 }

@@ -9,7 +9,7 @@ class DBConnect{
             $db = new PDO(DNS, DB_USER, DB_PASS);
 
             //Comment next row when app is in production
-    //        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+//            $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             self::$db = $db;
         }catch (PDOException $e){

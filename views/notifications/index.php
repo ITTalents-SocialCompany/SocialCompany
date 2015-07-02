@@ -21,13 +21,25 @@ setInterval(function(){
 	});
 }, 5000);
 
-function seeNotification(id){
+function seeChatNotification(id){
 	//isseen = true
 	//redirect to messages
 	$(document).ready(function(){
 		$.get('/notification/changeNotificationStatus/'+id, function(data){
 
 			document.location.href="/message/index";
+		
+		});
+	});
+}
+
+function seePostNotification(id){
+	//isseen = true
+	//redirect to messages
+	$(document).ready(function(){
+		$.get('/notification/changeNotificationStatus/'+id, function(data){
+
+			document.location.href="/post/index/"+id;
 		
 		});
 	});
