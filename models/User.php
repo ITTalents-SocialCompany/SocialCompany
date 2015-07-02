@@ -139,6 +139,18 @@ class User extends MasterModel{
 
     public function getAllUsersForAdmin(){
         $users = array();
+        $rows = $this->selectAll($this->table);
+        foreach($rows as $row){
+            $user = new User();
+            $user = $this->arrayToObject($user, $row);
+            $users[] = $user;
+        }
+
+        return $users;
+    }
+
+    public function getAllUsersForAdminTeams(){
+        $users = array();
         $rows = $this->selectAll($this->table, "is_approve IS TRUE AND soft_delete IS NULL");
         foreach($rows as $row){
             $user = new User();

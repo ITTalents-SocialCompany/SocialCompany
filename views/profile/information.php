@@ -32,16 +32,5 @@
             </div>
         </div>
         <hr>
-        <strong>Languages</strong>
-        <hr>
-        <div class="row">
-            <div class="col-md-offset-1">
-                <a onclick="showAddLanguages()"><span class="glyphicon glyphicon-plus-sign" style="color: green"></span> Add Language</a>
-                <div id="add_languages" hidden>
-                    <?php require_once "views/profile/addLanguages.php";?>
-                </div>
-            </div>
-        </div>
-        <hr>
     </div>
 </div>

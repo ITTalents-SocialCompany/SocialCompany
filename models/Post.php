@@ -27,13 +27,17 @@ class Post extends MasterModel{
 
     public function validate($post){
         try{
-            $this->setTitle(strip_tags($post['title']));
-            $this->setBody(strip_tags($post['body']));
-            $this->setCategoryId($post['category_id']);
-            $this->setAuthorId($post['author_id']);
+            $this->setTitle($post['title']);
+            $this->setBody($post['body']);
+            if(isset($post['category_id'])){
+                $this->setCategoryId($post['category_id']);
+            }
+            if(isset($post['category_id'])){
+                $this->setAuthorId($post['author_id']);
+            }
             return true;
         }catch (InvalidArgumentException $e){
-            return false;
+            return $e->getMessage();
         }
     }
 
@@ -42,16 +46,16 @@ class Post extends MasterModel{
     }
     
     public function setTitle($title){
-        if(is_null($title)){
-            $this->title = $title;
+        if(strcmp($title, "") !== 0){
+            $this->title = strip_tags($title);
         }else{
             throw new InvalidArgumentException("Title must be required!");
         }
     }
     
     public function setBody($body){
-        if(is_null($body)){
-            $this->body = $body;
+        if(strcmp($body, "") !== 0){
+            $this->body = strip_tags($body);
         }else{
             throw new InvalidArgumentException("Body must be required!");
         }

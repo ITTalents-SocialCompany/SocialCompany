@@ -32,7 +32,7 @@ class EventController extends MasterController{
 			
 			$filenameCover = $_FILES['cover_img_url']['tmp_name'];// = temp file
 			$realFilenameCover = $_FILES['cover_img_url']['name'];// = cv_photo.jpg
-			$coverFilePath = "/storage/events/$realFilenameCover";
+			$coverFilePath = "/storage/events/". substr($post['title'], 0, 10) ."_$realFilenameCover";
 			$newEvent->setCoverImgUrl($coverFilePath);
 			if(isset($filenameCover)){
 				$this->saveImg($filenameCover, $coverFilePath, $folder);

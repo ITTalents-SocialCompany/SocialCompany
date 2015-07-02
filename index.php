@@ -52,7 +52,11 @@ if(file_exists("controllers/$controller.php")){
             }else{
                 call_user_func_array(array($controller, $action), $args);
             }
+        }else{
+            require_once "views/error/404.php";
         }
+    }else{
+        require_once "views/error/404.php";
     }
 }else{
     require_once "views/error/404.php";

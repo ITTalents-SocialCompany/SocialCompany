@@ -31,7 +31,7 @@ class PostController extends MasterController{
                 $fields .= ",post_img_url";
                 $filenamePost = $_FILES['post_img_url']['tmp_name'];
                 $realFilenameProfile = $_FILES['post_img_url']['name'];
-                $postFilePath = "/storage/posts/$realFilenameProfile";
+                $postFilePath = "/storage/posts/". substr($post['title'], 0, 10) ."_$realFilenameProfile";
                 $newPost->setPostImg($postFilePath);
             }
 
@@ -66,12 +66,20 @@ class PostController extends MasterController{
     public function editPost($post){
         $id = $post['post_id'];
         unset($post['post_id']);
+
         $fields = array('title', 'body');
+
         $changePost = new Post();
-        $changePost->setTitle(strip_tags($post['title']));
-        $changePost->setBody(strip_tags($post['body']));
-        if($changePost->change($post, $fields, $id)){
-            $this->redirect("/");
+        $error = $changePost->validate($post);
+        if($error === true){
+            $changePost->setTitle($post['title']);
+            $changePost->setBody($post['body']);
+            if($changePost->change($post, $fields, $id)){
+                $this->redirect("/");
+            }
+        }else{
+            $changePost->getOne($changePost, $id);
+            $this->renderViewWithParams("post/edit", array("post"), array($changePost), "$error");
         }
     }
 

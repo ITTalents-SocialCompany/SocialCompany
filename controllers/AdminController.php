@@ -84,7 +84,7 @@ class AdminController extends MasterController{
     public function usersTeam(){
         $team = new Team();
         $user = new User();
-        $users = $user->getAllUsersForAdmin();
+        $users = $user->getAllUsersForAdminTeams();
         $teams = $team->getAllTeams();
         $this->renderViewWithParams("admin/team/usersTeam", array("teams", "users"), array($teams, $users));
     }
