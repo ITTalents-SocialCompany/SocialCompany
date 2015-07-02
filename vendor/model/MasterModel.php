@@ -107,7 +107,7 @@ abstract class MasterModel {
     	. (($on) ? " ON " . "$aliasJoinTable.$on = $aliasTable.$on" : "")
     	. (($where) ? " WHERE " . "$aliasTable.$where" : "")
     	. (($order) ? " ORDER BY " . $order : "");
-//     	var_dump($query);
+    	var_dump($query);
     	return $this->dbConn->query($query)->fetchAll(PDO::FETCH_ASSOC);
     }
 
