@@ -63,9 +63,9 @@
             </div>
         </div>
         <div class="row" id="post_<?= $post->post_id?>" hidden="hidden">
-            <form class="form-horizontal col-md-offset-1 col-md-10" id="form_<?= $post->post_id?>">
+            <form class="form-horizontal col-md-offset-1 col-md-10 commentForm" id="form_<?= $post->post_id?>">
                 <div class="form-group">
-                    <textarea class="form-control input-sm" rows="2" name="body" id="textArea" placeholder="Type a body"></textarea>
+                    <textarea class="form-control input-sm" rows="2" name="body" id="comment_body_<?= $post->post_id?>" placeholder="Type a body"></textarea>
                 </div>
                 <input type="hidden" name="post_id" value="<?= $post->post_id?>">
                 <input type="hidden" name="author_id" value="<?= Auth::getId()?>">

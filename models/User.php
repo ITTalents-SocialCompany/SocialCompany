@@ -17,7 +17,11 @@ class User extends MasterModel{
     }
 
     public function setUsername($username){
-        $this->username = $username;
+        if(preg_match('/^[a-zA-Z][a-zA-Z0-9\_\-]+/', $username)){
+            $this->username = $username;
+        }else{
+            throw new InvalidArgumentException("Username must be string!");
+        }
     }
 
     public function setPassword($password){
@@ -25,11 +29,19 @@ class User extends MasterModel{
     }
 
     public function setFirstName($first_name){
-        $this->first_name = $first_name;
+        if(preg_match('/[a-zA-Z]+/',$first_name)){
+            $this->first_name = $first_name;
+        }else{
+            throw new InvalidArgumentException("First name must be string!");
+        }
     }
 
     public function setLastName($last_name){
-        $this->last_name = $last_name;
+        if(preg_match('/[a-zA-Z]+/',$last_name)){
+            $this->last_name = $last_name;
+        }else{
+            throw new InvalidArgumentException("Last name must be string!");
+        }
     }
 
     public function addUserDetail(UserDetail $user_detail){
@@ -153,7 +165,7 @@ class User extends MasterModel{
 
     public function searchUser($searchStr){
         $rows = $this->selectAllWithJoins($this->table, array("user_details"), array("user_id"), array("u.user_id"),
-                        "first_name LIKE '$searchStr%'", "u.user_id, username, first_name, last_name, profile_img_url", "", "0, 5");
+                        "first_name LIKE '$searchStr%' AND is_approve IS NOT FALSE", "u.user_id, username, first_name, last_name, profile_img_url", "", "0, 5");
         if(count($rows) > 0){
             foreach($rows as $row){
                 $user = new User();

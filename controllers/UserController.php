@@ -10,20 +10,21 @@ class UserController extends MasterController{
     public function registerPost($post){
         $fields = $this->takeFields($post);
 
-        $user = new User();
-        $user->setUsername($post['username']);
-        $user->setPassword($post['password']);
-        $user->setFirstName($post['first_name']);
-        $user->setLastName($post['last_name']);
+        try{
+            $user = new User();
+            $user->setUsername($post['username']);
+            $user->setPassword($post['password']);
+            $user->setFirstName($post['first_name']);
+            $user->setLastName($post['last_name']);
+        }catch (Exception $e){
+            $this->renderViewWithParams("user/register", array("user"), array($user), "Invalid values!");
+        }
 
         if($user->register($user, $fields) !== 0){
-            $user->setPassword($post['password']);
-            if($user->login($user)){
-                $this->redirect("/profile/index");
-            }
+            $this->redirect("/user/login");
         }
         else{
-            $this->renderViewWithError("user/register", "user", $user, "Username is occupied!");
+            $this->renderViewWithParams("user/register", array("user"), array($user), "Username is occupied!");
         }
     }
 
@@ -44,7 +45,7 @@ class UserController extends MasterController{
                 $this->redirect("/profile/edit");
             }
         }else{
-            $this->renderViewWithError("user/login", "user", $user, "Username or password is wrong!");
+            $this->renderViewWithParams("user/login", array("user"), array($user), "Username or password is wrong!");
         }
     }
 
@@ -60,7 +61,8 @@ class UserController extends MasterController{
     public function changePasswordPost($post){
         $user = new User();
         if($user->changePassword($post)){
-            $this->redirect('/profile/');
+            session_destroy();
+            $this->redirect('/user/login');
         }else{
             $this->renderViewWithError("user/changePassword", null, null, "Old Password is wrong!");
         }

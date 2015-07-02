@@ -1,4 +1,4 @@
-<form action="/user/changePasswordPost" class="form-horizontal col-md-offset-3 col-md-5" method="post">
+<form action="/user/changePasswordPost" class="form-horizontal col-md-offset-3 col-md-5" method="post" id="changePasswordForm">
     <fieldset>
         <legend>Change Password</legend>
         <div class="form-group">

@@ -15,7 +15,6 @@ class MasterController {
     }
 
     public function renderViewAjax($view, array $params, array $arr){
-//        $$params = $arr;
         for($i = 0; $i < count($params); $i++){
             $$params[$i] = $arr[$i];
         }
@@ -43,7 +42,7 @@ class MasterController {
         require_once 'views/layouts/footer.php';
     }
 
-    public function renderViewWithParams($view, array $params, array $arr, $error = null){
+    public function renderViewWithParams($view, array $params = null, array $arr = null, $error = null){
         for($i = 0; $i < count($params); $i++){
             $$params[$i] = $arr[$i];
         }

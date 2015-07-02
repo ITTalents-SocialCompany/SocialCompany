@@ -1,5 +1,5 @@
 <h1 class="text-center">Register</h1>
-<form action="/user/registerPost" method="post" class="col-md-offset-4 col-md-4">
+<form action="/user/registerPost" method="post" class="col-md-offset-4 col-md-4" id="registerForm">
 
     <div class="form-group">
         <div class="input-group">
@@ -45,3 +45,6 @@
     </div>
 
 </form>
+<script>
+
+</script>

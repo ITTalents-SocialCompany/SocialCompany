@@ -1,5 +1,5 @@
 <h1 class="text-center">Login</h1>
-<form action="/user/loginPost" method="post" class="col-md-offset-4 col-md-4">
+<form action="/user/loginPost" method="post" class="col-md-offset-4 col-md-4" id="loginForm">
 
     <div class="form-group">
         <div class="input-group">

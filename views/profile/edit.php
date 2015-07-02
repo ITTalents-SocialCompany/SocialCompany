@@ -1,4 +1,4 @@
-<form action="/profile/editPost" method="post" class="form-horizontal col-md-offset-3 col-md-5">
+<form action="/profile/editPost" method="post" class="form-horizontal col-md-offset-3 col-md-5" id="profileEditForm">
     <fieldset>
         <legend>Edit Profile Information</legend>
         <div class="form-group">
@@ -6,6 +6,7 @@
             <div class="col-lg-10">
                 <input class="form-control" type="text" id="age" name="age" placeholder="Age"
                        value="<?= $user_detail->age?>" required>
+                <p id="messages" hidden></p>
             </div>
         </div>
 

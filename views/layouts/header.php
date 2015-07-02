@@ -18,6 +18,11 @@
   	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <!-- end datepicke -->
     <script src="/libs/js/main.js"></script>
+
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.0/css/bootstrapValidator.min.css"/>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.0/js/bootstrapValidator.min.js"></script>
+
+    <script src="/libs/js/validation.js"></script>
 </head>
 <body>
 <?php require_once "views/layouts/navbar.php";?>
