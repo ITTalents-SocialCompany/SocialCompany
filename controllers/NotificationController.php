@@ -10,30 +10,30 @@ class NotificationController extends MasterController{
         $this->renderView("notifications/index");
     }
     
-    public function getAllNotifications(){
+    public function countNotifications(){
     	$id = Auth::getId();
     	$notification = new Notification();
-    	$notifications = $notification->getAll($id);
-//     	var_dump($notifications);
-    	$this->renderViewAjax("notifications/log", array('notifications'), array($notifications));
+    	$notifications = $notification->getAllchatNotifications($id);
+     	echo count($notifications);
     }
     
-   
-//     public function getAllChatrooms(){    
-    	//     	$chatroomToUser = new ChatroomToUser();
-    	//     	$chatroomToUser = $chatroomToUser->getAllChatroomsForUser(Auth::getId());
-    	//     	$this->renderViewAjax("messages/chatrooms", array("chatrooms"), array($chatroomToUser));
+    public function getAllNotifications(){
+    	$id = Auth::getId();
+    	$chatNotification = new Notification();
+    	$chatNotifications = $chatNotification->getAllchatNotifications($id);
+
+//     	$postNotification = new Notification();
+//     	$postNotifications = $chatNotification->getAll($id);
+//     	$postNotifications = $postNotification->getAllpostNotifications($id);
+    	
+    	$this->renderViewAjax("notifications/log", array('chatNotifications'), array($chatNotifications));
+    }
     
-    	//     }
-    
-    	//     public function getAllMessages($args){
-    
-    	// 		$id = $args[0];
-    	//     	$message = new Message();
-    	//     	$message = $message->getAllMessagesForChat($id);
-    	//     	$this->renderViewAjax("messages/logs", array("messages"), array($message));
-    
-    	//     }
-    
-    
+    public function changeNotificationStatus($args){
+    	$chatroom_id = $args[0];
+    	$user_id = Auth::getId();
+    	$notification = new Notification();
+    	$notification->changeStatus($chatroom_id, $user_id);
+    	
+    }
 }

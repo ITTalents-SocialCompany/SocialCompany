@@ -79,18 +79,6 @@ class MessageController extends MasterController{
 	
     }
     
-    public function sendNotification(){
-    	$id = Auth::getId();
-    	$this->renderViewAjax("messages/logs", array("messages"), array($message));
-    }
-    
-    public function getAllNotifications($args){
-    	$id = $args[0];
-    	$notification = new Notification();
-    	$notification->getAll($id);
-    	$this->renderViewWithParams("notifications/index", array('notifications'), $notification);
-    }
-    
     public function noMessages(){
     	$this->renderView("messages/noChats");
     }

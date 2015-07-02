@@ -14,8 +14,9 @@
             <ul class="nav navbar-nav">
                 <?php if(Auth::isLoggedIn()): ?>
                     <li><a href="/">Home</a></li>
-                    <li><a href="/message/index">Messages <span class="badge">3</span></a></li>
+                    <li><a href="/message/index">Messages</a></li>
                 	<li><a href="/event/index">Events</a></li>
+                	<li><a href="/notification/index">Notifications <span class="badge"></span></a></li>
                     <?php if(Auth::isAdmin()):?>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Admin Controll <span class="caret"></span></a>
@@ -56,3 +57,27 @@
         </div>
     </div>
 </nav>
+
+<script>
+$(document).ready(function(){
+	$.get('/notification/countNotifications/', function(data){
+		if(data > 0){
+			$('.badge').html(data);
+		}else{
+			$('.badge').hide();
+		}
+		
+	});
+});
+setInterval(function(){
+	$(document).ready(function(){
+		$.get('/notification/countNotifications/', function(data){
+			if(data > 0){
+				$('.badge').html(data);
+			}else{
+				$('.badge').hide();
+			}
+		});
+	});
+}, 4000);
+</script>
