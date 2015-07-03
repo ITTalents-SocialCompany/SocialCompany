@@ -42,15 +42,15 @@ class Notification extends MasterModel{
 	}
 	
 	public function saveChatNotification($fields){
-		return $this->insert("chatroom_notifications", $fields, $this->objectToArray($this));		
+		return $this->insert("notifications_chatroom", $fields, $this->objectToArray($this));		
 	}
 	
 	public function savePostNotification($fields){
-		return $this->insert("post_notifications", $fields, $this->objectToArray($this));
+		return $this->insert("notifications_post", $fields, $this->objectToArray($this));
 	}
 	
 	public function getAllChatNotifications($id){
-		$rows = $this->selectAllWithJoin("chatroom_notifications","chatrooms","chatroom_id","LEFT", "user_id = $id AND seen = 0","*","");
+		$rows = $this->selectAllWithJoin("notifications_chatroom","chatrooms","chatroom_id","LEFT", "user_id = $id AND is_seen = 0","*","");
 		if(count($rows) > 0){
 			foreach ($rows as $chatNotification){
 				$notifications[] = new Notification($chatNotification['notification_id'], $chatNotification['user_id'], $chatNotification['chatroom_id'], $chatNotification['is_seen'], $chatNotification["chat_title"]);
@@ -61,7 +61,7 @@ class Notification extends MasterModel{
 	}
 	
 	public function getAllPostNotifications($id){
-		$rows = $this->selectAllWithJoin("postNotifications","posts","post_id","LEFT", "user_id = $id AND is_seen = 0","*", "");
+		$rows = $this->selectAllWithJoin("notifications_post","posts","post_id","LEFT", "user_id = $id AND is_seen = 0","*", "");
 		if(count($rows) > 0){
 			foreach ($rows as $postNotification){
 				$notifications[] = new Notification($postNotification['notification_id'], $postNotification['user_id'], $postNotification['post_id'], $postNotification['is_seen'], $postNotification['title']);
