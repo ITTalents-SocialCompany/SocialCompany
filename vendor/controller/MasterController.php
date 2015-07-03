@@ -8,8 +8,15 @@ class MasterController {
         }
     }
 
-    public function renderView($view, $post = array()){
+    public function renderView($view, array $params = null, array $arr = null, $error = null){
+        for($i = 0; $i < count($params); $i++){
+            $$params[$i] = $arr[$i];
+        }
+
         require_once 'views/layouts/header.php';
+        if($error !== null){
+            require_once 'views/layouts/error.php';
+        }
         require_once "views/$view.php";
         require_once 'views/layouts/footer.php';
     }
@@ -31,28 +38,6 @@ class MasterController {
 
     protected function takeFieldsArr($arr){
         return array_keys($arr);
-    }
-
-    public function renderViewWithError($view, $param, $obj, $error){
-        $$param = $obj;
-
-        require_once 'views/layouts/header.php';
-        require_once 'views/layouts/error.php';
-        require_once "views/$view.php";
-        require_once 'views/layouts/footer.php';
-    }
-
-    public function renderViewWithParams($view, array $params = null, array $arr = null, $error = null){
-        for($i = 0; $i < count($params); $i++){
-            $$params[$i] = $arr[$i];
-        }
-
-        require_once 'views/layouts/header.php';
-        if($error !== null){
-            require_once 'views/layouts/error.php';
-        }
-        require_once "views/$view.php";
-        require_once 'views/layouts/footer.php';
     }
 
     public function saveImg($filename, $filePath, $folder){

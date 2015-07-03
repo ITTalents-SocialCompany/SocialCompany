@@ -11,7 +11,7 @@ class Message extends MasterModel{
 	public function __construct($username = null, $message = null, $time = null, $chatroom_id = null, $user_id = null){
 		parent::__construct();
 		$this->setUsername($username);
-		$this->setMessage($message);
+		$this->message = $message;
 		$this->setTime($time);
 		$this->setChatroomId($chatroom_id);
 		$this->setUserId($user_id);
@@ -38,7 +38,11 @@ class Message extends MasterModel{
 	}
 	
 	public function setMessage($message){
-		$this->message = $message;
+        if(strcmp($message, "") !== 0){
+		    $this->message = strip_tags($message);
+        }else{
+            throw new InvalidArgumentException("Message can not be empty!");
+        }
 	}
 	
 	public function getTime(){
@@ -84,5 +88,15 @@ class Message extends MasterModel{
 		return get_object_vars($this);
 	}
 	
-	
+	public function validate($post, $time){
+        try{
+            $this->setUsername($post['user_id']);
+            $this->setMessage($post['message']);
+            $this->setChatroomId($post['chatroom_id']);
+            $this->setTime($time);
+            return true;
+        }catch (InvalidArgumentException $e){
+            return $e->getMessage();
+        }
+    }
 }

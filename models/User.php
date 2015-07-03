@@ -16,22 +16,6 @@ class User extends MasterModel{
         return $this->$name;
     }
 
-    public function validate($post){
-        try{
-            $this->setUsername($post['username']);
-            $this->setPassword($post['password']);
-            if(isset($post['first_name'])){
-                $this->setFirstName($post['first_name']);
-            }
-            if(isset($post['last_name'])){
-                $this->setLastName($post['last_name']);
-            }
-            return true;
-        }catch (InvalidArgumentException $e){
-            return $e->getMessage();
-        }
-    }
-
     public function setUsername($username){
         if(preg_match('/^[a-zA-Z][a-zA-Z0-9\_\-]+/', $username) === 1){
             $this->username = $username;
@@ -76,6 +60,22 @@ class User extends MasterModel{
             }
         }
         return $user;
+    }
+
+    public function validate($post){
+        try{
+            $this->setUsername($post['username']);
+            $this->setPassword($post['password']);
+            if(isset($post['first_name'])){
+                $this->setFirstName($post['first_name']);
+            }
+            if(isset($post['last_name'])){
+                $this->setLastName($post['last_name']);
+            }
+            return true;
+        }catch (InvalidArgumentException $e){
+            return $e->getMessage();
+        }
     }
 
     public function register(User $user, $fields){

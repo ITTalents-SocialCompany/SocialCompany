@@ -5,11 +5,10 @@ class CommentController extends MasterController{
         $fields = $this->takeFields($post);
 
         $comment = new Comment();
-        $comment->setBody(strip_tags($post['body']));
-        $comment->setPostId($post['post_id']);
-        $comment->setAuthorId($post['author_id']);
-//        var_dump($comment);
-        $comment->save($comment, $fields);
+        $error = $comment->validate($post);
+        if($error === true){
+            $comment->save($comment, $fields);
+        }
     }
 
     public function getAllComments($args){

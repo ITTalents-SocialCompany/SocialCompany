@@ -25,22 +25,6 @@ class Post extends MasterModel{
         $this->isLike = $isLike;
     }
 
-    public function validate($post){
-        try{
-            $this->setTitle($post['title']);
-            $this->setBody($post['body']);
-            if(isset($post['category_id'])){
-                $this->setCategoryId($post['category_id']);
-            }
-            if(isset($post['category_id'])){
-                $this->setAuthorId($post['author_id']);
-            }
-            return true;
-        }catch (InvalidArgumentException $e){
-            return $e->getMessage();
-        }
-    }
-
     public function __get($name) {
         return $this->$name;
     }
@@ -97,6 +81,22 @@ class Post extends MasterModel{
     		}
     	}
     	return $post;
+    }
+
+    public function validate($post){
+        try{
+            $this->setTitle($post['title']);
+            $this->setBody($post['body']);
+            if(isset($post['category_id'])){
+                $this->setCategoryId($post['category_id']);
+            }
+            if(isset($post['category_id'])){
+                $this->setAuthorId($post['author_id']);
+            }
+            return true;
+        }catch (InvalidArgumentException $e){
+            return $e->getMessage();
+        }
     }
 
     public function getOne(Post $post, $id){

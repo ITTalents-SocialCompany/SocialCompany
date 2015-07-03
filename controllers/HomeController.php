@@ -11,7 +11,7 @@ class HomeController extends MasterController{
         $categories = $category->getAllCategories();
         $user = new User();
         $users = $user->getAllUsers();
-        $this->renderViewWithParams("home/index", array("categories", "users","events"), array($categories, $users, $event));
+        $this->renderView("home/index", array("categories", "users","events"), array($categories, $users, $event));
     }
 
     public function searchUser($post){

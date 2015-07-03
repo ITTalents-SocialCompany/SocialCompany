@@ -8,14 +8,14 @@ class EventController extends MasterController{
     public function index(){
     	$event = new Event();
     	$event = $event->getAllEvents("");
-    	$this->renderViewWithParams("events/index", array("events"), array($event));	
+    	$this->renderView("events/index", array("events"), array($event));
     }
     
     public function show($args){
   		$id = $args[0];
     	$event = new Event();
     	$event = $event->getEvent($id);
-    	$this->renderViewWithParams("events/event", array("event"), array($event));
+    	$this->renderView("events/event", array("event"), array($event));
     }
     
     public function addEvent(){
@@ -57,7 +57,7 @@ class EventController extends MasterController{
 		$id = $args[0];
 		$event = new Event();
 		$event->getOne($event, $id);
-		$this->renderViewWithParams("events/edit", array("event"), array($event));
+		$this->renderView("events/edit", array("event"), array($event));
 	}
 	
 	public function editEvent($post){

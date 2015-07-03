@@ -14,7 +14,7 @@ class MessageController extends MasterController{
     public function addChatroom(){
     	$user = new User();
     	$user = $user->getAllUsers();
-    	$this->renderViewWithParams("messages/addChatroom", array("users"), array($user));
+    	$this->renderView("messages/addChatroom", array("users"), array($user));
     }
     
     public function addChatroomPost($post){
@@ -49,15 +49,14 @@ class MessageController extends MasterController{
     }
     
     public function addMessage($post){
-	
+	var_dump($post);
 	    	$fields = $this->takeFields($post);
 	    	$newMessage = new Message();
-	    	$newMessage->setUsername($post['user_id']);
-	    	$newMessage->setMessage($post['message']);
-	    	$newMessage->setChatroomId($post['chatroom_id']);
-	    	$newMessage->setTime($this->getLocalTime());
+            $error = $newMessage->validate($post, $this->getLocalTime());
+            if($error === true){
 	
-	       	$newMessage->saveMessage($newMessage, $fields);
+                $newMessage->saveMessage($newMessage, $fields);
+            }
 
     	
     }

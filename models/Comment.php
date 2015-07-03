@@ -22,7 +22,11 @@ class Comment extends MasterModel{
     }
 
     public function setBody($body){
-        $this->body = $body;
+        if(strcmp($body, "") !== 0){
+            $this->body = strip_tags($body);
+        }else{
+            throw new InvalidArgumentException("Body can not be empty!");
+        }
     }
 
     public function setPostId($post_id){
@@ -49,6 +53,17 @@ class Comment extends MasterModel{
             }
         }
         return $comment;
+    }
+
+    public function validate($post){
+        try{
+            $this->setBody($post['body']);
+            $this->setPostId($post['post_id']);
+            $this->setAuthorId($post['author_id']);
+            return true;
+        }catch (InvalidArgumentException $e){
+            return $e->getMessage();
+        }
     }
 
     public function save(Comment $comment, $fields){

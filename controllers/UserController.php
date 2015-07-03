@@ -14,14 +14,14 @@ class UserController extends MasterController{
         $user = new User();
         $error = $user->validate($post);
         if($error !== true){
-            $this->renderViewWithParams("user/register", array("user"), array($user), $error);
+            $this->renderView("user/register", array("user"), array($user), $error);
         }else{
 
             if($user->register($user, $fields) !== 0){
                 $this->redirect("/user/login");
             }
             else{
-                $this->renderViewWithParams("user/register", array("user"), array($user), "Username is occupied!");
+                $this->renderView("user/register", array("user"), array($user), "Username is occupied!");
             }
         }
     }
@@ -34,7 +34,7 @@ class UserController extends MasterController{
         $user = new User();
         $error = $user->validate($post);
         if($error !== true){
-            $this->renderViewWithParams("user/login", array("user"), array($user), $error);
+            $this->renderView("user/login", array("user"), array($user), $error);
         }else{
             $user->setUsername($post['username']);
             $user->setPassword($post['password']);
@@ -47,7 +47,7 @@ class UserController extends MasterController{
                     $this->redirect("/profile/edit");
                 }
             }else{
-                $this->renderViewWithParams("user/login", array("user"), array($user), "Username or password is wrong!");
+                $this->renderView("user/login", array("user"), array($user), "Username or password is wrong!");
             }
         }
     }
@@ -67,7 +67,7 @@ class UserController extends MasterController{
             session_destroy();
             $this->redirect('/user/login');
         }else{
-            $this->renderViewWithError("user/changePassword", null, null, "Old Password is wrong!");
+            $this->renderView("user/changePassword", null, null, "Old Password is wrong!");
         }
     }
 } 

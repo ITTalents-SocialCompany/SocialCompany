@@ -17,7 +17,7 @@ class Chatroom extends MasterModel{
 	}
 	
 	public function setTitle($title){
-		$this->title = $title;
+		$this->title = strip_tags($title);
 	}
 	
 	public function getParticipants(){

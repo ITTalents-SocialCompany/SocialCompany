@@ -14,7 +14,7 @@ class ProfileController extends MasterController {
             $user = new User();
             $user = $user->getUser($id);
             $user->getUserDetail();
-            $this->renderViewWithParams("profile/index", array("user"), array($user));
+            $this->renderView("profile/index", array("user"), array($user));
         }
     }
 
@@ -23,7 +23,7 @@ class ProfileController extends MasterController {
         $user = new User();
         $user = $user->findByUsername($username);
         $user_detail = $user->getUserDetail();
-        $this->renderViewWithParams("profile/index", array("user_detail", "user"), array($user_detail, $user));
+        $this->renderView("profile/index", array("user_detail", "user"), array($user_detail, $user));
     }
 
     public function timelineAjax($args){
@@ -45,7 +45,7 @@ class ProfileController extends MasterController {
         $id = Auth::getId();
         $user_detail = new UserDetail();
         $user_detail = $user_detail->getUserDetail($id);
-        $this->renderViewWithParams("profile/edit", array("user_detail"), array($user_detail));
+        $this->renderView("profile/edit", array("user_detail"), array($user_detail));
     }
 
     public function addLanguages(){
@@ -55,29 +55,29 @@ class ProfileController extends MasterController {
     public function editPost($post){
 
         $user_detail = new UserDetail();
-        $user_detail->setAge($post['age']);
-        $user_detail->setEmail($post['email']);
-        $user_detail->setPhone($post['phone']);
-        $user_detail->setGenderId($post['gender_id']);
-        $user_detail->setUserId($post['user_id']);
-        $user_detail->setBirthDate($post['birthdate']);
-        $user_detail->setUniversityName($post['university_name']);
-        $user_detail->setUniversitySpec($post['university_spec']);
-        $user_detail->setSkills($post['skills']);
+        $error = $user_detail->validate($post);
 
-        if(!$user_detail_id = $user_detail->hasUserDetail()){
-            $fields = $this->takeFields($post);
-            if($user_detail->save($user_detail, $fields) !== 0){
-                $this->redirect("/profile/index");
+        if($error === true){
+            if(!$user_detail_id = $user_detail->hasUserDetail()){
+                $fields = $this->takeFields($post);
+                if($user_detail->save($user_detail, $fields) !== 0){
+                    $this->redirect("/profile/index");
+                }else{
+                    $this->renderView("profile/edit", array("user_detail"), array($user_detail), "Error!");
+                }
             }else{
-                $this->renderViewWithError("profile/edit", "user_detail",$user_detail, "Error!");
+                $fields = $this->takeFieldsArr($post);
+                if($user_detail->change($post, $fields, $user_detail_id)){
+                    $this->redirect("/profile/index");
+                }else{
+                    $this->renderView("profile/edit", array("user_detail"), array($user_detail), "Error with Update!");
+                }
             }
         }else{
-            $fields = $this->takeFieldsArr($post);
-            if($user_detail->change($post, $fields, $user_detail_id)){
-                $this->redirect("/profile/index");
+            if(!$user_detail_id = $user_detail->hasUserDetail()){
+                $this->renderView("profile/edit", null, null, $error);
             }else{
-                $this->renderViewWithError("profile/edit", "user_detail", $user_detail, "Error with Update!");
+                $this->redirect("/profile/edit");
             }
         }
     }
@@ -89,7 +89,7 @@ class ProfileController extends MasterController {
         }else{
             $id = Auth::getId();
             $user_detail = $user_detail->getUserDetail($id);
-            $this->renderViewWithParams("profile/changeImgs", array("user_detail"), array($user_detail));
+            $this->renderView("profile/changeImgs", array("user_detail"), array($user_detail));
         }
     }
 

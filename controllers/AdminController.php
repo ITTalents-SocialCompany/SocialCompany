@@ -14,19 +14,19 @@ class AdminController extends MasterController{
     public function users(){
         $user = new User();
         $users = $user->getAllUsersForAdmin();
-        $this->renderViewWithParams("admin/user/users", array("users"), array($users));
+        $this->renderView("admin/user/users", array("users"), array($users));
     }
 
     public function deletedUsers(){
         $user = new User();
         $users = $user->getAllUsersDeleted();
-        $this->renderViewWithParams("admin/user/usersDelete", array("users"), array($users));
+        $this->renderView("admin/user/usersDelete", array("users"), array($users));
     }
 
     public function teams(){
         $team = new Team();
         $teams = $team->getAllTeams();
-        $this->renderViewWithParams("admin/team/teams", array("teams"), array($teams));
+        $this->renderView("admin/team/teams", array("teams"), array($teams));
     }
 
     public function addTeam(){
@@ -46,7 +46,7 @@ class AdminController extends MasterController{
     public function categories(){
         $category = new Category();
         $categories = $category->getAllCategories();
-        $this->renderViewWithParams("admin/category/categories", array("categories"), array($categories));
+        $this->renderView("admin/category/categories", array("categories"), array($categories));
     }
 
     public function addCategory(){
@@ -86,7 +86,7 @@ class AdminController extends MasterController{
         $user = new User();
         $users = $user->getAllUsersForAdminTeams();
         $teams = $team->getAllTeams();
-        $this->renderViewWithParams("admin/team/usersTeam", array("teams", "users"), array($teams, $users));
+        $this->renderView("admin/team/usersTeam", array("teams", "users"), array($teams, $users));
     }
 
     public function addUserToTeamPost($post){
@@ -103,7 +103,7 @@ class AdminController extends MasterController{
             $user = new User();
             $users = $user->getAllUsersForAdmin();
             $teams = $team->getAllTeams();
-            $this->renderViewWithParams("/admin/team/usersTeam", array("teams", "users"), array($teams, $users), "User is in this team!");
+            $this->renderView("/admin/team/usersTeam", array("teams", "users"), array($teams, $users), "User is in this team!");
         }
     }
 

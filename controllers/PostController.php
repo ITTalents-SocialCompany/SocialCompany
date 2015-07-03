@@ -9,7 +9,7 @@ class PostController extends MasterController{
         $id = $args[0];
         $post = new Post();
         $post = $post->getPostInfo($id);
-        $this->renderViewWithParams("post/index", array("post"), array($post));
+        $this->renderView("post/index", array("post"), array($post));
     }
 
 	public function savePost($post){
@@ -60,7 +60,7 @@ class PostController extends MasterController{
         $id = $args[0];
         $post = new Post();
         $post->getOne($post, $id);
-        $this->renderViewWithParams("post/edit", array("post"), array($post));
+        $this->renderView("post/edit", array("post"), array($post));
     }
 
     public function editPost($post){
@@ -79,7 +79,7 @@ class PostController extends MasterController{
             }
         }else{
             $changePost->getOne($changePost, $id);
-            $this->renderViewWithParams("post/edit", array("post"), array($changePost), "$error");
+            $this->renderView("post/edit", array("post"), array($changePost), "$error");
         }
     }
 

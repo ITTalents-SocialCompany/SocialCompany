@@ -19,11 +19,19 @@ class UserDetail extends MasterModel{
     }
 
     public function setAge($age){
-        $this->age = strip_tags($age);
+        if(intval($age) !== 0){
+            $this->age = strip_tags($age);
+        }else{
+            throw new InvalidArgumentException("Age must be a numeric");
+        }
     }
 
     public function setEmail($email){
-        $this->email = strip_tags($email);
+        if(strcmp($email, "") !== 0){
+            $this->email = strip_tags($email);
+        }else{
+            throw new InvalidArgumentException("Email can not be empty");
+        }
     }
 
     public function setProfileImg($profile_img_url){
@@ -35,7 +43,11 @@ class UserDetail extends MasterModel{
     }
 
     public function setPhone($phone){
-        $this->phone = strip_tags($phone);
+        if(intval($phone) !== 0){
+            $this->phone = strip_tags($phone);
+        }else{
+            throw new InvalidArgumentException("Phone must be a numeric");
+        }
     }
 
     public function setGenderId($gender_id){
@@ -76,6 +88,24 @@ class UserDetail extends MasterModel{
             }
         }
         return $userDetail;
+    }
+
+    public function validate($post){
+        try{
+            $this->setAge($post['age']);
+            $this->setEmail($post['email']);
+            $this->setPhone($post['phone']);
+            $this->setGenderId($post['gender_id']);
+            $this->setUserId($post['user_id']);
+            $this->setBirthDate($post['birthdate']);
+            $this->setUniversityName($post['university_name']);
+            $this->setUniversitySpec($post['university_spec']);
+            $this->setSkills($post['skills']);
+
+            return true;
+        }catch (InvalidArgumentException $e){
+            return $e->getMessage();
+        }
     }
 
     public function save(UserDetail $profile_detail, $fields){

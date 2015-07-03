@@ -6,7 +6,7 @@ class CategoryController extends MasterController{
         $category->getCategory($id);
         $user = new User();
         $users = $user->getAllUsers();
-        $this->renderViewWithParams("category/index", array("category", "users"), array($category, $users));
+        $this->renderView("category/index", array("category", "users"), array($category, $users));
     }
 
 } 
