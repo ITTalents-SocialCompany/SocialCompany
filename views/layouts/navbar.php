@@ -16,7 +16,7 @@
                     <li><a href="/">Home</a></li>
                     <li><a href="/message/index">Messages</a></li>
                 	<li><a href="/event/index">Events</a></li>
-                	<li><a href="/notification/index">Notifications <span class="badge"></span><span class="badge posts"></span></a></li>
+                	<li><a href="/notification/index">Chats <span id="notif_chat_badge" class="badge"></span> Posts <span id="notif_post_badge" class="badge"></span></a></li>
                     <?php if(Auth::isAdmin()):?>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Admin Controll <span class="caret"></span></a>
@@ -62,9 +62,9 @@
 $(document).ready(function(){
 	$.get('/notification/countChatNotifications', function(data){
 		if(data > 0){
-			$('.badge').html(data);
+			$('#notif_chat_badge').html(data);
 		}else{
-			$('.badge').hide();
+			$('#notif_chat_badge').hide();
 		}
 		
 	});
@@ -73,9 +73,9 @@ setInterval(function(){
 	$(document).ready(function(){
 		$.get('/notification/countChatNotifications', function(data){
 			if(data > 0){
-				$('.badge').html(data);
+				$('#notif_chat_badge').html(data);
 			}else{
-				$('.badge').hide();
+				$('#notif_chat_badge').hide();
 			}
 		});
 	});
@@ -84,9 +84,9 @@ setInterval(function(){
 $(document).ready(function(){
 	$.get('/notification/countPostNotifications', function(data){
 		if(data > 0){
-			$('.badge posts').html(data);
+			$('#notif_post_badge').html(data);
 		}else{
-			$('.badge posts').hide();
+			$('#notif_post_badge').hide();
 		}
 		
 	});
@@ -95,9 +95,9 @@ setInterval(function(){
 	$(document).ready(function(){
 		$.get('/notification/countPostNotifications', function(data){
 			if(data > 0){
-				$('.badge').html(data);
+				$('#notif_post_badge').html(data);
 			}else{
-				$('.badge').hide();
+				$('#notif_post_badge').hide();
 			}
 		});
 	});

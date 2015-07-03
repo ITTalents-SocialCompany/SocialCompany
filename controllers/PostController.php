@@ -18,6 +18,7 @@ class PostController extends MasterController{
             $tagged_users = $post["tagged_users"];
             unset($post['tagged_users']);
         }
+        $usersToNotify = $tagged_users;
         $tagged_users[] = Auth::getId();
 
         $newPost = new Post();

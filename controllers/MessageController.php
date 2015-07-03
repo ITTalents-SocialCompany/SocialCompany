@@ -39,9 +39,10 @@ class MessageController extends MasterController{
     			}
     			foreach ($usersToNotify as $userToNotify){
     				$notification = new Notification($userToNotify, $chatroom_id, "0");
-    				$notification->saveChatNotification("user_id,chatroom_id,seen");
+    				$notification->saveChatNotification("user_id,chatroom_id,is_seen");
     			}
-    			$this->redirect("/message/index");
+    			
+    			//$this->redirect("/message/index");
     		}else{
     			echo "Error!";
     		}

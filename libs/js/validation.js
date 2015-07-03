@@ -206,4 +206,72 @@ $(document).ready(function() {
             }
         }
     });
+    
+    $('#event_form').bootstrapValidator({
+        err: {
+            container: 'tooltip'
+        },
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            title: {
+                validators: {
+                    notEmpty: {
+                        message: 'Required and cannot be empty'
+                    }
+                }
+            },
+            body: {
+                validators: {
+                    notEmpty: {
+                        message: 'Required and cannot be empty'
+                    }
+                }
+            },
+            event_time: {
+                validators: {
+                    notEmpty: {
+                        message: 'Required and cannot be empty'
+                    },
+		            date: {
+		                message: 'The date is not valid',
+		                format: 'YYYY-MM-DD',
+		                // min and max options can be strings or Date objects
+		                min: '2015-07-03'
+		                //max: '2015-07-03'
+		            }
+                }
+            },
+            cover_img_url: {
+                validators: {
+                    notEmpty: {
+                        message: 'Required and cannot be empty'
+                    }
+                }
+            }
+        }
+    });
+    
+    $('#form_add_chatroom').bootstrapValidator({
+        err: {
+            container: 'tooltip'
+        },
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+        	chat_title: {
+                validators: {
+                    notEmpty: {
+                        message: 'Required and cannot be empty'
+                    }
+                }
+            }
+        }
+    });
 });

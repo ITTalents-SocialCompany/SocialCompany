@@ -1,4 +1,4 @@
-<form action="/message/addChatroomPost" method="POST" class="form-horizontal">
+<form action="/message/addChatroomPost" method="POST" class="form-horizontal" id="form_add_chatroom">
   <fieldset>
     <legend>Add chatroom</legend>
 

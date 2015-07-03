@@ -12,7 +12,7 @@
     <div class="form-group">
       <label for="title" class="col-lg-2 control-label">Body</label>
       <div class="col-lg-10">
-		<textarea class="form-control input-sm" rows="3" name="body" id="textArea" placeholder="Type a body" required></textarea>     
+		<textarea class="form-control input-sm" rows="3" name="body" id="body" placeholder="Type a body" required></textarea>     
       </div>
     </div>
     
@@ -28,7 +28,7 @@
 	<div class="form-group">
         <label class="col-lg-2 control-label" for="cover_img_url">Upload Cover Img:</label>
         <div class="col-lg-10">
-             <input type="file" name="cover_img_url" accept="image/*">
+             <input type="file" name="cover_img_url" accept="image/*" id="cover_img_url">
         </div>
     </div>
         

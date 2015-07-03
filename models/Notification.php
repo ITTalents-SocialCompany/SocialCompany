@@ -71,8 +71,12 @@ class Notification extends MasterModel{
 		}
 	}
 	
-	public function changeStatus($chatroom_id, $user_id){
-		return $this->update("notifications", array('seen'), array('seen'=>1), $where = "chatroom_id = $chatroom_id AND user_id = $user_id");
+	public function changeChatStatus($chatroom_id, $user_id){
+		return $this->update("notifications_chatroom", array('is_seen'), array('is_seen'=>1), $where = "chatroom_id = $chatroom_id AND user_id = $user_id");
+	}
+	
+	public function changePostStatus($post_id, $user_id){
+		return $this->update("notifications_post", array('is_seen'), array('is_seen'=>1), $where = "post_id = $post_id AND user_id = $user_id");
 	}
 	
 	public function objectToArray(){

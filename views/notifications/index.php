@@ -25,8 +25,8 @@ function seeChatNotification(id){
 	//isseen = true
 	//redirect to messages
 	$(document).ready(function(){
-		$.get('/notification/changeNotificationStatus/'+id, function(data){
-
+		$.get('/notification/changeChatNotificationStatus/'+id, function(data){
+			
 			document.location.href="/message/index";
 		
 		});
@@ -35,9 +35,9 @@ function seeChatNotification(id){
 
 function seePostNotification(id){
 	//isseen = true
-	//redirect to messages
+	//redirect to post
 	$(document).ready(function(){
-		$.get('/notification/changeNotificationStatus/'+id, function(data){
+		$.get('/notification/changePostNotificationStatus/'+id, function(data){
 
 			document.location.href="/post/index/"+id;
 		

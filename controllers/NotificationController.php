@@ -10,7 +10,7 @@ class NotificationController extends MasterController{
         $this->renderView("notifications/index");
     }
     
-    public function countNotifications(){
+    public function countChatNotifications(){
     	$id = Auth::getId();
     	$notification = new Notification();
     	$notifications = $notification->getAllChatNotifications($id);
@@ -35,11 +35,19 @@ class NotificationController extends MasterController{
     	$this->renderViewAjax("notifications/log", array('chatNotifications','postNotifications'), array($chatNotifications,$postNotifications));
     }
     
-    public function changeNotificationStatus($args){
+    public function changeChatNotificationStatus($args){
+    	var_dump($args);
     	$chatroom_id = $args[0];
     	$user_id = Auth::getId();
     	$notification = new Notification();
-    	$notification->changeStatus($chatroom_id, $user_id);
+    	$notification->changeChatStatus($chatroom_id, $user_id);   	
+    }
+    
+    public function changePostNotificationStatus($args){
     	
+    	$post_id = $args[0];
+    	$user_id = Auth::getId();
+    	$notification = new Notification();
+    	$notification->changePostStatus($post_id, $user_id);
     }
 }
