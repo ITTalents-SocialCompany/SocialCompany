@@ -36,18 +36,21 @@ class UserController extends MasterController{
         if($error !== true){
             $this->renderView("user/login", array("user"), array($user), $error);
         }else{
-            $user->setUsername($post['username']);
-            $user->setPassword($post['password']);
+        	$error = $user->validate($post);
+            if($error == true){
 
-            if($user->login($user)){
-                $user_detail = new UserDetail();
-                if($user_detail->hasUserDetail()){
-                    $this->redirect("/profile/index");
-                }else{
-                    $this->redirect("/profile/edit");
-                }
+	            if($user->login($user)){
+	                $user_detail = new UserDetail();
+	                if($user_detail->hasUserDetail()){
+	                    $this->redirect("/profile/index");
+	                }else{
+	                    $this->redirect("/profile/edit");
+	                }
+	            }else{
+	                $this->renderView("user/login", array("user"), array($user), "Username or password is wrong!");
+	            }
             }else{
-                $this->renderView("user/login", array("user"), array($user), "Username or password is wrong!");
+            	$this->redirect("/user/login");
             }
         }
     }

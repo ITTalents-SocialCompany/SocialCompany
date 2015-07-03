@@ -27,7 +27,8 @@ class UserDetail extends MasterModel{
     }
 
     public function setEmail($email){
-        if(strcmp($email, "") !== 0){
+        if(strcmp($email, "") !== 0 && 
+        		filter_var($email, FILTER_VALIDATE_EMAIL)){
             $this->email = strip_tags($email);
         }else{
             throw new InvalidArgumentException("Email can not be empty");

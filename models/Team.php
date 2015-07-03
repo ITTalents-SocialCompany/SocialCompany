@@ -10,7 +10,7 @@ class Team extends MasterModel{
     }
 
     public function setName($name){
-        $this->name = $name;
+        $this->name = strip_tags($name);
     }
 
     public function objectToArray(){

@@ -24,27 +24,33 @@ class MessageController extends MasterController{
     			$participants = $post["participants"];
     			unset($post['participants']);
     		}
+    		if(count($participants) > 0 && count($participants) <= 3){
     		
-    		$usersToNotify = $participants;
-    		$participants[] = Auth::getId();
-
-    		$newChatroom = new Chatroom();
-    		$newChatroom->setTitle($post['chat_title']);
-    		$chatroom_id = $newChatroom->saveChatroom($newChatroom, "chat_title");
-    	
-    		if($chatroom_id !== 0){
-    			foreach($participants as $participant){
-    				$chatroom_to_user = new ChatroomToUser($chatroom_id, $participant);
-    				$chatroom_to_user->save("chatroom_id,user_id");
-    			}
-    			foreach ($usersToNotify as $userToNotify){
-    				$notification = new Notification($userToNotify, $chatroom_id, "0");
-    				$notification->saveChatNotification("user_id,chatroom_id,is_seen");
-    			}
-    			
-    			//$this->redirect("/message/index");
+	    		$usersToNotify = $participants;
+	    		$participants[] = Auth::getId();
+	
+	    		$newChatroom = new Chatroom();
+	    		$newChatroom->setTitle($post['chat_title']);
+	    		$chatroom_id = $newChatroom->saveChatroom($newChatroom, "chat_title");
+	    	
+	    		if($chatroom_id !== 0){
+	    			foreach($participants as $participant){
+	    				$chatroom_to_user = new ChatroomToUser($chatroom_id, $participant);
+	    				$chatroom_to_user->save("chatroom_id,user_id");
+	    			}
+	    			foreach ($usersToNotify as $userToNotify){
+	    				$notification = new Notification($userToNotify, $chatroom_id, "0");
+	    				$notification->saveChatNotification("user_id,chatroom_id,is_seen");
+	    			}
+	    			
+	    			$this->redirect("/message/index");
+	    		}else{
+	    			echo "Error!";
+	    		}
     		}else{
-    			echo "Error!";
+    			$user = new User();
+    			$user = $user->getAllUsers();
+    			$this->renderView("messages/addChatroom", array("users"), array($user), "Partisipants can not be empty and max value is 3");
     		}
     	}
     }
@@ -55,11 +61,8 @@ class MessageController extends MasterController{
 	    	$newMessage = new Message();
             $error = $newMessage->validate($post, $this->getLocalTime());
             if($error === true){
-	
                 $newMessage->saveMessage($newMessage, $fields);
             }
-
-    	
     }
     
     public function getAllChatrooms(){

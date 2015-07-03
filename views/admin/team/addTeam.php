@@ -1,4 +1,4 @@
-<form action="/admin/teamPost" method="post" class="form-horizontal col-md-offset-3 col-md-5">
+<form action="/admin/teamPost" method="post" id="teamForm" class="form-horizontal col-md-offset-3 col-md-5">
     <fieldset>
         <legend>Add Team</legend>
         <div class="form-group">

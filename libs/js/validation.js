@@ -271,6 +271,53 @@ $(document).ready(function() {
                         message: 'Required and cannot be empty'
                     }
                 }
+            },
+            participants:{
+            	validators: {
+                    notEmpty: {
+                        message: 'Required and cannot be empty'
+                    }
+                }
+            }
+        }
+    });
+    
+    $('#categoryForm').bootstrapValidator({
+        err: {
+            container: 'tooltip'
+        },
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+        	name: {
+                validators: {
+                    notEmpty: {
+                        message: 'Required and cannot be empty'
+                    }
+                }
+            }
+        }
+    });
+    
+    $('#teamForm').bootstrapValidator({
+        err: {
+            container: 'tooltip'
+        },
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+        	name: {
+                validators: {
+                    notEmpty: {
+                        message: 'Required and cannot be empty'
+                    }
+                }
             }
         }
     });

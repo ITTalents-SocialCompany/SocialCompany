@@ -1,4 +1,4 @@
-<form action="/admin/categoryPost" method="post" class="form-horizontal col-md-offset-3 col-md-5">
+<form action="/admin/categoryPost" method="post" id="categoryForm" class="form-horizontal col-md-offset-3 col-md-5">
     <fieldset>
         <legend>Category Team</legend>
         <div class="form-group">
