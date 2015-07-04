@@ -19,11 +19,17 @@ class ProfileController extends MasterController {
     }
 
     public function user($args){
-        $username = $args[0];
-        $user = new User();
-        $user = $user->findByUsername($username);
-        $user_detail = $user->getUserDetail();
-        $this->renderView("profile/index", array("user_detail", "user"), array($user_detail, $user));
+    	if(isset($args) && strcmp($args[0], "") !== 0 ){
+	        $username = $args[0];
+	        $user = new User();
+	        $user = $user->findByUsername($username);
+	        if($user->username !== null){
+		        $user_detail = $user->getUserDetail();
+		        $this->renderView("profile/index", array("user_detail", "user"), array($user_detail, $user));
+	        }else{
+	        	$this->redirect("/");
+	        }
+        }
     }
 
     public function timelineAjax($args){
